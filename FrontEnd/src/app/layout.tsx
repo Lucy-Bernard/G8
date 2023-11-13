@@ -2,6 +2,9 @@ import "./globals.css";
 import type { Metadata } from "next";
 import { Quicksand } from "next/font/google";
 import NavigationBar, { PageLink } from "@/components/NavigationBar/NavigationBar";
+import Header from "@/components/Header/Header";
+import Banner from "@/components/Banner/Banner"; // Import the Banner component
+
 
 const quicksand = Quicksand({ subsets: ["latin"] });
 const links: Array<PageLink> = [
@@ -13,7 +16,7 @@ const links: Array<PageLink> = [
     link_text: "User Profile",
     link_url: "userprofile"
   }
-]
+];
 
 export const metadata: Metadata = {
   title: "Frontend Setup",
@@ -22,11 +25,15 @@ export const metadata: Metadata = {
 
 export default function RootLayout({ children }: { children: React.ReactNode }) {
   return (
-    <html lang="en"> {/*this stuff goes on every page */}
+
+    <html lang="en">
       <body className={quicksand.className}>
-        {/* <NavigationBar links={links} /> */}
+        <Header />
+        <Banner /> 
+
         {children}
       </body>
     </html>
   )
 }
+

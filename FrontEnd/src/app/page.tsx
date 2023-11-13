@@ -4,6 +4,7 @@ import NavigationBar, { PageLink } from "@/components/NavigationBar/NavigationBa
 
 export default function Home() {
   return (
+
     <main>
       <NavigationBar />
       <div className={styles.main}>
