@@ -1,10 +1,6 @@
 import "./globals.css";
 import type { Metadata } from "next";
 import { Quicksand } from "next/font/google";
-import NavigationBar, { PageLink } from "@/components/NavigationBar/NavigationBar";
-import Header from "@/components/Header/Header";
-import Banner from "@/components/Banner/Banner"; // Import the Banner component
-
 
 const quicksand = Quicksand({ subsets: ["latin"] });
 const links: Array<PageLink> = [
@@ -28,8 +24,6 @@ export default function RootLayout({ children }: { children: React.ReactNode }) 
 
     <html lang="en">
       <body className={quicksand.className}>
-        <Header />
-        <Banner /> 
 
         {children}
       </body>
