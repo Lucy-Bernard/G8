@@ -8,7 +8,7 @@ import styles from './Header.module.css';
 const Header: React.FC = () => {
  
  
- const topLeftImage = require("@/assets/Header Images/logo.png")
+ const topLeftImage = require("@/assets/Header Images/G8.png")
  
   const topRightImage1 = require("@/assets/Header Images/UserProfile.png")
  
