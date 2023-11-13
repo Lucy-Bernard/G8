@@ -1,34 +1,39 @@
+import React from 'react';
 import Link from 'next/link';
+import styles from './NavigationBar.module.css';
 
-import styles from "./NavigationBar.module.css";
+type NavigationBarProps = {
+  // Define any props you might need
+};
 
-export type PageLink = {
-  link_text: string,
-  link_url: string
-}
+const NavigationBar: React.FC<NavigationBarProps> = () => {
+  const scrollToSection = (sectionId: string) => {
+    // Ensure this runs only in the browser
+    if (typeof window !== 'undefined') {
+      const section = document.getElementById(sectionId);
+      section?.scrollIntoView({ behavior: 'smooth', block: 'start' });
+    }
+  };
 
-export type NavigationBarProps = {
-  links: Array<PageLink>
-}
-
-export default function NavigationBar(props: NavigationBarProps) {
   return (
-    <nav className={styles.navigation_bar}>
-      <Link href="/">
-        <h1>Logo</h1>
-      </Link>
-
-      <ul>
-        {props.links.map((link) => {
-          return (
-            <li key={link.link_url}>
-              <Link href={`/${link.link_url}`}>
-                {link.link_text}
-              </Link>
-            </li>
-          );
-        })}
+    <nav className={styles.navigationBar}>
+      <ul className={styles['navbar-nav']}>
+        {/* still need to implement sections once main page is created */}
+        <li className={styles['nav-item']}>
+          <button>Top</button>
+        </li>
+        <li className={styles['nav-item']}>
+          <button>Bottom</button>
+        </li>
+        <li className={styles['nav-item']}>
+          <button>Outerwear</button>
+        </li>
+        <li className={styles['nav-item']}>
+          <button>Shoe</button>
+        </li>
       </ul>
     </nav>
   );
-}
+};
+
+export default NavigationBar;
