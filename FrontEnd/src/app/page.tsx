@@ -1,3 +1,4 @@
+import ProductCard from "@/components/ProductCard/ProductCard";
 import styles from "./page.module.css"
 
 export default function Home() {

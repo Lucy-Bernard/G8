@@ -8,6 +8,10 @@ const links: Array<PageLink> = [
   {
     link_text: "Products",
     link_url: "products"
+  },
+  {
+    link_text: "User Profile",
+    link_url: "userprofile"
   }
 ]
 
