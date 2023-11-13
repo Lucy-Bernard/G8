@@ -10,9 +10,9 @@ const Header: React.FC = () => {
  
  const topLeftImage = require("@/assets/Header Images/G8.png")
  
-  const topRightImage1 = require("@/assets/Header Images/UserProfile.png")
+  const topRightImage1 = require("@/assets/Header Images/Profile.png")
  
-  const topRightImage2 = require("@/assets/Header Images/CART.png")
+  const topRightImage2 = require("@/assets/Header Images/Cart.png")
 
   return (
     <div className={styles.container}>
@@ -20,8 +20,8 @@ const Header: React.FC = () => {
         <Image
           src={topLeftImage}
           alt="Logo"
-          height={100}
-          width={100}
+          height={70}
+          width={70}
           objectFit="contain" // or "contain", depending on your design
           objectPosition="left top" // adjust as needed
           
@@ -31,16 +31,16 @@ const Header: React.FC = () => {
         <Image
           src={topRightImage1}
           alt="User Profile"
-          height={100}
-          width={100}
+          height={40}
+          width={50}
           objectFit="cover"
           objectPosition="right top"
         />
         <Image
           src={topRightImage2}
           alt="Cart"
-          height={100}
-          width={100}
+          height={40}
+          width={40}
           objectFit="cover"
           objectPosition="right top"
         />
