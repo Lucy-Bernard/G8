@@ -24,7 +24,7 @@ export default function RootLayout({ children }: { children: React.ReactNode }) 
   return (
     <html lang="en"> {/*this stuff goes on every page */}
       <body className={quicksand.className}>
-        <NavigationBar links={links} />
+        {/* <NavigationBar links={links} /> */}
         {children}
       </body>
     </html>

@@ -1,15 +1,15 @@
 import ProductCard from "@/components/ProductCard/ProductCard";
 import styles from "./page.module.css"
-
-/**
- * This is the website home page and default routing location.
- * 
- */
+import NavigationBar, { PageLink } from "@/components/NavigationBar/NavigationBar";
 
 export default function Home() {
   return (
-    <main className={styles.main}>
-      <h1>Home</h1>
+    <main>
+      <NavigationBar />
+      <div className={styles.main}>
+        <h1>Home</h1>
+      </div>
+      
     </main>
   )
 }
