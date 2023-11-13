@@ -1,9 +1,9 @@
 import "./globals.css";
 import type { Metadata } from "next";
-import { Inter } from "next/font/google";
+import { Quicksand } from "next/font/google";
 import NavigationBar, { PageLink } from "@/components/NavigationBar/NavigationBar";
 
-const inter = Inter({ subsets: ["latin"] });
+const quicksand = Quicksand({ subsets: ["latin"] });
 const links: Array<PageLink> = [
   {
     link_text: "Products",
@@ -22,8 +22,8 @@ export const metadata: Metadata = {
 
 export default function RootLayout({ children }: { children: React.ReactNode }) {
   return (
-    <html lang="en">
-      <body className={inter.className}>
+    <html lang="en"> {/*this stuff goes on every page */}
+      <body className={quicksand.className}>
         <NavigationBar links={links} />
         {children}
       </body>
