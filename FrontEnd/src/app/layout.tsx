@@ -11,6 +11,10 @@ const links: Array<PageLink> = [
   {
     link_text: "Products",
     link_url: "products"
+  },
+  {
+    link_text: "User Profile",
+    link_url: "userprofile"
   }
 ];
 
@@ -23,11 +27,10 @@ export default function RootLayout({ children }: { children: React.ReactNode }) 
   return (
 
     <html lang="en">
-      <body className={inter.className}>
+      <body className={quicksand.className}>
         <Header />
-
-        <NavigationBar links={links} />
         <Banner /> 
+
         {children}
       </body>
     </html>
