@@ -1,0 +1,31 @@
+.banner {
+    position: relative;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    height: 300px; /* Adjust the height as needed */
+  }
+  
+  .bannerImage {
+    max-width: 100%;
+    max-height: 100%;
+  }
+  
+  .arrowContainer {
+    position: absolute;
+    top: 50%;
+    width: 100%;
+    display: flex;
+    justify-content: space-between;
+    padding: 0 20px;
+    box-sizing: border-box;
+    z-index: 2; /* Ensure arrows are above the image */
+  }
+  
+  .arrow {
+    font-size: 24px;
+    cursor: pointer;
+    color: #808080;
+  }
+  
+  
