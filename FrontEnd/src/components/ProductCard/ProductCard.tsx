@@ -1,9 +1,10 @@
 import Image from "next/image";
 import styles from "./ProductCard.module.css";
-import { Product } from "@/app/products/page";
+import { Product } from "@/app/home/products/page";
 
 export default function ProductCard(props: Product) {
-  const product_image = require("@/assets/Product Images/" + props.productName + ".webp");
+  // Assuming your images are in the public folder
+  const productImagePath = `/Product Images/${props.productName}.webp`;
 
   const US_dollar = new Intl.NumberFormat("en-US", {
     style: "currency",
@@ -12,12 +13,13 @@ export default function ProductCard(props: Product) {
 
   return (
     <div className={styles.product_card}>
+      {/* Use Image component with the direct path */}
       <Image
         className={styles.product_image}
-        src={product_image}
+        src={productImagePath}
         alt={props.productName}
-        height="175"
-        width="250"
+        height={175}
+        width={250}
       />
 
       <div className={styles.product_information}>
