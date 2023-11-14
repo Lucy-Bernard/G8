@@ -1,11 +1,91 @@
 
+@import url('https://fonts.googleapis.com/css2?family=Quicksand:wght@300;400;500;600;700&display=swap');
 
 .main {
-  height: calc(100vh - 5rem);
-  width: 100vw;
-  display: flex;
-  align-items: center;
-  justify-content: center;
-}
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    min-height: 100vh;
+    background: #fff;
+    flex-direction: column;
+    font-family: 'Quicksand', sans-serif;
+      
+
+  }
+  
+  .loginContainer {
+    text-align: left;
+    max-width: 400px;
+    width: 100%;
+    padding: 40px;
+    box-shadow: 0 8px 14px 4px rgba(0, 0, 0, 0.235); /*4px 8 px to go back to normal*/
+    border-radius: 10px;
+    background: #fff;
 
 
+  }
+  
+  .title {
+    margin-bottom: 2rem;
+    color: #333;
+    font-size: 2rem;
+  }
+  
+  .loginForm {
+    display: flex;
+    flex-direction: column;
+  }
+  
+  .formGroup {
+    margin-bottom: 1rem;
+  }
+  
+  .formGroup label {
+    display: block;
+    margin-bottom: 0.5rem;
+  }
+  
+  .formGroup input {
+    width: 100%;
+    padding: 0.8rem;
+    border: 1px solid #ccc;
+    border-radius: 5px;
+    font-family: 'Quicksand', sans-serif;
+    
+  } 
+  
+  .submitButton {
+    background-color: #827379; 
+    border: none;
+    color: white;
+    padding: 15px 32px;
+    text-align: center;
+    text-decoration: none;
+    display: inline-block;
+    font-size: 16px;
+    margin: 4px 2px;
+    cursor: pointer;
+    border-radius: 5px;
+    font-family: 'Quicksand', sans-serif;
+  }
+
+  .submitButton:active {
+    transform: scale(0.9); /* this will make the button scale down to 90% of its original size */
+    transition: transform 0.3s;
+  }
+  
+  .links {
+    margin-top: 4rem;
+    font-size: 0.9rem;
+  }
+  
+  .links a {
+    color: #76686d;
+    text-decoration: none;
+    margin: 0 5px;
+  }
+  
+  .links a:hover {
+    text-decoration: underline;
+  }
+  

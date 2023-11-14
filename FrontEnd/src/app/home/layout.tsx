@@ -1,8 +1,8 @@
 import type { Metadata } from "next"
 
 import { Quicksand } from "next/font/google"
-
-import "./globals.css"
+import NavigationBar from "@/components/NavigationBar/NavigationBar"
+import Header from "@/components/Header/Header"
 
  
 
@@ -20,7 +20,7 @@ export const metadata: Metadata = {
 
  
 
-export default function RootLayout({
+export default function HomeLayout({
 
   children,
 
@@ -31,13 +31,10 @@ export default function RootLayout({
 }) {
 
   return (
-
-    <html lang="en">
-
-      <body className={quicksand.className}>{children}</body>
-
-    </html>
-
+    <div>
+         <Header /> 
+        <NavigationBar/> {children}
+</div>
   )
 
 }
