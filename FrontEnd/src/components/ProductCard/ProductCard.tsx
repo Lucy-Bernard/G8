@@ -1,6 +1,6 @@
 import Image from "next/image";
 import styles from "./ProductCard.module.css";
-import { Product } from "@/app/products/page";
+import { Product } from "@/app/home/products/page";
 
 export default function ProductCard(props: Product) {
   // Assuming your images are in the public folder
