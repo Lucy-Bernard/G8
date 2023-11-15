@@ -32,7 +32,7 @@ const Header: React.FC = () => {
               objectFit="cover"
             />
           </div>
-        <Link href="/userprofile">
+        <Link href="/home/userprofile">
           <div className={styles.headerItem}>
             <Image
               src={profileImage}
@@ -43,7 +43,7 @@ const Header: React.FC = () => {
             />
           </div>
         </Link>
-        <Link href="/cart">
+        <Link href="/home/cart">
           <div className={styles.headerItem}>
             <Image
               src={cartImage}
