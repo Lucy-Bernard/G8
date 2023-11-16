@@ -3,6 +3,7 @@
 import React from 'react';
 import Image from 'next/image';
 import styles from './ProductCard.module.css';
+import { Product } from "@/app/home/products/page";
 
 interface ProductCardProps {
   productId: number,
