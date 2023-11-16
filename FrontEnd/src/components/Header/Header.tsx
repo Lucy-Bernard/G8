@@ -1,59 +1,63 @@
- 
 import React from 'react';
- 
 import Image from 'next/image';
-import styles from './Header.module.css';
-// ... (other imports)
+import styles from './Header.module.css'; // Ensure this file name matches your actual CSS module file
+import Link from 'next/link';
 
 const Header: React.FC = () => {
- 
- 
- const topLeftImage = require("@/assets/Header Images/G8.png")
- 
-  const topRightImage1 = require("@/assets/Header Images/Profile.png")
- 
-  const topRightImage2 = require("@/assets/Header Images/Cart.png")
+  const logoImage = require("@/assets/Header Images/G8.png");
+  const profileImage = require("@/assets/Header Images/Profile.png");
+  const cartImage = require("@/assets/Header Images/Cart.png");
+  const searchImage = require("@/assets/Header Images/search.png");
 
   return (
-    <div className={styles.container}>
-      <div className={`${styles.topLeftImage} ${styles.image}`}>
-        <Image
-          src={topLeftImage}
-          alt="Logo"
-          height={70}
-          width={70}
-          objectFit="contain" // or "contain", depending on your design
-          objectPosition="left top" // adjust as needed
-          
-        />
-      </div>
-      <div className={`${styles.topRightImages} ${styles.headImages}`}>
-        <Image
-          src={topRightImage1}
-          alt="User Profile"
-          height={40}
-          width={50}
-          objectFit="cover"
-          objectPosition="right top"
-        />
-        <Image
-          src={topRightImage2}
-          alt="Cart"
-          height={40}
-          width={40}
-          objectFit="cover"
-          objectPosition="right top"
-        />
+    <div className={styles.headerContainer}>
+      <Link href="/home">
+        <div className={`${styles.logoContainer} ${styles.headerItemImage}`}>
+          <Image
+            src={logoImage}
+            alt="Logo"
+            height={60}
+            width={60}
+            objectFit="contain"
+          />
+        </div>
+      </Link>
+      <div className={styles.headerItemsContainer}>
+          <div className={styles.headerItem}>
+            <Image
+              src={searchImage}
+              alt="Search"
+              height={30}
+              width={30}
+              objectFit="cover"
+            />
+          </div>
+        <Link href="/home/userprofile">
+          <div className={styles.headerItem}>
+            <Image
+              src={profileImage}
+              alt="User Profile"
+              height={35}
+              width={35}
+              objectFit="cover"
+            />
+          </div>
+        </Link>
+        <Link href="/home/cart">
+          <div className={styles.headerItem}>
+            <Image
+              src={cartImage}
+              alt="Cart"
+              height={35}
+              width={35}
+              objectFit="cover"
+            />
+          </div>
+        </Link>
       </div>
     </div>
+    
   );
 };
 
- 
 export default Header;
-
-
-
-
-
-

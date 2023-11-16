@@ -1,7 +1,10 @@
 "use client";
 
+import ProductCard from "@/components/ProductCard/ProductCard";
 import styles from "./page.module.css"
+import Header from "@/components/Header/Header";
 import Banner from "@/components/Banner/Banner";
+import NavigationBar from "@/components/NavigationBar/NavigationBar";
 import ProductSection from "@/components/ProductSection/ProductSection";
 import { useEffect, useState } from "react";
 
@@ -52,6 +55,9 @@ export default function Home() {
           </>
         )}
         </div>
+        <footer>
+          
+        </footer>
     </main>
   );
 }
