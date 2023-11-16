@@ -1,0 +1,33 @@
+.product_section {
+    height: 250px;
+    width: 250px;
+    border: 1px solid rgb(240, 240, 240);
+    border-radius: 10px;
+    box-shadow: 0px 0px 20px 1px rgb(240, 240, 240);
+  }
+  
+  .product_section:hover {
+    cursor: pointer;
+  }
+  
+  .product_image {
+    height: 70%;
+    width: 100%;
+    object-fit: contain;
+  }
+  
+  .product_information {
+    display: flex;
+    flex-direction: column;
+    gap: 0.5rem;
+    padding: 1rem;
+  }
+  
+  .product_name {
+    font-size: 12px;
+  }
+  
+  .unit_price {
+    font-size: 10px;
+    color: lightgrey;
+  }

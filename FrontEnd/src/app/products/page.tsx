@@ -7,8 +7,14 @@ import ProductCard from "@/components/ProductCard/ProductCard";
 // These keys MUST be in camel case
 export type Product = {
   productId: number,
+  categoryId: number,
   productName: string,
-  unitPrice: number
+  unitPrice: number,
+  manufacturer: string,
+  description: string,
+  rating: number,
+  sku: string,
+  imageLink: string
 }
 
 export default function Products() {
@@ -38,10 +44,16 @@ export default function Products() {
           {product_list.map((product) => {
             return (
               <ProductCard
-                key={product.productId}
-                productId={product.productId}
-                productName={product.productName}
-                unitPrice={product.unitPrice}
+              key={product.productId}
+              productId={product.productId}
+              categoryId={product.categoryId}
+              productName={product.productName}
+              unitPrice={product.unitPrice}
+              manufacturer={product.manufacturer}
+              description={product.description}
+              rating={product.rating}
+              sku={product.sku}
+              imageLink={product.imageLink}
               />
             );
           })}

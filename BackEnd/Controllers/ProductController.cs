@@ -36,7 +36,7 @@ namespace ExampleAPI.Controllers
                     
                     while (reader.Read())
                     {
-                        Product product = new(reader.GetInt32(0), reader.GetString(1), reader.GetDecimal(2));
+                        Product product = new(reader.GetInt32(0), reader.GetInt32(0), reader.GetString(1), reader.GetDecimal(2), reader.GetString(1), reader.GetString(1), reader.GetDecimal(2), reader.GetString(1));
                         products.Add(product);
                     }
                 }

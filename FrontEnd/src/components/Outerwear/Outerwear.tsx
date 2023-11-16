@@ -1,28 +1,25 @@
 import React from 'react';
-import ProductCard from '../ProductCard/ProductCard';
-import styles from './ProductSection.module.css';
+import ProductCard from '../ProductCard/ProductCard'; // Import your ProductCard component
+import styles from './Outerwear.module.css'; // Add your CSS styles
 
-interface Product {
-  productId: number,
-  categoryId: number,
-  productName: string,
-  unitPrice: number,
-  manufacturer: string,
-  description: string,
-  rating: number,
-  sku: string,
-  imageLink: string
+interface OuterwearProps {
+  products: Array<{
+    productId: number,
+    categoryId: number,
+    productName: string,
+    unitPrice: number,
+    manufacturer: string,
+    description: string,
+    rating: number,
+    sku: string,
+    imageLink: string
+  }>;
 }
 
-interface ProductSectionProps {
-  title: string;
-  products: Product[];
-}
-
-const ProductSection: React.FC<ProductSectionProps> = ({ title, products }) => {
+const Outerwear: React.FC<OuterwearProps> = ({ products }) => {
   return (
-    <section className={styles.productSection}>
-      <h2>{title}</h2>
+    <div className={styles.outerwearsContainer}>
+      <h2>Outerwear</h2>
       <div className={styles.productGrid}>
         {products.map((product) => (
           <ProductCard
@@ -39,8 +36,8 @@ const ProductSection: React.FC<ProductSectionProps> = ({ title, products }) => {
           />
         ))}
       </div>
-    </section>
+    </div>
   );
 };
 
-export default ProductSection;
+export default Outerwear;
