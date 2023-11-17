@@ -17,7 +17,9 @@ interface ProductCardProps {
   imageLink: string
 }
 
-const ProductCard: React.FC<ProductCardProps> = ({ productId, categoryId, productName, unitPrice, manufacturer, description, rating, sku, imageLink }) => {
+export default function ProductCard(props: Product) {
+  const product_image = require("@/assets/Product Images/" + props.productName + ".png");
+
   const US_dollar = new Intl.NumberFormat('en-US', {
     style: 'currency',
     currency: 'USD',
@@ -27,24 +29,22 @@ const ProductCard: React.FC<ProductCardProps> = ({ productId, categoryId, produc
     <div className={styles.product_card}>
       <Image
         className={styles.product_image}
-        src={imageLink} // Use the imageUrl from props
-        alt={productName}
+        src={props.imageLink} // Use the imageUrl from props
+        alt={props.productName}
         height={175}
         width={250}
       />
 
       <div className={styles.product_information}>
-        <div className={styles.product_id}>{productId}</div>
-        <div className={styles.category_id}>{categoryId}</div>
-        <div className={styles.product_name}>{productName}</div>
-        <div className={styles.unit_price}>{US_dollar.format(unitPrice)}</div>
-        <div className={styles.product_manufacturer}>{manufacturer}</div>
-        <div className={styles.product_description}>{description}</div>
-        <div className={styles.product_rating}>{rating}</div>
-        <div className={styles.product_sku}>{sku}</div>
+        <div className={styles.product_id}>{props.productId}</div>
+        <div className={styles.category_id}>{props.categoryId}</div>
+        <div className={styles.product_name}>{props.productName}</div>
+        <div className={styles.unit_price}>{US_dollar.format(props.unitPrice)}</div>
+        <div className={styles.product_manufacturer}>{props.manufacturer}</div>
+        <div className={styles.product_description}>{props.description}</div>
+        <div className={styles.product_rating}>{props.rating}</div>
+        <div className={styles.product_sku}>{props.sku}</div>
       </div>
     </div>
   );
 };
-
-export default ProductCard;

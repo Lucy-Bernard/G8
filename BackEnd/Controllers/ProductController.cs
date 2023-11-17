@@ -1,7 +1,10 @@
-using Microsoft.AspNetCore.Mvc;
+using Microsoft.Extensions.Configuration;
+using System.Collections.Generic;
 using System.Data;
 using System.Data.SqlClient;
 using ExampleAPI.Models;
+using Microsoft.AspNetCore.Mvc;
+using Newtonsoft.Json;
 
 namespace ExampleAPI.Controllers
 {
@@ -44,7 +47,7 @@ namespace ExampleAPI.Controllers
                             reader.GetString(4), 
                             reader.GetString(5), 
                             reader.GetDecimal(6), 
-                            reader.GetString(7);
+                            reader.GetString(7),
                             reader.GetString(8));
                         products.Add(product);
                     }

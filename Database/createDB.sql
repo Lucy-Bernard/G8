@@ -38,7 +38,7 @@ CREATE TABLE Product
 (
     productId INT PRIMARY KEY IDENTITY(1, 1) NOT NULL,
 	categoryId INT FOREIGN KEY REFERENCES Category (categoryId), --allowed to be null for now
-    name VARCHAR(100) NOT NULL,
+    productName VARCHAR(100) NOT NULL,
     unitPrice MONEY NOT NULL,
 	manufacturer VARCHAR(MAX) NOT NULL,--Review data type
 	description VARCHAR(MAX), --would include dimensions if we still want that; nullable for basic items?
@@ -141,7 +141,7 @@ VALUES ('Top'),
 	   ('Outterwear'),
 	   ('Shoes');
 
-INSERT INTO Product (categoryId, name, unitPrice, manufacturer, description, rating, sku, imageLink)
+INSERT INTO Product (categoryId, productName, unitPrice, manufacturer, description, rating, sku, imageLink)
 VALUES (3, 'Homme Graphic Jogger', 21.00, 'manufacturer 1', 'description 1', 4.6, '123456','https://i1.adis.ws/i/boohooamplience/bmm60817_black_xl/black-elastic-waist-multi-cargo-pocket-slim-fit-jogger?$product_page_main_magic_zoom$'),
 	   (4, 'Corduroy Patchwork Long Sleeve Shirts', 26.00, 'manufacturer 3', 'description 3', 4.5, '234234','https://images.urbndata.com/is/image/UrbanOutfitters/84174168_045_d?$redesign-zoom-5x$'),
 	   (1, 'Men''s Nike Air Max 90 Casual Shoes', 130.00, 'manufacturer 8', 'description 8', 4.8, '234245','https://www.hoooyi.com/cdn/shop/products/ia_3900002369_900x.jpg?v=1697704511'),
@@ -213,20 +213,21 @@ GO
 --   * to make viewing information easier; can create more as we see fit
 --	 * (some of these may not be needed)
 CREATE PROCEDURE GetProduct
-    AS
-    BEGIN
-        SELECT * FROM Product
-    END
+AS
+BEGIN
+    SELECT ProductId, CategoryId, ProductName, UnitPrice, Manufacturer, Description, Rating, SKU
+    FROM Product;
+END
 GO
 
 --Gets the Product details along with Category it's associated with
 CREATE PROCEDURE GetProductsWithCategory
-	AS
-	BEGIN
-		SELECT p.*, c.name AS categoryName
-		FROM Product p
-		INNER JOIN Category c ON p.categoryId = c.categoryId;
-	END
+AS
+BEGIN
+    SELECT p.ProductId, p.ProductName, p.UnitPrice, p.Manufacturer, p.Description, p.Rating, p.SKU, c.name AS categoryName
+    FROM Product p
+    INNER JOIN Category c ON p.categoryId = c.categoryId;
+END
 GO
 
 
@@ -305,7 +306,7 @@ GO
 CREATE PROCEDURE GetOrderItem @orderId INT
 	AS
 	BEGIN
-		SELECT oi.orderItemId, p.name AS productName, ci.quantity
+		SELECT oi.orderItemId, p.productName AS productName, ci.quantity
 		FROM OrderItem oi
 		INNER JOIN CartItem ci ON oi.cartItemId = ci.cartItemId
 		INNER JOIN Product p ON ci.productId = p.productId
@@ -317,7 +318,7 @@ Go
 CREATE PROCEDURE GetUserCart @userId INT
 	AS
 	BEGIN
-		SELECT ci.cartItemId, p.name AS productName, ci.quantity, ci.size, ci.color
+		SELECT ci.cartItemId, p.productName AS productName, ci.quantity, ci.size, ci.color
 		FROM CartItem ci
 		INNER JOIN Product p ON ci.productId = p.productId
 		WHERE ci.cartId = (SELECT cartId FROM Cart WHERE userId = @userId);
