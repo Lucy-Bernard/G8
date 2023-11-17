@@ -10,18 +10,19 @@ namespace ExampleAPI.Models
         public string Description { get; set; }
         public decimal Rating { get; set; }
         public string SKU { get; set; }
+        public string ImageLink { get; set; }
 
-
-        public Product(int ProductId, int CategoryId, string ProductName, decimal UnitPrice, string Manufacturer, string Description, decimal Rating, string SKU)
+        public Product(int productId, int categoryId, string productName, decimal unitPrice, string manufacturer, string description, decimal rating, string sku, string imageLink)
         {   
-            this.ProductId = ProductId;
-            this.CategoryId = CategoryId;
-            this.ProductName = ProductName;
-            this.UnitPrice = UnitPrice;
-            this.Manufacturer = Manufacturer;
-            this.Description = Description;
-            this.Rating = Rating;
-            this.SKU = SKU;
+            ProductId = productId;
+            CategoryId = categoryId;
+            ProductName = productName;
+            UnitPrice = unitPrice;
+            Manufacturer = manufacturer;
+            Description = description;
+            Rating = rating;
+            SKU = sku;
+            ImageLink = imageLink;
         }
     }
 }

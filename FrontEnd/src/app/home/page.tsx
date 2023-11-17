@@ -22,8 +22,7 @@ export type Product = {
 
 export default function Home() {
   const [isLoading, setIsLoading] = useState(true);
-  const [productList, setProductList] = useState<Product[]>([]);
-  const [productsData, setProductsData] = useState([]);
+  const [productsData, setProductsData] = useState<Product[]>([]);
   // const [bottomsData, setBottomsData] = useState([]);
   // const [outerwearData, setOuterwearData] = useState([]);
   // const [shoesData, setShoesData] = useState([]);
@@ -52,8 +51,8 @@ export default function Home() {
           <p>{error}</p>
         ) : (
           <>
-            <ProductSection title="Tops" products={productsData} />
-          </>
+          <ProductSection title="Products" products={productsData} />
+        </>
         )}
         </div>
         <footer>

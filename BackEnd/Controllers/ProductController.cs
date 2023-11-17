@@ -25,7 +25,7 @@ namespace ExampleAPI.Controllers
             {
                 using (SqlConnection connection = new(configuration.GetConnectionString("local_database")))
                 {
-                    SqlCommand command = new ("GetProducts", connection)
+                    SqlCommand command = new ("GetProduct", connection)
                     {
                         CommandType = CommandType.StoredProcedure
                     };
@@ -36,7 +36,16 @@ namespace ExampleAPI.Controllers
                     
                     while (reader.Read())
                     {
-                        Product product = new(reader.GetInt32(0), reader.GetInt32(0), reader.GetString(1), reader.GetDecimal(2), reader.GetString(1), reader.GetString(1), reader.GetDecimal(2), reader.GetString(1));
+                        Product product = new Product(
+                            reader.GetInt32(0), 
+                            reader.GetInt32(1), 
+                            reader.GetString(2), 
+                            reader.GetDecimal(3), 
+                            reader.GetString(4), 
+                            reader.GetString(5), 
+                            reader.GetDecimal(6), 
+                            reader.GetString(7);
+                            reader.GetString(8));
                         products.Add(product);
                     }
                 }

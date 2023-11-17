@@ -34,9 +34,14 @@ const ProductCard: React.FC<ProductCardProps> = ({ productId, categoryId, produc
       />
 
       <div className={styles.product_information}>
+        <div className={styles.product_id}>{productId}</div>
+        <div className={styles.category_id}>{categoryId}</div>
         <div className={styles.product_name}>{productName}</div>
-  
         <div className={styles.unit_price}>{US_dollar.format(unitPrice)}</div>
+        <div className={styles.product_manufacturer}>{manufacturer}</div>
+        <div className={styles.product_description}>{description}</div>
+        <div className={styles.product_rating}>{rating}</div>
+        <div className={styles.product_sku}>{sku}</div>
       </div>
     </div>
   );
