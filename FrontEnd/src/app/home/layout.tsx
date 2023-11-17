@@ -12,7 +12,7 @@ const quicksand = Quicksand({ subsets: ["latin"] })
 
 export const metadata: Metadata = {
 
-  title: "Clean AF",
+  title: "G8",
 
   description: "",
 

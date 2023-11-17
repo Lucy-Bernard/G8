@@ -1,4 +1,6 @@
 .product_card {
+    display:inline-flex;
+    flex-direction:column;
     height: 250px;
     width: 250px;
     border: 1px solid rgb(240, 240, 240);
@@ -12,7 +14,7 @@
   
   .product_image {
     height: 70%;
-    width: 100%;
+    max-width: 100%;
     object-fit: contain;
   }
   

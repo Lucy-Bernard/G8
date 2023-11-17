@@ -1,22 +1,68 @@
-import ProductCard from "@/components/ProductCard/ProductCard";
+"use client";
+
 import styles from "./page.module.css"
-import Header from "@/components/Header/Header";
 import Banner from "@/components/Banner/Banner";
 import NavigationBar from "@/components/NavigationBar/NavigationBar";
 import ProductSection from "@/components/ProductSection/ProductSection";
+import { useEffect, useState } from "react";
+
+export type Product = {
+  productId: number,
+  categoryId: number,
+  productName: string,
+  unitPrice: number,
+  manufacturer: string,
+  description: string,
+  rating: number,
+  sku: string,
+  imageLink: string
+}
 
 export default function Home() {
-  return (
+  const [isLoading, setIsLoading] = useState(true);
+  const [productsData, setProductsData] = useState<Product[]>([]);
+  // const [bottomsData, setBottomsData] = useState([]);
+  // const [outerwearData, setOuterwearData] = useState([]);
+  // const [shoesData, setShoesData] = useState([]);
+  const [error, setError] = useState<string | null>(null);
 
+  useEffect(() => {
+    var myHeaders = new Headers();
+    myHeaders.append("Content-Type", "application/json");
+
+    fetch("http://localhost:5165/api/product", {
+      method: 'GET',
+      headers: myHeaders,
+      redirect: 'follow'
+    })
+      .then(response => response.json())
+      .then(result => setProductsData(result))
+      .catch(error => setError(error.message))
+      .finally(() => setIsLoading(false));
+  },[]);
+
+  return (
     <main>
-      <NavigationBar />
-      <Banner />
-      <div className={styles.main}>
-        <h1>Home</h1>
-        <ProductSection title={""} products={[]}/>
-      </div>
-      <footer>
-      </footer>
+        <NavigationBar />
+        <Banner />
+        <div className={styles.main}>
+          <h1>Home</h1>
+          {isLoading ? (
+          <p>Loading...</p>
+        ) : error ? (
+          <p>{error}</p>
+        ) : (
+          <>
+          <ProductSection title="Tops" products={productsData} />
+          <ProductSection title="Bottoms" products={productsData} />
+          <ProductSection title="Outerwear" products={productsData} />
+          <ProductSection title="Shoes" products={productsData} />
+        </>
+        )}
+        </div>
+        <footer className={styles.footer}>
+          <div>&copy; 2023 G8. All rights reserved.</div>
+        </footer>
     </main>
-  )
+  );
 }

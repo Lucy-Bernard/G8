@@ -1,14 +1,35 @@
-
 @import url('https://fonts.googleapis.com/css2?family=Quicksand:wght@300;400;500;600;700&display=swap');
 
 .main {
   height: calc(100vh - 5rem);
   width: 100vw;
   display: flex;
+  flex-direction: column;
   align-items: center;
   justify-content: center;
+  padding: 20px;
+  margin: 0 auto;
+  background-color: #d1b8a3;
 }
 
 .padding {
   padding-top: 4.5rem;
 }
+
+.product-section {
+  margin-top: 20px;
+  display:inline;
+}
+
+.product-section h2 {
+  font-size: 24px;
+  margin-bottom: 3rem;
+}
+
+.footer {
+  text-align: center;
+  padding: 10px;
+  background-color: #f0f0f0;
+  position: relative;
+}
+
