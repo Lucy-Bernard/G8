@@ -33,7 +33,7 @@ export default function HomeLayout({
   return (
     <div>
          <Header /> 
-         <NavigationBar />
+         {/* <NavigationBar /> */}
         {children}
 </div>
   )
