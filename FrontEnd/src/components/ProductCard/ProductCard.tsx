@@ -18,8 +18,7 @@ interface ProductCardProps {
 }
 
 export default function ProductCard(props: Product) {
-  const product_image = require("@/assets/Product Images/" + props.productName + ".png");
-
+  
   const US_dollar = new Intl.NumberFormat('en-US', {
     style: 'currency',
     currency: 'USD',
