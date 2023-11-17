@@ -31,8 +31,8 @@ namespace ExampleAPI.Controllers
             {
                 CommandType = CommandType.StoredProcedure
             };
-            // adds parameters to the SQL command , parameters (loginUser objects) are set to the username 
-            //and pw that the user provides via input
+            // parses out the json formatted email and pw that the user provided and seperates them into
+            // two seperate parameters for the stored procedure that takes in @Email and @Password
             command.Parameters.Add(new SqlParameter("@Email", loginUser.Email));
             command.Parameters.Add(new SqlParameter("@Password_", loginUser.Password_)); 
 

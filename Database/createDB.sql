@@ -347,7 +347,7 @@ CREATE PROCEDURE AuthenticateUser @Email VARCHAR(255), @Password_ VARCHAR(255)
 	END
 Go
 
--- select * from [User];
+select * from [User];
 
 -- Use this to check whether a stored procedure is working
 -- EXECUTE AuthenticateUser "johndoe217@email.com", "P@ssw0rd143";
