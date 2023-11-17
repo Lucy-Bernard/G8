@@ -23,7 +23,7 @@ export type Product = {
 export default function Home() {
   const [isLoading, setIsLoading] = useState(true);
   const [productList, setProductList] = useState<Product[]>([]);
-  const [topsData, setTopsData] = useState([]);
+  const [productsData, setProductsData] = useState([]);
   // const [bottomsData, setBottomsData] = useState([]);
   // const [outerwearData, setOuterwearData] = useState([]);
   // const [shoesData, setShoesData] = useState([]);
@@ -35,13 +35,14 @@ export default function Home() {
       redirect: "follow"
     })
       .then(response => response.json())
-      .then(result => setTopsData(result))
+      .then(result => setProductsData(result))
       .catch(error => console.log("Error:", error))
       .finally(() => setIsLoading(false));
   },[]);
 
   return (
     <main>
+        <NavigationBar />
         <Banner />
         <div className={styles.main}>
           <h1>Home</h1>
@@ -51,7 +52,7 @@ export default function Home() {
           <p>{error}</p>
         ) : (
           <>
-            <ProductSection title="Tops" products={topsData} />
+            <ProductSection title="Tops" products={productsData} />
           </>
         )}
         </div>
