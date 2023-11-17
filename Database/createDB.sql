@@ -1,3 +1,4 @@
+
 use OnlineStore;
 
 DROP TABLE IF EXISTS Sale;
@@ -36,14 +37,15 @@ CREATE TABLE Category
 CREATE TABLE Product
 (
     productId INT PRIMARY KEY IDENTITY(1, 1) NOT NULL,
-	categoryId INT FOREIGN KEY REFERENCES Categories (categoryId), --allowed to be null for now
-    name VARCHAR(100) NOT NULL,
+	categoryId INT FOREIGN KEY REFERENCES Category (categoryId), --allowed to be null for now
+    productName VARCHAR(100) NOT NULL,
     unitPrice MONEY NOT NULL,
 	manufacturer VARCHAR(MAX) NOT NULL,--Review data type
 	description VARCHAR(MAX), --would include dimensions if we still want that; nullable for basic items?
 	--  can display size and color on front end and only update this field in ItemsInCart when a user selects one option
 	rating DECIMAL(2,1), --allow nullable to distinguish between a product with a 0 rating a product that has no reviews yet
-	sku VARCHAR(15) NOT NULL
+	sku VARCHAR(15) NOT NULL,
+    imageLink VARCHAR(MAX) NOT NULL
 );
 
 -- CREATE TABLE Images
@@ -60,13 +62,13 @@ CREATE TABLE [Address]
 	city VARCHAR(50) NOT NULL,
 	state VARCHAR(50) NOT NULL,
 	zip VARCHAR(15) NOT NULL,
-	country VARCHAR(50) NOT NULL,
+	country VARCHAR(50) NOT NULL
 );
 
 CREATE TABLE Payment
 (
 	paymentId INT PRIMARY KEY IDENTITY(1, 1) NOT NULL,
-	billingAddressId INT FOREIGN KEY REFERENCES Addresses (addressId) NOT NULL, -- if it DNE, create an address
+	billingAddressId INT FOREIGN KEY REFERENCES [Address] (addressId) NOT NULL, -- if it DNE, create an address
 	cardNumber VARCHAR(16) NOT NULL,
 	nameOnCard VARCHAR(50) NOT NULL,
 	expirationMonth VARCHAR(2) NOT NULL,
@@ -78,7 +80,7 @@ CREATE TABLE Payment
 CREATE TABLE [User]
 ( 
 	UserId INT PRIMARY KEY IDENTITY(1, 1) NOT NULL,
-	AddressId INT FOREIGN KEY REFERENCES Addresses (addressId) NOT NULL,
+	AddressId INT FOREIGN KEY REFERENCES [Address] (addressId) NOT NULL,
 	FirstName VARCHAR(100) NOT NULL,
 	LastName VARCHAR(100) NOT NULL,
 	Email VARCHAR(255) UNIQUE NOT NULL,
@@ -88,17 +90,17 @@ CREATE TABLE [User]
 CREATE TABLE Cart
 (
 	cartId INT PRIMARY KEY IDENTITY(1, 1) NOT NULL,
-	userId INT FOREIGN KEY REFERENCES [User] (userId) NOT NULL,
+	userId INT FOREIGN KEY REFERENCES [User] (userId) NOT NULL
 );
 
 CREATE TABLE CartItem
 (
 	cartItemId INT PRIMARY KEY IDENTITY(1, 1) NOT NULL,
-	productId INT FOREIGN KEY REFERENCES Products (productId) NOT NULL, 
-	cartId INT FOREIGN KEY REFERENCES Carts (cartId) NOT NULL,
+	productId INT FOREIGN KEY REFERENCES Product (productId) NOT NULL, 
+	cartId INT FOREIGN KEY REFERENCES Cart (cartId) NOT NULL,
 	quantity INT NOT NULL,
 	size VARCHAR(20), --to allow for shoe sizes, pant sizes as ints, or letters like XS, S, XXL, etc. nullable if we sell accessories
-	color VARCHAR(100) NOT NULL,
+	color VARCHAR(100) NOT NULL
 );
 
 --updpate what fields we need for this table
@@ -106,8 +108,8 @@ CREATE TABLE [Order]
 (
     orderId INT PRIMARY KEY IDENTITY(1, 1) NOT NULL,
     userId INT FOREIGN KEY REFERENCES [User] (userId) NOT NULL,
-	paymentId INT FOREIGN KEY REFERENCES Payments (paymentId) NOT NULL,
-	shippingAddressId INT FOREIGN KEY REFERENCES Addresses (addressId) NOT NULL,
+	paymentId INT FOREIGN KEY REFERENCES Payment (paymentId) NOT NULL,
+	shippingAddressId INT FOREIGN KEY REFERENCES [Address] (addressId) NOT NULL,
 	orderNumber VARCHAR(20) UNIQUE NOT NULL,
 	orderDate DATE NOT NULL
 );
@@ -116,8 +118,8 @@ CREATE TABLE [Order]
 CREATE TABLE OrderItem
 (
     orderItemId INT PRIMARY KEY IDENTITY(1, 1) NOT NULL,
-    orderId INT FOREIGN KEY REFERENCES Orders (orderId) NOT NULL,
-    cartItemId INT FOREIGN KEY REFERENCES CartItems (cartItemId) NOT NULL,
+    orderId INT FOREIGN KEY REFERENCES [Order] (orderId) NOT NULL,
+    cartItemId INT FOREIGN KEY REFERENCES CartItem (cartItemId) NOT NULL,
 );
 
 CREATE TABLE Sale
@@ -139,7 +141,7 @@ VALUES ('Top'),
 	   ('Outterwear'),
 	   ('Shoes');
 
-INSERT INTO Product (categoryId, name, unitPrice, manufacturer, description, rating, sku, imageLink)
+INSERT INTO Product (categoryId, productName, unitPrice, manufacturer, description, rating, sku, imageLink)
 VALUES (3, 'Homme Graphic Jogger', 21.00, 'manufacturer 1', 'description 1', 4.6, '123456','https://i1.adis.ws/i/boohooamplience/bmm60817_black_xl/black-elastic-waist-multi-cargo-pocket-slim-fit-jogger?$product_page_main_magic_zoom$'),
 	   (4, 'Corduroy Patchwork Long Sleeve Shirts', 26.00, 'manufacturer 3', 'description 3', 4.5, '234234','https://images.urbndata.com/is/image/UrbanOutfitters/84174168_045_d?$redesign-zoom-5x$'),
 	   (1, 'Men''s Nike Air Max 90 Casual Shoes', 130.00, 'manufacturer 8', 'description 8', 4.8, '234245','https://www.hoooyi.com/cdn/shop/products/ia_3900002369_900x.jpg?v=1697704511'),
@@ -166,7 +168,7 @@ VALUES (1, '4485794962663379', 'John Doe', '12', '2025', '222'),
 	   (9, '3724138446734898', 'Nya Cham', '10', '2027', '4511'),
 	   (10, '5327781364121257', 'Harrison Steele', '02', '2024', '618');
 
-INSERT INTO [User] (addressId, firstName, lastName, email, password_)
+INSERT INTO [User] (AddressId, FirstName, LastName, Email, Password_)
 VALUES (1, 'John', 'Doe', 'johndoe217@email.com', 'P@ssw0rd143'),
 	   (2, 'Jane', 'Doe', 'doughjane143@email.com', 'j4n3!D0ugH'),
        (3, 'Anthony', 'Rodriguez', 'ant_rodriguez@email.com', 'yullN3vIrg_ue55'),
@@ -174,7 +176,7 @@ VALUES (1, 'John', 'Doe', 'johndoe217@email.com', 'P@ssw0rd143'),
        (5, 'Lexis', 'Maly', 'lmalyyy@email.com', 'an0th4%juAn'),
 	   (6, 'Charlie', 'Zeta','charlieee@email.com', 'an0th4%on3');
 
-INSERT INTO Cart (userId)
+INSERT INTO Cart (UserId)
 VALUES (1),
 	   (2),
 	   (3),
@@ -183,21 +185,12 @@ VALUES (1),
 	   (6);
 
 INSERT INTO CartItem (cartId, productId, quantity, size, color)
-VALUES (1, 2, 1, '6', 'Grey'),
-	   (1, 8, 1, '11.5','White/Anthracite/Pure Platinum/Spring Green'),
-	   (1, 8, 1, '11.5', 'Photon Dust/Photon Dust/Light Iron Ore/Sail'),
-	   (1, 7, 1, '8', 'Black'),
-	   (3, 6, 1, 'M', 'Olive'),
-	   (3, 6, 1, 'M', 'Coral'),
+VALUES (1, 2, 1, '6', 'Grey'),	   
 	   (3, 1, 1, 'L', 'Grey' ),
-	   (3, 9, 1, '7', 'Gold'),
 	   (3, 4, 1, 'M', 'Black'),
-	   (3, 13, 2, NULL, 'Green/Purple'),
-	   (5, 10, 2, 'XL', 'Black'),
-	   (6, 11, 1, 'S', 'Red'),
 	   (6, 3, 1, 'L', 'Navy/Brown');
 
-INSERT INTO [Order] (userId, paymentId, shippingAddressId, orderNumber, orderDate)
+INSERT INTO [Order] (UserId, paymentId, shippingAddressId, orderNumber, orderDate)
 VALUES (1, 1, 7, 'ORD724806','2023-09-10'),
 	   (3, 2, 3, 'ORD806664','2023-06-22'),
 	   (5, 3, 5, 'ORD115687', '2023-11-11');
@@ -206,15 +199,8 @@ INSERT INTO OrderItem (orderId, cartItemId)
 VALUES (1, 1),
 	   (1, 2),
 	   (1, 3),
-	   (1, 4),
-	   (2, 5),
-	   (2, 6),
-	   (2, 7),
-	   (2, 8),
-	   (2, 9),
-	   (2, 10),
-	   (3, 11); 
-
+	   (1, 4);
+    
 INSERT INTO Sale (startDate, endDate, promoCode, saleName)
 VALUES ('2023-11-27', '2023-11-28', 'cyber23', 'Cyber Monday'),
 	   ('2023-12-18', '2023-12-24', 'jolly30', 'Holiday Sale'),
@@ -227,20 +213,21 @@ GO
 --   * to make viewing information easier; can create more as we see fit
 --	 * (some of these may not be needed)
 CREATE PROCEDURE GetProduct
-    AS
-    BEGIN
-        SELECT * FROM Product
-    END
+AS
+BEGIN
+    SELECT ProductId, CategoryId, ProductName, UnitPrice, Manufacturer, Description, Rating, SKU
+    FROM Product;
+END
 GO
 
 --Gets the Product details along with Category it's associated with
 CREATE PROCEDURE GetProductsWithCategory
-	AS
-	BEGIN
-		SELECT p.*, c.name AS categoryName
-		FROM Product p
-		INNER JOIN Category c ON p.categoryId = c.categoryId;
-	END
+AS
+BEGIN
+    SELECT p.ProductId, p.ProductName, p.UnitPrice, p.Manufacturer, p.Description, p.Rating, p.SKU, c.name AS categoryName
+    FROM Product p
+    INNER JOIN Category c ON p.categoryId = c.categoryId;
+END
 GO
 
 
@@ -319,7 +306,7 @@ GO
 CREATE PROCEDURE GetOrderItem @orderId INT
 	AS
 	BEGIN
-		SELECT oi.orderItemId, p.name AS productName, ci.quantity
+		SELECT oi.orderItemId, p.productName AS productName, ci.quantity
 		FROM OrderItem oi
 		INNER JOIN CartItem ci ON oi.cartItemId = ci.cartItemId
 		INNER JOIN Product p ON ci.productId = p.productId
@@ -331,7 +318,7 @@ Go
 CREATE PROCEDURE GetUserCart @userId INT
 	AS
 	BEGIN
-		SELECT ci.cartItemId, p.name AS productName, ci.quantity, ci.size, ci.color
+		SELECT ci.cartItemId, p.productName AS productName, ci.quantity, ci.size, ci.color
 		FROM CartItem ci
 		INNER JOIN Product p ON ci.productId = p.productId
 		WHERE ci.cartId = (SELECT cartId FROM Cart WHERE userId = @userId);
@@ -359,7 +346,7 @@ CREATE PROCEDURE AuthenticateUser @Email VARCHAR(255), @Password_ VARCHAR(255)
 	END
 Go
 
-select * from [User];
+-- select * from [User];
 
 -- Use this to check whether a stored procedure is working
 -- EXECUTE AuthenticateUser "johndoe217@email.com", "P@ssw0rd143";
