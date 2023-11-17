@@ -28,14 +28,13 @@ export default function ProductCard(props: SingleProduct) {
       />
 
       <div className={styles.product_information}>
-        <div className={styles.product_id}>{props.productId}</div>
-        <div className={styles.category_id}>{props.categoryId}</div>
+        {/* <div className={styles.category_id}>{props.categoryId}</div> */}
         <div className={styles.product_name}>{props.productName}</div>
         <div className={styles.unit_price}>{US_dollar.format(props.unitPrice)}</div>
-        <div className={styles.product_manufacturer}>{props.manufacturer}</div>
+        {/* <div className={styles.product_manufacturer}>{props.manufacturer}</div>
         <div className={styles.product_description}>{props.description}</div>
         <div className={styles.product_rating}>{props.rating}</div>
-        <div className={styles.product_sku}>{props.sku}</div>
+        <div className={styles.product_sku}>{props.sku}</div> */}
       </div>
     </div>
   );

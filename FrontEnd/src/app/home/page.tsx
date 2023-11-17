@@ -60,9 +60,6 @@ export default function Home() {
         </>
         )}
         </div>
-        <footer className={styles.footer}>
-          <div>&copy; 2023 G8. All rights reserved.</div>
-        </footer>
     </main>
   );
 }
