@@ -1,4 +1,5 @@
 
+
 use OnlineStore;
 
 DROP TABLE IF EXISTS Sale;
