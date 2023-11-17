@@ -4,13 +4,8 @@ import styles from './ProductSection.module.css';
 
 export type SingleProduct ={
   productId: number,
-  categoryId: number,
   productName: string,
   unitPrice: number,
-  manufacturer: string,
-  description: string,
-  rating: number,
-  sku: string,
   imageLink: string
 }
 
@@ -28,13 +23,8 @@ const ProductSection: React.FC<ProductSectionProps> = ({ title, products }) => {
           <ProductCard
             key={product.productId}
             productId={product.productId}
-            categoryId={product.categoryId}
             productName={product.productName}
             unitPrice={product.unitPrice}
-            manufacturer={product.manufacturer}
-            description={product.description}
-            rating={product.rating}
-            sku={product.sku}
             imageLink={product.imageLink}
           />
         ))}

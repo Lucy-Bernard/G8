@@ -12,14 +12,24 @@
   background-color: #d1b8a3;
 }
 
-.topsContainer,
-.bottomsContainer,
-.outerwearContainer,
-.shoesContainer {
-  margin-top: 20px;
-}
-
 .padding {
   padding-top: 4.5rem;
+}
+
+.product-section {
+  margin-top: 20px;
+  display:inline;
+}
+
+.product-section h2 {
+  font-size: 24px;
+  margin-bottom: 3rem;
+}
+
+.footer {
+  text-align: center;
+  padding: 10px;
+  background-color: #f0f0f0;
+  position: relative;
 }
 

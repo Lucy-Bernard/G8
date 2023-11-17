@@ -53,12 +53,15 @@ export default function Home() {
           <p>{error}</p>
         ) : (
           <>
-          <ProductSection title="Products" products={productsData} />
+          <ProductSection title="Tops" products={productsData} />
+          <ProductSection title="Bottoms" products={productsData} />
+          <ProductSection title="Outerwear" products={productsData} />
+          <ProductSection title="Shoes" products={productsData} />
         </>
         )}
         </div>
-        <footer>
-          
+        <footer className={styles.footer}>
+          <div>&copy; 2023 G8. All rights reserved.</div>
         </footer>
     </main>
   );
