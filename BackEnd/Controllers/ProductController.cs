@@ -36,7 +36,7 @@ namespace ExampleAPI.Controllers
                     connection.Open();
 
                     using SqlDataReader reader = command.ExecuteReader();
-                    
+
                     while (reader.Read())
                     {
                         Product product = new Product(

@@ -3,22 +3,15 @@
 import React from 'react';
 import Image from 'next/image';
 import styles from './ProductCard.module.css';
-import { Product } from "@/app/home/products/page";
+import {SingleProduct} from "../ProductSection/ProductSection";
 
-interface ProductCardProps {
-  productId: number,
-  categoryId: number,
-  productName: string,
-  unitPrice: number,
-  manufacturer: string,
-  description: string,
-  rating: number,
-  sku: string,
-  imageLink: string
+type ProductCardProps={
+  product:SingleProduct
 }
 
-export default function ProductCard(props: Product) {
-  
+export default function ProductCard(props: SingleProduct) {
+  const product_image = require("@/assets/Product Images/" + props.imageLink);
+
   const US_dollar = new Intl.NumberFormat('en-US', {
     style: 'currency',
     currency: 'USD',
@@ -28,7 +21,7 @@ export default function ProductCard(props: Product) {
     <div className={styles.product_card}>
       <Image
         className={styles.product_image}
-        src={props.imageLink} // Use the imageUrl from props
+        src={product_image} // Use the imageUrl from props
         alt={props.productName}
         height={175}
         width={250}

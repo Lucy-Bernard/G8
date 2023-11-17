@@ -2,7 +2,7 @@ import React from 'react';
 import ProductCard from '../ProductCard/ProductCard';
 import styles from './ProductSection.module.css';
 
-interface Product {
+export type SingleProduct ={
   productId: number,
   categoryId: number,
   productName: string,
@@ -16,7 +16,7 @@ interface Product {
 
 interface ProductSectionProps {
   title: string;
-  products: Product[];
+  products: SingleProduct[];
 }
 
 const ProductSection: React.FC<ProductSectionProps> = ({ title, products }) => {

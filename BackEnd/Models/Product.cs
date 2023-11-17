@@ -14,15 +14,15 @@ namespace ExampleAPI.Models
 
         public Product(int productId, int categoryId, string productName, decimal unitPrice, string manufacturer, string description, decimal rating, string sku, string imageLink)
         {   
-            ProductId = productId;
-            CategoryId = categoryId;
-            ProductName = productName;
-            UnitPrice = unitPrice;
-            Manufacturer = manufacturer;
-            Description = description;
-            Rating = rating;
-            SKU = sku;
-            ImageLink = imageLink;
+            this.ProductId = productId;
+            this.CategoryId = categoryId;
+            this.ProductName = productName;
+            this.UnitPrice = unitPrice;
+            this.Manufacturer = manufacturer;
+            this.Description = description;
+            this.Rating = rating;
+            this.SKU = sku;
+            this.ImageLink = imageLink;
         }
     }
 }
