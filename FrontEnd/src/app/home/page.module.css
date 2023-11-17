@@ -1,7 +1,6 @@
 @import url('https://fonts.googleapis.com/css2?family=Quicksand:wght@300;400;500;600;700&display=swap');
 
 .main {
-  height: calc(100vh - 5rem);
   width: 100vw;
   display: flex;
   flex-direction: column;
@@ -27,9 +26,11 @@
 }
 
 .footer {
-  text-align: center;
-  padding: 10px;
-  background-color: #f0f0f0;
-  position: relative;
+  text-align: right;
+  font-size: small;
+  padding: 5px;
+  background-color: #d1b8a3;
+  position:sticky;
+  bottom: 0;
 }
 
