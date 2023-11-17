@@ -1,8 +1,6 @@
 "use client";
 
-import ProductCard from "@/components/ProductCard/ProductCard";
 import styles from "./page.module.css"
-import Header from "@/components/Header/Header";
 import Banner from "@/components/Banner/Banner";
 import NavigationBar from "@/components/NavigationBar/NavigationBar";
 import ProductSection from "@/components/ProductSection/ProductSection";
@@ -29,9 +27,13 @@ export default function Home() {
   const [error, setError] = useState<string | null>(null);
 
   useEffect(() => {
+    var myHeaders = new Headers();
+    myHeaders.append("Content-Type", "application/json");
+
     fetch("http://localhost:5165/api/product", {
-      method: "GET",
-      redirect: "follow"
+      method: 'GET',
+      headers: myHeaders,
+      redirect: 'follow'
     })
       .then(response => response.json())
       .then(result => setProductsData(result))
