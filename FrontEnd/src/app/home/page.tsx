@@ -35,7 +35,7 @@ export default function Home() {
     })
       .then(response => response.json())
       .then(result => setProductsData(result))
-      .catch(error => console.log("Error:", error))
+      .catch(error => setError(error.message))
       .finally(() => setIsLoading(false));
   },[]);
 
