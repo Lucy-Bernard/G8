@@ -1,5 +1,3 @@
-
-
 use OnlineStore;
 
 DROP TABLE IF EXISTS Sale;
@@ -139,15 +137,14 @@ CREATE TABLE Sale
 INSERT INTO Category (name)
 VALUES ('Top'),
 	   ('Bottom'),
-	   ('Outterwear'),
+	   ('Outerwear'),
 	   ('Shoes');
 
 INSERT INTO Product (categoryId, productName, unitPrice, manufacturer, description, rating, sku, imageLink)
-VALUES (3, 'Homme Graphic Jogger', 21.00, 'manufacturer 1', 'description 1', 4.6, '123456','https://i1.adis.ws/i/boohooamplience/bmm60817_black_xl/black-elastic-waist-multi-cargo-pocket-slim-fit-jogger?$product_page_main_magic_zoom$'),
-	   (4, 'Corduroy Patchwork Long Sleeve Shirts', 26.00, 'manufacturer 3', 'description 3', 4.5, '234234','https://images.urbndata.com/is/image/UrbanOutfitters/84174168_045_d?$redesign-zoom-5x$'),
-	   (1, 'Men''s Nike Air Max 90 Casual Shoes', 130.00, 'manufacturer 8', 'description 8', 4.8, '234245','https://www.hoooyi.com/cdn/shop/products/ia_3900002369_900x.jpg?v=1697704511'),
-	   (2, 'Gold Strapped Point Toe Heels', 48.00, 'manufacturer 9', 'description 9', 4.5, '234225','https://m.media-amazon.com/images/I/81VAeMiKP5L._AC_SY679_.jpg');
-
+VALUES (2, 'Homme Graphic Jogger', 21.00, 'manufacturer 1', 'description 1', 4.6, '123456','Homme Graphic Jogger.jpeg'),
+	   (1, 'Corduroy Patchwork Long Sleeve Shirts', 26.00, 'manufacturer 3', 'description 3', 4.5, '234234','Corduroy Patchwork Long Sleeve Shirts.webp'),
+	   (4, 'Men''s Nike Air Max 90 Casual Shoes', 130.00, 'manufacturer 8', 'description 8', 4.8, '234245','Mens Nike Air Max 90 Casual Shoes.jpeg'),
+	   (3, 'Women''s Grey Full Zip Jacket', 60.00, 'manufacturer 9', 'description 9', 4.5, '234225','Womens Grey Full Zip Jacket.jpg');
 
 INSERT INTO [Address] (street, city, state, zip, country)
 VALUES ('11 Mallard Park', 'Sacramento', 'California', 94245, 'United States'),
@@ -216,9 +213,12 @@ GO
 CREATE PROCEDURE GetProduct
 AS
 BEGIN
-    SELECT ProductId, CategoryId, ProductName, UnitPrice, Manufacturer, Description, Rating, SKU
+    SELECT ProductId, CategoryId, ProductName, UnitPrice, Manufacturer, Description, Rating, SKU, imageLink
     FROM Product;
 END
+GO
+
+EXECUTE GetProduct;
 GO
 
 --Gets the Product details along with Category it's associated with
