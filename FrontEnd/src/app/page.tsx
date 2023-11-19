@@ -31,6 +31,7 @@ const handleSubmit = async (event: { preventDefault: () => void; }) => {
   setError(''); // informs users of any potential errors
 
   // sets up HTTP headers and indicates that the payload is json
+  //  the header stuff is saying "HEY this is json"
   var myHeaders = new Headers();
   myHeaders.append("Content-Type", "application/json");
   // converts user input into a json string and stores it into raw, preparing it for transmission in the HTTP req
