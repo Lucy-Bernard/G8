@@ -2,6 +2,7 @@ import React from 'react';
 import Image from 'next/image';
 import styles from './Header.module.css'; // Ensure this file name matches your actual CSS module file
 import Link from 'next/link';
+import SearchButtonThatSlides from '../Search/Search';
 
 const Header: React.FC = () => {
   const logoImage = require("@/assets/Header Images/G8.png");
@@ -24,13 +25,7 @@ const Header: React.FC = () => {
       </Link>
       <div className={styles.headerItemsContainer}>
           <div className={styles.headerItem}>
-            <Image
-              src={searchImage}
-              alt="Search"
-              height={30}
-              width={30}
-              objectFit="cover"
-            />
+          <SearchButtonThatSlides />
           </div>
         <Link href="/home/userprofile">
           <div className={styles.headerItem}>
