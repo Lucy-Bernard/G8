@@ -1,22 +1,23 @@
 "use client";
 
-import styles from "./page.module.css"
+import styles from "./page.module.css";
 import Banner from "@/components/Banner/Banner";
 import NavigationBar from "@/components/NavigationBar/NavigationBar";
 import ProductSection from "@/components/ProductSection/ProductSection";
-import { useEffect, useState } from "react";
+import {useEffect, useState} from "react";
+import Link from "next/link";
 
 export type Product = {
-  productId: number,
-  categoryId: number,
-  productName: string,
-  unitPrice: number,
-  manufacturer: string,
-  description: string,
-  rating: number,
-  sku: string,
-  imageLink: string
-}
+  productId: number;
+  categoryId: number;
+  productName: string;
+  unitPrice: number;
+  manufacturer: string;
+  description: string;
+  rating: number;
+  sku: string;
+  imageLink: string;
+};
 
 export default function Home() {
   const [isLoading, setIsLoading] = useState(true);
@@ -31,35 +32,35 @@ export default function Home() {
     myHeaders.append("Content-Type", "application/json");
 
     fetch("http://localhost:5165/api/product", {
-      method: 'GET',
+      method: "GET",
       headers: myHeaders,
-      redirect: 'follow'
+      redirect: "follow",
     })
-      .then(response => response.json())
-      .then(result => setProductsData(result))
-      .catch(error => setError(error.message))
+      .then((response) => response.json())
+      .then((result) => setProductsData(result))
+      .catch((error) => setError(error.message))
       .finally(() => setIsLoading(false));
-  },[]);
+  }, []);
 
   return (
     <main>
-        <NavigationBar />
-        <Banner />
-        <div className={styles.main}>
-          <h1>Home</h1>
-          {isLoading ? (
+      <NavigationBar />
+      <Banner />
+      <div className={styles.main}>
+        <h1>Home</h1>
+        {isLoading ? (
           <p>Loading...</p>
         ) : error ? (
           <p>{error}</p>
         ) : (
           <>
-          <ProductSection title="Tops" products={productsData} />
-          <ProductSection title="Bottoms" products={productsData} />
-          <ProductSection title="Outerwear" products={productsData} />
-          <ProductSection title="Shoes" products={productsData} />
-        </>
+            <ProductSection title="Tops" products={productsData} />
+            <ProductSection title="Bottoms" products={productsData} />
+            <ProductSection title="Outerwear" products={productsData} />
+            <ProductSection title="Shoes" products={productsData} />
+          </>
         )}
-        </div>
+      </div>
     </main>
   );
 }

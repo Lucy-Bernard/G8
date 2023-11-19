@@ -1,23 +1,27 @@
-import React from 'react';
-import ProductCard from '../ProductCard/ProductCard';
-import styles from './ProductSection.module.css';
+import React from "react";
+import ProductCard from "../ProductCard/ProductCard";
+import styles from "./ProductSection.module.css";
+import Link from "next/link";
 
-export type SingleProduct ={
-  productId: number,
-  productName: string,
-  unitPrice: number,
-  imageLink: string
-}
+export type SingleProduct = {
+  productId: number;
+  productName: string;
+  unitPrice: number;
+  imageLink: string;
+};
 
 interface ProductSectionProps {
   title: string;
   products: SingleProduct[];
 }
 
-const ProductSection: React.FC<ProductSectionProps> = ({ title, products }) => {
+const ProductSection: React.FC<ProductSectionProps> = ({title, products}) => {
   return (
     <section className={styles.productSection}>
-      <h2>{title}</h2>
+      <Link href={`/home/${title.toLowerCase()}`}>
+        <h2>{title}</h2>
+      </Link>
+
       <div className={styles.productGrid}>
         {products.map((product) => (
           <ProductCard
