@@ -1,5 +1,6 @@
 "use client";
 
+import Link from 'next/link';
 import React, { useState } from 'react';
 
 // Existing CartItem type
@@ -141,7 +142,9 @@ const Cart = () => {
       </div>
       <div>
         <h3>Total Cost: ${formatPrice(calculateTotal(cartItems))}</h3>
-        <button style={styles.proceedButton}>Proceed to Checkout</button>
+        <Link href="/home/cart/checkout">
+          <button style={styles.proceedButton}>Proceed to Checkout</button>
+        </Link>
       </div>
     </div>
   );
