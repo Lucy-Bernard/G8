@@ -93,6 +93,9 @@ export default function Checkout() {
 
   return (
     <ThemeProvider theme={theme}>
+      {/* <Grid container spacing={2} justifyContent="center" alignItems="flex-start"> */}
+
+        
 
     <Box sx={{ width: '50%', marginTop: '10px', marginRight: 'auto', padding: '40px'}}>
       
@@ -115,7 +118,7 @@ export default function Checkout() {
             <Button onClick={handleReset}>Reset</Button>
           </Box>
         ) : (
-//--------------------------Shipping----------------------------------------------
+          //--------------------------Shipping----------------------------------------------
           <Box>
             {activeStep === 0 && (
               <Box component="form" noValidate autoComplete="off" sx={{maxWidth: '700px', mt: 2 }}>
@@ -133,7 +136,7 @@ export default function Checkout() {
                   error={formError && !firstName}
                   helperText={formError && !firstName ? "first name is required" : ""}
                   onChange={(e) => setFirstName(e.target.value)}
-                />
+                  />
                 </Grid>
                 <Grid item xs ={12} sm={5}>
                 <TextField
@@ -148,7 +151,7 @@ export default function Checkout() {
                   error={formError && !lastName}
                   helperText={formError && !lastName ? "last name is required" : ""}
                   onChange={(e) => setLastName(e.target.value)}
-                />
+                  />
                 </Grid>
                 <Grid item xs ={12} sm={10}>
                 <TextField
@@ -163,20 +166,20 @@ export default function Checkout() {
                   error={formError && !address}
                   helperText={formError && !address ? "address is required" : ""}
                   onChange={(e) => setAddress(e.target.value)}
-
-                />
+                  
+                  />
                 </Grid>
                 <Grid item xs ={12} sm={10}>
                 <TextField
                
-                  name="apt"
-                  label="Apt, Suite, Floor (optional)"
-                  fullWidth
-                  variant="filled"
-                  margin="normal"
-                  value={apt}
-                  onChange={(e) => setApt(e.target.value)}
-                />
+               name="apt"
+               label="Apt, Suite, Floor (optional)"
+               fullWidth
+               variant="filled"
+               margin="normal"
+               value={apt}
+               onChange={(e) => setApt(e.target.value)}
+               />
                 </Grid>
                 <Grid item xs ={12} sm={3}>
                 <TextField
@@ -191,14 +194,14 @@ export default function Checkout() {
                   error={formError && !postalCode}
                   helperText={formError && !postalCode ? " postal code is required" : ""}
                   onChange={(e) => setPostalCode(e.target.value)}
-                />
+                  />
                 </Grid>
                 </Grid>
               </Box>
             )}
 {/**----------------------------Payment---------------------------------------------- */}
 {activeStep === 1 && (
-
+  
   <Box component="form" noValidate autoComplete="off" sx={{ maxWidth: '500px', mt: 2 }}>
     <Grid container spacing={2}>
       <Grid item xs={12} sm={8}>
@@ -217,8 +220,8 @@ export default function Checkout() {
           inputProps={{ 
             maxLength: 16,
             minLength: 16 
-           }}
-        />
+          }}
+          />
       </Grid>
       <Grid item xs={6} sm={3}>
         <TextField
@@ -243,7 +246,7 @@ export default function Checkout() {
               </InputAdornment>
             )
           }}
-        />
+          />
       </Grid>
       <Grid item xs={3} sm={2}>
         <TextField
@@ -259,7 +262,7 @@ export default function Checkout() {
           helperText={formError && !expirationMonth ? "exp month is required" : ""}
           onChange={(e) => setExpirationMonth(e.target.value)}
           inputProps={{ maxLength: 2 }} // limit input to 2 characters
-        />
+          />
       </Grid>
       <Grid item xs={3} sm={2}>
         <TextField
@@ -275,7 +278,7 @@ export default function Checkout() {
           helperText={formError && !expirationYear ? "exp year is required" : ""}
           onChange={(e) => setExpirationYear(e.target.value)}
           inputProps={{ maxLength: 2 }} // Limit input to 2 characters
-        />
+          />
       </Grid>
       {/* Expiration Date Label */}
       <Grid item xs={12}>
@@ -294,13 +297,14 @@ export default function Checkout() {
                 disabled={activeStep === 0}
                 onClick={handleBack}
                 sx={{ mr: 1 }}
-              >
+                >
                 Back
               </Button>
               <Box sx={{ flex: '1 1 auto' }} />
               <Button onClick={handleNext}>
                 {activeStep === steps.length - 1 ? 'Submit Order' : 'Next'}
               </Button>
+            {/* </Grid> */}
             </Box>
           </Box>
         
