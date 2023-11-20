@@ -4,10 +4,15 @@ import styles from "./ProductSection.module.css";
 import Link from "next/link";
 
 export type SingleProduct = {
-  productId: number;
-  productName: string;
-  unitPrice: number;
-  imageLink: string;
+  productId: number,
+  categoryId: number,
+  productName: string,
+  unitPrice: number,
+  manufacturer: string,
+  description: string,
+  rating: number,
+  sku: string,
+  imageLink: string
 };
 
 interface ProductSectionProps {
