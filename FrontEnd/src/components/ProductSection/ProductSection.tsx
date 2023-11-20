@@ -2,22 +2,11 @@ import React from "react";
 import ProductCard from "../ProductCard/ProductCard";
 import styles from "./ProductSection.module.css";
 import Link from "next/link";
+import { Product } from "@/app/home/products/page";
 
-export type SingleProduct = {
-  productId: number,
-  categoryId: number,
-  productName: string,
-  unitPrice: number,
-  manufacturer: string,
-  description: string,
-  rating: number,
-  sku: string,
-  imageLink: string
-};
-
-interface ProductSectionProps {
+type ProductSectionProps ={
   title: string;
-  products: SingleProduct[];
+  products: Product[];
 }
 
 const ProductSection: React.FC<ProductSectionProps> = ({title, products}) => {
@@ -31,10 +20,7 @@ const ProductSection: React.FC<ProductSectionProps> = ({title, products}) => {
         {products.map((product) => (
           <ProductCard
             key={product.productId}
-            productId={product.productId}
-            productName={product.productName}
-            unitPrice={product.unitPrice}
-            imageLink={product.imageLink}
+            product={product}
           />
         ))}
       </div>
