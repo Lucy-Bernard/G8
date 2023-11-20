@@ -2,7 +2,7 @@ import React from "react";
 import ProductCard from "../ProductCard/ProductCard";
 import styles from "./ProductSection.module.css";
 import Link from "next/link";
-import { Product } from "@/app/home/products/page";
+import { Product } from "@/app/home/page";
 
 type ProductSectionProps ={
   title: string;
