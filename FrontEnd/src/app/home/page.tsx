@@ -64,7 +64,6 @@ export default function Home() {
       <NavigationBar />
       <Banner />
       <div className={styles.main}>
-        <h1>Home</h1>
         {isLoading ? (
           <p>Loading...</p>
         ) : error ? (
