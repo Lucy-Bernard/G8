@@ -3,7 +3,6 @@ import Link from 'next/link';
 import styles from './NavigationBar.module.css';
 
 type NavigationBarProps = {
-  // Define any props you might need
 };
 
 const NavigationBar: React.FC<NavigationBarProps> = () => {
