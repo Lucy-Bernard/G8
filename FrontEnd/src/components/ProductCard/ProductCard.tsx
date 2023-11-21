@@ -25,6 +25,7 @@ export default function ProductCard(props: ProductCardProps) {
         alt={props.product.productName}
         height={175}
         width={250}
+        loading="lazy"
       />
 
       <div className={styles.product_information}>
