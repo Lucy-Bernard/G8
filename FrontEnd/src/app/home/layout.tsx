@@ -33,7 +33,7 @@ export default function HomeLayout({
   return (
     <div>
          <Header /> 
-         {/* <NavigationBar /> */}
+         <NavigationBar />
         {children}
         <footer className={styles.footer}>
           <div>&copy; 2023 G8.</div>

@@ -78,6 +78,23 @@ const Cart = () => {
   const calculateItemTotal = (price: number, quantity: number) => {
     return formatPrice(price * quantity);
   };
+  
+  const addToCart = async (userId, productId, quantity) => {
+    try {
+      const response = await fetch('/api/cart/add', {
+        method: 'POST',
+        headers: {'Content-Type': 'application/json'},
+        body: JSON.stringify({ userId, productId, quantity })
+      });
+      if (!response.ok) {
+        throw new Error('Failed to add to cart');
+      }
+      // Update cart state or UI as needed
+    } catch (error) {
+      console.error('Error adding to cart:', error);
+    }
+  };
+  
 
   // Inline styles
   const styles = {

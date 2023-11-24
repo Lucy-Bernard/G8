@@ -44,7 +44,6 @@ export default function Home() {
 
   return (
     <main>
-      <NavigationBar />
       <Banner />
       <div className={styles.main}>
         <h1>Home</h1>

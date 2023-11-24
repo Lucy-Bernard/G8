@@ -18,10 +18,8 @@ interface ProductSectionProps {
 const ProductSection: React.FC<ProductSectionProps> = ({title, products}) => {
   return (
     <section className={styles.productSection}>
-      <Link href={`/home/${title.toLowerCase()}`}>
-        <h2>{title}</h2>
-      </Link>
-
+      <h2>{title}</h2>
+      
       <div className={styles.productGrid}>
         {products.map((product) => (
           <ProductCard
