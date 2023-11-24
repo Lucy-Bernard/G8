@@ -1,6 +1,8 @@
 "use client";
 
 import * as React from 'react';
+import OrderSummary from "@/components/OrderSummary/OrderSummary";
+import ReviewOrder from "@/components/ReviewOrder/ReviewOrder";
 import Box from '@mui/material/Box';
 import Stepper from '@mui/material/Stepper';
 import Step from '@mui/material/Step';
@@ -15,9 +17,9 @@ import InfoIcon from '@mui/icons-material/Info';
 import "@fontsource/quicksand"; // Defaults to weight 400
 import "@fontsource/quicksand/400.css"; // Specify weight
 import { createTheme, ThemeProvider } from '@mui/material/styles';
-import OrderSummary from "@/components/OrderSummary/OrderSummary";
 import { Snackbar, SnackbarContent } from '@mui/material';
 import { useRouter } from 'next/navigation';
+import styles from "./page.module.css";
 
 // -----------Font -------------------------------------
 const theme = createTheme({
@@ -30,52 +32,79 @@ const theme = createTheme({
 });
 
 // const stepHeight = '100px'; 
-  // -------------------Checkout------------------------------
+// -------------------Checkout------------------------------
+
 
 const steps = ['Shipping', 'Payment', 'Review & Order'];
 
 
+
 export default function Checkout() {
 
+
   const [formError, setFormError] = React.useState(false);
-  const [openSnackbar, setOpenSnackbar] = React.useState(false); 
-  const [orderSubmitted, setOrderSubmitted] = React.useState(false); 
+  const [openSnackbar, setOpenSnackbar] = React.useState(false);
+  const [orderSubmitted, setOrderSubmitted] = React.useState(false);
   const router = useRouter();
 
-// ---------------Shipping Input-----------------------
+  // ---------------Shipping Input----------------------------
   const [activeStep, setActiveStep] = React.useState(0);
-  const [firstName, setFirstName] = React.useState('');
-  const [lastName, setLastName] = React.useState('');
-  const [address, setAddress] = React.useState('');
-  const [apt, setApt] = React.useState('');
-  const [postalCode, setPostalCode] = React.useState('');
 
-// ---------------Payment Input-----------------------
-  const [cardNumber, setCardNumber] = React.useState('');
-  const [securityCode, setSecurityCode] = React.useState('');
-  const [expirationMonth, setExpirationMonth] = React.useState('');
-  const [expirationYear, setExpirationYear] = React.useState('');
-  
-// -----------------Validation-----------------------------
+  const [shipping, setShipping] = React.useState<ShippingState>({
+    firstName: '',
+    lastName: '',
+    address: '',
+    apt: '',
+    city: '',
+    state: '',
+    postalCode: ''
+  });
+  type ShippingState = {
+    firstName: string;
+    lastName: string;
+    address: string;
+    apt: string;
+    city: string;
+    state: string;
+    postalCode: string;
+  }
+
+  // ---------------Payment Input-------------------------
+
+  const [payment, setPayment] = React.useState<PaymentState>({
+    cardNumber: '',
+    securityCode: '',
+    expirationMonth: '',
+    expirationYear: ''
+  });
+
+  type PaymentState = {
+    cardNumber: string;
+    securityCode: string;
+    expirationMonth: string;
+    expirationYear: string;
+
+  }
+  // -----------------Validation-----------------------------
   const validateShipping = () => {
-    return firstName && lastName && address && postalCode;
-  };
-  
-  const validatePayment = () => {
-    return cardNumber && securityCode && expirationMonth && expirationYear;
+    return shipping.firstName && shipping.lastName && shipping.address && shipping.postalCode;
   };
 
-// ----------------------Next/Back/Home Buttons ------------
+  const validatePayment = () => {
+    return payment.cardNumber && payment.securityCode && payment.expirationMonth && payment.expirationYear;
+  };
+
+  // ----------------------Next/Back/Home Buttons ------------
   const handleNext = () => {
     // prevent from proceeding to next step if shipping fields not filled out
     if (activeStep === 0 && !validateShipping()) {
       setFormError(true);
-      return; 
+      return;
     }
     // prevent from proceeding to next step if payment fields not filled out
     if (activeStep === 1 && !validatePayment()) {
       setFormError(true);
-      return; 
+      return;
     }
     setFormError(false); // Reset error state if validation passes
     // handle order submmission
@@ -88,258 +117,270 @@ export default function Checkout() {
 
   };
 
-    // function to handle Snackbar close
-    const handleCloseSnackbar = (event: any, reason: string) => {
-      if (reason === 'clickaway') {
-        return;
-      }
-      setOpenSnackbar(false);
-    };
-  
-    const handleGoHome = () => {
-      router.push('/home'); 
-    };
-  
+  // function to handle Snackbar close
+  const handleCloseSnackbar = (event: any, reason: string) => {
+    if (reason === 'clickaway') {
+      return;
+    }
+    setOpenSnackbar(false);
+  };
+
+  const handleGoHome = () => {
+    router.push('/home');
+  };
+
 
   const handleBack = () => {
     setActiveStep((prevActiveStep) => prevActiveStep - 1);
   };
 
-  const handleReset = () => {
-    setActiveStep(0);
-    setFirstName('');
-    setLastName('');
-    setAddress('');
-    setPostalCode('');
-    setApt('');
-  };
-
   return (
     <ThemeProvider theme={theme}>
-      <Grid container spacing={2} justifyContent="center" alignItems="flex-start">
 
 
-        {/* Steps and Forms */}
-        <Grid item xs={12} md={7}>
-          <Box sx={{ padding: '40px', marginLeft:'-50px', maxWidth:700 }}>
-            <Stepper activeStep={activeStep}>
-              <Step key="Shipping">
-                <StepLabel>Shipping</StepLabel>
-              </Step>
-              <Step key="Payment">
-                <StepLabel>Payment</StepLabel>
-              </Step>
-              <Step key="Review & Order">
-                <StepLabel>Review & Order</StepLabel>
-              </Step>
-            </Stepper>
-{/* Snackbar notification */}
-      <Snackbar
-        open={openSnackbar}
-        autoHideDuration={6000}
-        onClose={handleCloseSnackbar}
-        anchorOrigin={{ vertical: 'top', horizontal: 'center' }} 
-      >
-        <SnackbarContent
-          message="Order confirmed! You will receive a confirmation email."
-          style={{ backgroundColor: 'green' }} // Snackbar with green background
-        />
-      </Snackbar>
-{/* -------------------------------------------Shipping Form --------------------------------------------*/}
-            {activeStep === 0 && (
-              <Box component="form" noValidate autoComplete="off" sx={{ mt: 2, maxWidth:700 }}>
-                <Grid container spacing={2}>
-                  <Grid item xs={12} sm={6}>
-                    <TextField
-                      required
-                      id="firstName"
-                      name="firstName"
-                      label="First Name "
-                      fullWidth
-                      variant="outlined"
-                      margin="normal"
-                      value={firstName}
-                      error={formError && !firstName}
-                      helperText={formError && !firstName ? "first name is required" : ""}
-                      onChange={(e) => setFirstName(e.target.value)}
-                      />
-                  </Grid>
-                  <Grid item xs={12} sm={6}>
-                    <TextField
-                      required
-                      id="lastName"
-                      name="lastName"
-                      label="Last Name "
-                      fullWidth
-                      variant="outlined"
-                      margin="normal"
-                      value={lastName}
-                      error={formError && !lastName}
-                      helperText={formError && !lastName ? "last name is required" : ""}
-                      onChange={(e) => setLastName(e.target.value)}
-                      />
-                  </Grid>
-                  <Grid item xs={12}>
-                    <TextField
-                      required
-                      id="address"
-                      name="address"
-                      label="Address "
-                      fullWidth
-                      variant="outlined"
-                      margin="normal"
-                      value={address}
-                      error={formError && !address}
-                      helperText={formError && !address ? "address is required" : ""}
-                      onChange={(e) => setAddress(e.target.value)}                 
-                      />
-                  </Grid>
-                  <Grid item xs={12}>
-                    <TextField
-                      name="apt"
-                      label="Apt, Suite, Floor (optional)"
-                      fullWidth
-                      variant="filled"
-                      margin="normal"
-                      value={apt}
-                      onChange={(e) => setApt(e.target.value)}
-                    />
-                  </Grid>
-                  <Grid item xs={12} sm={6}>
-                    <TextField
-                      required
-                      id="postalCode"
-                      name="postalCode"
-                      label="Postal Code "
-                      fullWidth
-                      variant="outlined"
-                      margin="normal"
-                      value={postalCode}
-                      error={formError && !postalCode}
-                      helperText={formError && !postalCode ? " postal code is required" : ""}
-                      onChange={(e) => setPostalCode(e.target.value)}
-                    />
-                  </Grid>
-                </Grid>
+      {/* Steps and Forms */}
+      {/*outter box */}
+      <Box className={styles.content}>
+        <Box>
+
+
+          <Stepper activeStep={activeStep}>
+            <Step key="Shipping">
+              <StepLabel>Shipping</StepLabel>
+            </Step>
+            <Step key="Payment">
+              <StepLabel>Payment</StepLabel>
+            </Step>
+            <Step key="Review & Order">
+              <StepLabel>Review & Order</StepLabel>
+            </Step>
+          </Stepper>
+
+          {/* -------------------------------------------Shipping Form --------------------------------------------*/}
+          {activeStep === 0 && (
+            <Box component="form" noValidate autoComplete="off" sx={{ mt: 2, maxWidth: '600px' }}>
+              <TextField
+                required
+                id="firstName"
+                name="firstName"
+                label="First Name "
+                variant="outlined"
+                margin="normal"
+                value={shipping.firstName}
+                sx={{ width: '48%', marginRight: '13px' }}
+                error={formError && !shipping.firstName}
+                helperText={formError && !shipping.firstName ? "first name is required" : ""}
+                onChange={(e) => setShipping({ ...shipping, firstName: e.target.value })}
+              />
+
+              <TextField
+                required
+                id="lastName"
+                name="lastName"
+                label="Last Name "
+                sx={{ width: '48%' }}
+                variant="outlined"
+                margin="normal"
+                value={shipping.lastName}
+                error={formError && !shipping.lastName}
+                helperText={formError && !shipping.lastName ? "last name is required" : ""}
+                onChange={(e) => setShipping({ ...shipping, lastName: e.target.value })}
+              />
+
+              <TextField
+                required
+                id="address"
+                name="address"
+                label="Address "
+                variant="outlined"
+                margin="normal"
+                sx={{ width: '98%' }}
+                value={shipping.address}
+                error={formError && !shipping.address}
+                helperText={formError && !shipping.address ? "address is required" : ""}
+                onChange={(e) => setShipping({ ...shipping, address: e.target.value })}
+              />
+
+              <TextField
+                name="apt"
+                label="Apt, Suite, Floor (optional)"
+                variant="filled"
+                margin="normal"
+                sx={{ width: '98%' }}
+                value={shipping.apt}
+                onChange={(e) => setShipping({ ...shipping, apt: e.target.value })}
+              />
+              <TextField
+                required
+                id="city"
+                name="city"
+                label="City "
+                variant="outlined"
+                margin="normal"
+                sx={{ width: '30%', marginRight: '13px' }}
+                value={shipping.city}
+                error={formError && !shipping.city}
+                helperText={formError && !shipping.city ? " city is required" : ""}
+                onChange={(e) => setShipping({ ...shipping, city: e.target.value })}
+              />
+              <TextField
+                required
+                id="state"
+                name="state"
+                label="State"
+                variant="outlined"
+                margin="normal"
+                sx={{ width: '30%', marginRight: '13px' }}
+                value={shipping.state}
+                error={formError && !shipping.state}
+                helperText={formError && !shipping.state ? " state is required" : ""}
+                onChange={(e) => setShipping({ ...shipping, state: e.target.value })}
+              />
+
+              <TextField
+                required
+                id="postalCode"
+                name="postalCode"
+                label="Postal Code "
+                variant="outlined"
+                margin="normal"
+                sx={{ width: '34%' }}
+                value={shipping.postalCode}
+                error={formError && !shipping.postalCode}
+                helperText={formError && !shipping.postalCode ? " postal code is required" : ""}
+                onChange={(e) => setShipping({ ...shipping, postalCode: e.target.value })}
+              />
+
+            </Box >
+          )
+          }
+
+          {/* ------------------------------------------------Payment Form ------------------------------------------------*/}
+          {
+            activeStep === 1 && (
+              <Box component="form" noValidate autoComplete="off" sx={{ mt: 2, maxWidth: '600px' }}>
+
+                <TextField
+                  required
+                  id="cardNumber"
+                  name="cardNumber"
+                  label="Credit Card Number"
+                  sx={{ width: '70%', marginRight: '13px' }}
+                  variant="outlined"
+                  margin="normal"
+                  value={payment.cardNumber}
+                  error={formError && !payment.cardNumber}
+                  onChange={(e) => setPayment({ ...payment, cardNumber: e.target.value })}
+                  helperText={formError && !payment.cardNumber ? "card number is required 16-digits" : ""}
+                  inputProps={{
+                    maxLength: 16,
+                    minLength: 16
+                  }}
+                />
+
+                <TextField
+                  required
+                  id="securityCode"
+                  name="securityCode"
+                  label="CVV"
+                  fullWidth
+                  variant="outlined"
+                  margin="normal"
+                  sx={{ width: '27%' }}
+                  value={payment.securityCode}
+                  error={formError && !payment.securityCode}
+                  helperText={formError && !payment.securityCode ? "cvv is required" : ""}
+                  onChange={(e) => setPayment({ ...payment, securityCode: e.target.value })}
+                  inputProps={{ maxLength: 3 }} // limit input to 3 characters
+                  InputProps={{
+                    endAdornment: (
+                      <InputAdornment position="end">
+                        <Tooltip title="The 3-digit code on the back of your card">
+                          <InfoIcon fontSize="small" sx={{ color: '#1976d2' }} />
+                        </Tooltip>
+                      </InputAdornment>
+                    )
+                  }}
+                />
+
+                <TextField
+                  required
+                  id="expirationMonth"
+                  name="expirationMonth"
+                  label="MM"
+                  fullWidth
+                  variant="outlined"
+                  margin="normal"
+                  sx={{ width: '14%', marginRight: '13px' }}
+                  value={payment.expirationMonth}
+                  error={formError && !payment.expirationMonth}
+                  helperText={formError && !payment.expirationMonth ? "exp month is required" : ""}
+                  onChange={(e) => setPayment({ ...payment, expirationMonth: e.target.value })}
+                  inputProps={{ maxLength: 2 }} // limit input to 2 characters
+                />
+
+                <TextField
+                  required
+                  id="expirationYear"
+                  name="expirationYear"
+                  label="YY"
+                  fullWidth
+                  variant="outlined"
+                  margin="normal"
+                  sx={{ width: '14%' }}
+                  value={payment.expirationYear}
+                  error={formError && !payment.expirationYear}
+                  helperText={formError && !payment.expirationYear ? "exp year is required" : ""}
+                  onChange={(e) => setPayment({ ...payment, expirationYear: e.target.value })}
+                  inputProps={{ maxLength: 2 }} // Limit input to 2 characters
+                />
+
+                <Typography variant="subtitle2" gutterBottom sx={{ color: '#6f6f6f', textAlign: 'left' }}>
+                  Expiration Date
+                </Typography>
+
               </Box>
-            )}
+            )
+          }
+          {/*----------------------------Review Order------------------------------------*/}
+          {activeStep === 2 && (
+            // <Box sx={{ mt: 2, maxWidth: '900px' }}>
 
-{/* ------------------------------------------------Payment Form ------------------------------------------------*/}
-            {activeStep === 1 && (
-              <Box component="form" noValidate autoComplete="off" sx={{ mt: 2 }}>
-                <Grid container spacing={2}>
-                  <Grid item xs={8} sm ={8}>
-                    <TextField
-                      required
-                      id="cardNumber"
-                      name="cardNumber"
-                      label="Credit Card Number"
-                      fullWidth
-                      variant="outlined"
-                      margin="normal"
-                      value={cardNumber}
-                      error={formError && !cardNumber}
-                      onChange={(e) => setCardNumber(e.target.value.replace(/[^0-9]/g, ''))}
-                      helperText={formError && !cardNumber ? "card number is required 16-digits" : ""}
-                      inputProps={{ 
-                        maxLength: 16,
-                        minLength: 16 
-                      }}
-                      />
-                  </Grid>
-                  <Grid item xs={3} sm={3}>
-                  <TextField
-                    required
-                    id="securityCode"
-                    name="securityCode"
-                    label="CVV"
-                    fullWidth
-                    variant="outlined"
-                    margin="normal"
-                    value={securityCode}
-                    error={formError && !securityCode}
-                    helperText={formError && !securityCode ? "cvv is required" : ""}
-                    onChange={(e) => setSecurityCode(e.target.value)}
-                    inputProps={{ maxLength: 3 }} // limit input to 3 characters
-                    InputProps={{
-                      endAdornment: (
-                        <InputAdornment position="end">
-                          <Tooltip title="The 3-digit code on the back of your card">
-                            <InfoIcon fontSize="small" sx = {{color:'#1976d2'}} />
-                          </Tooltip>
-                        </InputAdornment>
-                      )
-                    }}
-                    />
-                  </Grid>
-                  <Grid item xs={2} sm={2}>
-                    <TextField
-                      required
-                      id="expirationMonth"
-                      name="expirationMonth"
-                      label="MM"
-                      fullWidth
-                      variant="outlined"
-                      margin="normal"
-                      value={expirationMonth}
-                      error={formError && !expirationMonth}
-                      helperText={formError && !expirationMonth ? "exp month is required" : ""}
-                      onChange={(e) => setExpirationMonth(e.target.value)}
-                      inputProps={{ maxLength: 2 }} // limit input to 2 characters
-                      />
-                  </Grid>
-                  <Grid item xs={2} sm={2}>
-                    <TextField
-                      required
-                      id="expirationYear"
-                      name="expirationYear"
-                      label="YY"
-                      fullWidth
-                      variant="outlined"
-                      margin="normal"
-                      value={expirationYear}
-                      error={formError && !expirationYear}
-                      helperText={formError && !expirationYear ? "exp year is required" : ""}
-                      onChange={(e) => setExpirationYear(e.target.value)}
-                      inputProps={{ maxLength: 2 }} // Limit input to 2 characters
-                      />
-                      </Grid>
-                  <Grid item xs={12} >
-                    <Typography variant="subtitle2" gutterBottom sx = {{color:'#6f6f6f', textAlign: 'left'}}>
-                      Expiration Date
-                    </Typography>
-                      </Grid>
-                  </Grid>
-                {/* </Grid> */}
-              </Box>
-            )}
+            <ReviewOrder
+              shippingDetails={shipping}
+              paymentDetails={{
+                cardNumber: payment.cardNumber.replace(/.(?=.{4})/g, 'x'), // Mask all but last 4 digits
+                expirationMonth: payment.expirationMonth,
+                expirationYear: payment.expirationYear
+              }}
+            />
+            // </Box>
+          )}
 
-            {/* Navigation Buttons */}
-            <Box sx={{ display: 'flex', flexDirection: 'row', pt: 2, mt: 2 }}>
-              <Button
-                color="inherit"
-                disabled={activeStep === 0 || orderSubmitted}
-                onClick={handleBack}
-                sx={{ mr: 1 }}
-              >
-                Back
+          {/*-------------------------------- Navigation Buttons --------------------------*/}
+          <Box sx={{ display: 'flex', flexDirection: 'row', pt: 2, mt: 2 }}>
+            <Button
+              color="inherit"
+              disabled={activeStep === 0 || orderSubmitted}
+              onClick={handleBack}
+              sx={{ mr: 1 }}
+            >
+              Back
+            </Button>
+
+            {orderSubmitted ? (
+              <Button onClick={handleGoHome}>
+                Home
               </Button>
-              <Box sx={{ flex: '1 1 auto' }} />
-              {orderSubmitted ? (
-          <Button onClick={handleGoHome}>
-            Home
-          </Button>
-        ) : (
-          <Button onClick={handleNext}>
-            {activeStep === steps.length - 1 ? 'Submit Order' : 'Next'}
-          </Button>
-        )}
-      </Box>
-          </Box>
-        </Grid>
-
-        {/* Order Summary */}
-        <Grid item xs={4} md={4} sx = {{marginTop: '35px'}}>
+            ) : (
+              <Button onClick={handleNext}>
+                {activeStep === steps.length - 1 ? 'Submit Order' : 'Next'}
+              </Button>
+            )}
+          </Box >
+        </Box>
+        <Box sx={{ marginTop: '-100px' }}>
+          {/* Order Summary */}
           <OrderSummary
             subtotal={408.28}
             discounts={0.41}
@@ -348,9 +389,21 @@ export default function Checkout() {
             total={407.87}
             savings={85.41}
           />
-        </Grid>
+        </Box>
+      </Box>
+      {/* Snackbar notification */}
+      <Snackbar
+        open={openSnackbar}
+        autoHideDuration={6000}
+        onClose={handleCloseSnackbar}
+        anchorOrigin={{ vertical: 'top', horizontal: 'center' }}
+      >
+        <SnackbarContent
+          message="Order confirmed! You will receive a confirmation email."
+          style={{ backgroundColor: 'green' }} // Snackbar with green background
+        />
+      </Snackbar>
+    </ThemeProvider >
 
-      </Grid>
-    </ThemeProvider>
   );
 };
