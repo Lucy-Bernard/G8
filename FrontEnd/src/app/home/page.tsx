@@ -21,10 +21,10 @@ export type Product = {
 
 export default function Home() {
   const [isLoading, setIsLoading] = useState(true);
-  const [productsData, setProductsData] = useState<Product[]>([]);
-  // const [bottomsData, setBottomsData] = useState([]);
-  // const [outerwearData, setOuterwearData] = useState([]);
-  // const [shoesData, setShoesData] = useState([]);
+  const [topsData, setTopsData] = useState<Product[]>([]);
+  const [bottomsData, setBottomsData] = useState<Product[]>([]);
+  const [outerwearData, setOuterwearData] = useState<Product[]>([]);
+  const [shoesData, setShoesData] = useState<Product[]>([]);
   const [error, setError] = useState<string | null>(null);
 
   useEffect(() => {
@@ -37,26 +37,42 @@ export default function Home() {
       redirect: "follow",
     })
       .then((response) => response.json())
-      .then((result) => setProductsData(result))
+      .then((result) => filterCategory(result))
       .catch((error) => setError(error.message))
       .finally(() => setIsLoading(false));
   }, []);
+
+  function filterCategory(result:Product[]){
+    result.map((product)=>{
+      if (product.categoryId == 1) {
+        setTopsData([...topsData, product]);
+      }
+      if (product.categoryId == 2) {
+        setBottomsData([...bottomsData, product]);
+      }
+      if (product.categoryId == 3) {
+        setOuterwearData([...outerwearData, product]);
+      }
+      if (product.categoryId == 4) {
+        setShoesData([...shoesData, product]);
+      }
+    })
+  }
 
   return (
     <main>
       <Banner />
       <div className={styles.main}>
-        <h1>Home</h1>
         {isLoading ? (
           <p>Loading...</p>
         ) : error ? (
           <p>{error}</p>
         ) : (
           <>
-            <ProductSection title="Tops" products={productsData} />
-            <ProductSection title="Bottoms" products={productsData} />
-            <ProductSection title="Outerwear" products={productsData} />
-            <ProductSection title="Shoes" products={productsData} />
+            <ProductSection title="Tops" products={topsData} />
+            <ProductSection title="Bottoms" products={bottomsData} />
+            <ProductSection title="Outerwear" products={outerwearData} />
+            <ProductSection title="Shoes" products={shoesData} />
           </>
         )}
       </div>

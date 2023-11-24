@@ -5,7 +5,7 @@ import Paper from '@mui/material/Paper';
 
 const OrderSummary = ({ subtotal, discounts, tax, delivery, total, savings }) => {
   return (
-    <Paper elevation={3} sx={{ p: 2, width: '300px', marginLeft: '20px' }}> {/* Adjust width and margin as needed */}
+    <Paper elevation={3} sx={{ p: 2, width: '300px', marginLeft: '20px' }}>
       <Typography variant="h6" gutterBottom>
         Order summary
       </Typography>
