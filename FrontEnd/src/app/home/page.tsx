@@ -4,7 +4,7 @@ import styles from "./page.module.css";
 import Banner from "@/components/Banner/Banner";
 import NavigationBar from "@/components/NavigationBar/NavigationBar";
 import ProductSection from "@/components/ProductSection/ProductSection";
-import {useEffect, useState} from "react";
+import { useEffect, useState } from "react";
 import Link from "next/link";
 
 export type Product = {
@@ -28,7 +28,7 @@ export default function Home() {
   const [error, setError] = useState<string | null>(null);
 
   useEffect(() => {
-    var myHeaders = new Headers();
+    const myHeaders = new Headers();
     myHeaders.append("Content-Type", "application/json");
 
     fetch("http://localhost:5165/api/product", {
@@ -42,21 +42,28 @@ export default function Home() {
       .finally(() => setIsLoading(false));
   }, []);
 
-  function filterCategory(result:Product[]){
-    result.map((product)=>{
-      if (product.categoryId == 1) {
-        setTopsData([...topsData, product]);
+  function filterCategory(result: Product[]) {
+    const newTopsData: Product[] = [];
+    const newBottomsData: Product[] = [];
+    const newOuterwearData: Product[] = [];
+    const newShoesData: Product[] = [];
+
+    result.forEach((product) => {
+      if (newTopsData.length < 4 && product.categoryId === 1) {
+        newTopsData.push(product);
+      } else if (newBottomsData.length < 4 && product.categoryId === 2) {
+        newBottomsData.push(product);
+      } else if (newOuterwearData.length < 4 && product.categoryId === 3) {
+        newOuterwearData.push(product);
+      } else if (newShoesData.length < 4 && product.categoryId === 4) {
+        newShoesData.push(product);
       }
-      if (product.categoryId == 2) {
-        setBottomsData([...bottomsData, product]);
-      }
-      if (product.categoryId == 3) {
-        setOuterwearData([...outerwearData, product]);
-      }
-      if (product.categoryId == 4) {
-        setShoesData([...shoesData, product]);
-      }
-    })
+    });
+
+    setTopsData(newTopsData);
+    setBottomsData(newBottomsData);
+    setOuterwearData(newOuterwearData);
+    setShoesData(newShoesData);
   }
 
   return (
