@@ -45,3 +45,17 @@
     text-overflow: ellipsis;
     white-space: nowrap;
   }
+
+  /* ProductCard.module.css */
+
+.addToCartButton {
+  /* Styles for the 'Add to Cart' button */
+  background-color: #007bff;
+  color: white;
+  border: none;
+  padding: 10px;
+  margin-top: 10px;
+  border-radius: 4px;
+  cursor: pointer;
+  /* Add additional styles as needed */
+}

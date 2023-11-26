@@ -44,7 +44,6 @@ export default function ShoesPage() {
 
   return (
     <main>
-      <NavigationBar />
       <div className={styles.main}>
         <h1>Shoes</h1>
         {isLoading ? (

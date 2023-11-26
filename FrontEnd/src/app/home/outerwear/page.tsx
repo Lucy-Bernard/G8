@@ -44,7 +44,6 @@ export default function OuterwearsPage() {
 
   return (
     <main>
-      <NavigationBar />
       <div className={styles.main}>
         <h1>Outerwear</h1>
         {isLoading ? (
