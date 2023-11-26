@@ -21,25 +21,26 @@ export default function ProductCard(props: ProductCardProps) {
   const [is_loading, set_is_loading] = useState(false); // loading state for API call
   const [error, setError] = useState("");
 
-  const handleAddToCart = async (event: {preventDefault: () => void}) => {
+  const handleAddToCart = async () => {
     console.log("Add to Cart Clicked for Product:", props.product.productId);
-
+    
     const userId = 1; // Assuming user ID is 1 for now
-
-    fetch(`http://localhost:5165/api/cart/add`, { // the error is right here, api/cart/add is wrong
-      method: "POST",
-      headers: {"Content-Type": "application/json"},
-      body: JSON.stringify({userId: 1, productId: props.product.productId}),
+  
+    fetch(`http://localhost:5165/api/cart`, {
+      method: 'POST',
+      headers: { 'Content-Type': 'application/json' },
+      body: JSON.stringify({ userId, productId: props.product.productId })
     })
-      .then((response) => {
-        if (!response.ok) {
-          throw new Error("Failed to add to cart");
-        }
-        return response.text();
-      })
-      .then(() => console.log("Product added to cart"))
-      .catch((error) => console.error("Error:", error));
+    .then(response => {
+      if (!response.ok) {
+        throw new Error('Failed to add to cart');
+      }
+      return response.text();
+    })
+    .then(() => console.log("Product added to cart"))
+    .catch(error => console.error('Error:', error));
   };
+  
 
   return (
     <div className={styles.product_card}>
