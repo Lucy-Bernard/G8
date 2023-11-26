@@ -1,7 +1,10 @@
+"use client";
+
 import React from "react";
 import Image from "next/image";
 import styles from "./ProductCard.module.css";
 import {Product} from "@/app/home/page";
+import {useState} from "react";
 
 type ProductCardProps = {
   product: Product;
@@ -15,8 +18,10 @@ export default function ProductCard(props: ProductCardProps) {
     style: "currency",
     currency: "USD",
   });
+  const [is_loading, set_is_loading] = useState(false); // loading state for API call
+  const [error, setError] = useState("");
 
-  const handleAddToCart = () => {
+  const handleAddToCart = async (event: {preventDefault: () => void}) => {
     console.log("Add to Cart Clicked for Product:", props.product.productId);
 
     const userId = 1; // Assuming user ID is 1 for now
