@@ -3,11 +3,12 @@
     display: flex;
     justify-content: center;
     align-items: center;
-    height: 300px; /* Adjust the height as needed */
+    height: 500px; /* Adjust the height as needed */
+    width: 1300px;
   }
   
   .bannerImage {
-    max-width: 100%;
+    max-width: 100%vp;
     max-height: 100%;
   }
   

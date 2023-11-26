@@ -59,6 +59,7 @@ export default function Checkout() {
     state: '',
     postalCode: ''
   });
+
   type ShippingState = {
     firstName: string;
     lastName: string;
