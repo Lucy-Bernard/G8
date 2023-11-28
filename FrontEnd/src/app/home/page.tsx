@@ -6,6 +6,7 @@ import NavigationBar from "@/components/NavigationBar/NavigationBar";
 import ProductSection from "@/components/ProductSection/ProductSection";
 import {useEffect, useState} from "react";
 import Link from "next/link";
+import { withRouter, NextRouter } from "next/router";
 
 export type Product = {
   productId: number;
@@ -19,7 +20,7 @@ export type Product = {
   imageLink: string;
 };
 
-export default function Home() {
+export default function Home(props: { router: NextRouter }) {
   const [isLoading, setIsLoading] = useState(true);
   const [topsData, setTopsData] = useState<Product[]>([]);
   const [bottomsData, setBottomsData] = useState<Product[]>([]);
@@ -28,6 +29,7 @@ export default function Home() {
   const [error, setError] = useState<string | null>(null);
 
   useEffect(() => {
+    console.log(props.router.query.userId)
     var myHeaders = new Headers();
     myHeaders.append("Content-Type", "application/json");
 

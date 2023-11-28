@@ -3,7 +3,13 @@
 import {useEffect, useState} from "react";
 import styles from "./page.module.css";
 import Link from "next/link";
-import {useRouter} from "next/navigation";
+import {useRouter} from "next/router";
+
+type User = {
+  userId: number;
+  email: string;
+  password: string;
+};
 
 export default function Login() {
   const [email, setEmail] = useState(""); //holds username and pw provided by user
@@ -44,10 +50,12 @@ export default function Login() {
       body: raw, // raw is the user input coverted into json format
       redirect: "follow",
     })
-      .then((response) => {
-        if (response.ok) {
-          router.push("/home");
-        }
+      .then((response) => response.json())
+      .then((result) => {
+        router.push({
+          pathname: "/home",
+          query: result,
+        });
       })
       .catch((error) => console.log("error", error));
   };
