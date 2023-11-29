@@ -14,7 +14,7 @@ public class CreditCardTests
             creditCard.SetCreditCardNumber("1234567890123456"); // Replace with a valid credit card number
 
             // Assert //IsValidCreditCardNumber this function might be called something different
-            Assert.True(creditCard.IsValidCreditCardNumber());
+            Assert.True(creditCard.validatePayment());
         }
 
         [Fact]
@@ -27,7 +27,7 @@ public class CreditCardTests
             creditCard.SetCreditCardNumber("12345"); // Replace with an invalid credit card number
 
             // Assert
-            Assert.False(creditCard.IsValidCreditCardNumber());
+            Assert.False(creditCard.validatePayment());
         }
 
         // Add more test cases as needed for other credit card fields
