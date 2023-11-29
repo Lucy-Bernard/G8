@@ -16,13 +16,11 @@
 }
 
 .product-section {
-  margin-top: 20px;
   display:inline;
 }
 
 .product-section h2 {
   font-size: 24px;
-  margin-bottom: 3rem;
 }
 
 .footer {
@@ -37,5 +35,4 @@
 .headerDiv h2 {
   font-size: 24px;
   padding: 10px;
-  margin-bottom: 10px;
 }

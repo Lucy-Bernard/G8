@@ -8,9 +8,15 @@ const ProductDetails = () => {
   // Fetch product details based on the productId and manage state with useState
 
   useEffect(() => {
-    // Fetch product details using productId
-    // Update state with the fetched product details
-  }, [productId]);
+    var myHeaders = new Headers();
+    myHeaders.append("Content-Type", "application/json");
+
+    fetch("http://localhost:5165/api/product", {
+      method: "GET",
+      headers: myHeaders,
+      redirect: "follow",
+    })
+    }, [productId]);
 
   if (!productId) {
     return <p>Loading...</p>;
