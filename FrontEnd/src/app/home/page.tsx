@@ -6,6 +6,8 @@ import NavigationBar from "@/components/NavigationBar/NavigationBar";
 import ProductSection from "@/components/ProductSection/ProductSection";
 import { useEffect, useState } from "react";
 import Link from "next/link";
+import {withRouter, NextRouter} from "next/router";
+import {useUser} from "../user";
 
 export type Product = {
   productId: number;
@@ -19,7 +21,7 @@ export type Product = {
   imageLink: string;
 };
 
-export default function Home() {
+export default function Home(props: {router: NextRouter}) {
   const [isLoading, setIsLoading] = useState(true);
   const [topsData, setTopsData] = useState<Product[]>([]);
   const [bottomsData, setBottomsData] = useState<Product[]>([]);
@@ -68,7 +70,6 @@ export default function Home() {
 
   return (
     <main>
-      <NavigationBar />
       <Banner />
       <div className={styles.main}>
         {isLoading ? (

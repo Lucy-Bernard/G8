@@ -44,7 +44,6 @@ export default function TopsPage() {
 
   return (
     <main>
-      <NavigationBar />
       <div className={styles.main}>
         <h1>Tops</h1>
         {isLoading ? (

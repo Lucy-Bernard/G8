@@ -1,13 +1,12 @@
 import React from "react";
 import ProductCard from "../ProductCard/ProductCard";
 import styles from "./ProductSection.module.css";
-import Link from "next/link";
-import { Product } from "@/app/home/page";
+import {Product} from "@/app/home/page";
 
 type ProductSectionProps = {
   title: string;
   products: Product[];
-}
+};
 
 const ProductSection: React.FC<ProductSectionProps> = ({ title, products }) => {
   return (
@@ -18,10 +17,7 @@ const ProductSection: React.FC<ProductSectionProps> = ({ title, products }) => {
 
       <div className={styles.productGrid}>
         {products.map((product) => (
-          <ProductCard
-            key={product.productId}
-            product={product}
-          />
+          <ProductCard key={product.productId} product={product} />
         ))}
       </div>
     </section>

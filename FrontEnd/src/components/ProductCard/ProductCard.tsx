@@ -1,27 +1,52 @@
-// ProductCard.tsx
+"use client";
 
-import React from 'react';
-import Image from 'next/image';
-import styles from './ProductCard.module.css';
-import { Product } from '@/app/home/page';
+import React from "react";
+import Image from "next/image";
+import styles from "./ProductCard.module.css";
+import {Product} from "@/app/home/page";
+import {useContext, useState} from "react";
 
-type ProductCardProps={
-  product:Product
-}
+type ProductCardProps = {
+  product: Product;
+};
 
 export default function ProductCard(props: ProductCardProps) {
-  const product_image = require("@/assets/Product Images/" + props.product.imageLink);
+  const product_image = require("@/assets/Product Images/" +
+    props.product.imageLink);
 
-  const US_dollar = new Intl.NumberFormat('en-US', {
-    style: 'currency',
-    currency: 'USD',
+  const US_dollar = new Intl.NumberFormat("en-US", {
+    style: "currency",
+    currency: "USD",
   });
+  const [is_loading, set_is_loading] = useState(false); // loading state for API call
+  const [error, setError] = useState("");
+
+  const handleAddToCart = async () => {
+    console.log("Add to Cart Clicked for Product:", props.product.productId);
+    
+    const userId = 1; // Assuming user ID is 1 for now
+  
+    fetch(`http://localhost:5165/api/cart`, {
+      method: 'POST',
+      headers: { 'Content-Type': 'application/json' },
+      body: JSON.stringify({ userId, productId: props.product.productId })
+    })
+    .then(response => {
+      if (!response.ok) {
+        throw new Error('Failed to add to cart');
+      }
+      return response.text();
+    })
+    .then(() => console.log("Product added to cart"))
+    .catch(error => console.error('Error:', error));
+  };
+  
 
   return (
     <div className={styles.product_card}>
       <Image
         className={styles.product_image}
-        src={product_image} // Use the imageUrl from props
+        src={product_image}
         alt={props.product.productName}
         height={175}
         width={250}
@@ -29,14 +54,19 @@ export default function ProductCard(props: ProductCardProps) {
       />
 
       <div className={styles.product_information}>
-        {/* <div className={styles.category_id}>{props.categoryId}</div> */}
+        {/* <div className={styles.category_id}>{props.product.categoryId}</div> */}
         <div className={styles.product_name}>{props.product.productName}</div>
-        <div className={styles.unit_price}>{US_dollar.format(props.product.unitPrice)}</div>
-        {/* <div className={styles.product_manufacturer}>{props.manufacturer}</div>
-        <div className={styles.product_description}>{props.description}</div>
-        <div className={styles.product_rating}>{props.rating}</div>
-        <div className={styles.product_sku}>{props.sku}</div> */}
+        <div className={styles.unit_price}>
+          {US_dollar.format(props.product.unitPrice)}
+        </div>
+        {/* <div className={styles.product_manufacturer}>{props.product.manufacturer}</div>
+        <div className={styles.product_description}>{props.product.description}</div>
+        <div className={styles.product_rating}>{props.product.rating}</div>
+        <div className={styles.product_sku}>{props.product.sku}</div> */}
+        <button onClick={handleAddToCart} className={styles.addToCartButton}>
+          Add to Cart
+        </button>
       </div>
     </div>
   );
-};
+}

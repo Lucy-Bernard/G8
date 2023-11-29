@@ -143,9 +143,7 @@ const Cart = () => {
             />
             <div style={styles.cartItemDetails}>
               <h2>{item.name}</h2>
-              <p>
-                Total: ${calculateItemTotal(item.price, item.quantity)}
-              </p>
+              <p>Total: ${calculateItemTotal(item.price, item.quantity)}</p>
               <div>
                 <button
                   style={styles.quantityButton}

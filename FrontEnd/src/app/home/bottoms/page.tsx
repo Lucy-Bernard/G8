@@ -44,7 +44,6 @@ export default function BottomsPage() {
 
   return (
     <main>
-      <NavigationBar />
       <div className={styles.main}>
         <h1>Bottoms</h1>
         {isLoading ? (

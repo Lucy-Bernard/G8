@@ -39,3 +39,31 @@
 /* .nav-item button:hover {
 } */
 
+.nav-link {
+  color: white; /* This sets the text color to white for unvisited links */
+  text-decoration: none; /* This removes the underline */
+  background: none;
+  border: none;
+  font-size: 1em;
+  cursor: pointer;
+  padding: 10px 20px;
+  text-transform: uppercase;
+  transition: background-color 0.3s, color 0.3s;
+  color: white;
+  font-weight: bold;
+  font-family: 'Quicksand', sans-serif;
+}
+
+.nav-link:visited {
+  color: white; /* This sets the text color to white for visited links */
+  background: none;
+  border: none;
+  font-size: 1em;
+  cursor: pointer;
+  padding: 10px 20px;
+  text-transform: uppercase;
+  transition: background-color 0.3s, color 0.3s;
+  color: white;
+  font-weight: bold;
+  font-family: 'Quicksand', sans-serif;
+}
