@@ -6,7 +6,7 @@
     border: 1px solid rgb(240, 240, 240);
     border-radius: 10px;
     box-shadow: 0px 0px 20px 1px rgb(240, 240, 240);
-    margin-bottom: 5rem;
+    margin-bottom: 10rem;
   }
   
   .product_card:hover {
@@ -27,7 +27,7 @@
     padding: 1rem;
     border-bottom-left-radius: 10px;
     border-bottom-right-radius: 10px;
-    height: 30%;
+    height: 52%;
   }
   
   .product_name {

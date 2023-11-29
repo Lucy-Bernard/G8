@@ -11,10 +11,6 @@ type ProductSectionProps = {
 const ProductSection: React.FC<ProductSectionProps> = ({ title, products }) => {
   return (
     <section className={styles.productSection}>
-
-      <h2>{title}</h2>
-
-
       <div className={styles.productGrid}>
         {products.map((product) => (
           <ProductCard key={product.productId} product={product} />
