@@ -78,10 +78,22 @@ export default function Home(props: {router: NextRouter}) {
           <p>{error}</p>
         ) : (
           <>
-            <ProductSection title="Tops" products={topsData} />
-            <ProductSection title="Bottoms" products={bottomsData} />
-            <ProductSection title="Outerwear" products={outerwearData} />
-            <ProductSection title="Shoes" products={shoesData} />
+            <div className={styles.headerDiv}>
+              <h2>Tops</h2>
+              <ProductSection title="Tops" products={topsData} />
+            </div>
+            <div className={styles.headerDiv}>
+              <h2>Bottoms</h2>
+              <ProductSection title="Bottoms" products={bottomsData} />
+            </div>
+            <div className={styles.headerDiv}>
+              <h2>Outerwear</h2>
+              <ProductSection title="Outerwear" products={outerwearData} />
+            </div>
+            <div className={styles.headerDiv}>
+              <h2>Shoes</h2> 
+              <ProductSection title="Shoes" products={shoesData} />
+            </div>
           </>
         )}
       </div>
