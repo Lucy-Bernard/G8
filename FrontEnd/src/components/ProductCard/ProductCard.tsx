@@ -4,7 +4,7 @@ import React from "react";
 import Image from "next/image";
 import styles from "./ProductCard.module.css";
 import {Product} from "@/app/home/page";
-import {useState} from "react";
+import {useContext, useState} from "react";
 
 type ProductCardProps = {
   product: Product;

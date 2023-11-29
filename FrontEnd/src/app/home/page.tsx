@@ -6,7 +6,8 @@ import NavigationBar from "@/components/NavigationBar/NavigationBar";
 import ProductSection from "@/components/ProductSection/ProductSection";
 import {useEffect, useState} from "react";
 import Link from "next/link";
-import { withRouter, NextRouter } from "next/router";
+import {withRouter, NextRouter} from "next/router";
+import {useUser} from "../user";
 
 export type Product = {
   productId: number;
@@ -20,7 +21,7 @@ export type Product = {
   imageLink: string;
 };
 
-export default function Home(props: { router: NextRouter }) {
+export default function Home(props: {router: NextRouter}) {
   const [isLoading, setIsLoading] = useState(true);
   const [topsData, setTopsData] = useState<Product[]>([]);
   const [bottomsData, setBottomsData] = useState<Product[]>([]);
@@ -29,7 +30,6 @@ export default function Home(props: { router: NextRouter }) {
   const [error, setError] = useState<string | null>(null);
 
   useEffect(() => {
-    console.log(props.router.query.userId)
     var myHeaders = new Headers();
     myHeaders.append("Content-Type", "application/json");
 
@@ -44,8 +44,8 @@ export default function Home(props: { router: NextRouter }) {
       .finally(() => setIsLoading(false));
   }, []);
 
-  function filterCategory(result:Product[]){
-    result.map((product)=>{
+  function filterCategory(result: Product[]) {
+    result.map((product) => {
       if (product.categoryId == 1) {
         setTopsData([...topsData, product]);
       }
@@ -58,7 +58,7 @@ export default function Home(props: { router: NextRouter }) {
       if (product.categoryId == 4) {
         setShoesData([...shoesData, product]);
       }
-    })
+    });
   }
 
   return (

@@ -3,13 +3,8 @@
 import {useEffect, useState} from "react";
 import styles from "./page.module.css";
 import Link from "next/link";
-import {useRouter} from "next/router";
-
-type User = {
-  userId: number;
-  email: string;
-  password: string;
-};
+import {useRouter} from "next/navigation";
+import { useUser } from "./user";
 
 export default function Login() {
   const [email, setEmail] = useState(""); //holds username and pw provided by user
@@ -17,6 +12,7 @@ export default function Login() {
   const [is_loading, set_is_loading] = useState(false); // loading state for API call
   const [error, setError] = useState("");
   const router = useRouter(); // router to redirect users to other pages
+  const { user, setUser } = useUser();
   //-----------------------------------------------------------------------------
 
   /**
@@ -52,10 +48,8 @@ export default function Login() {
     })
       .then((response) => response.json())
       .then((result) => {
-        router.push({
-          pathname: "/home",
-          query: result,
-        });
+        setUser(result);
+        router.push("/home");
       })
       .catch((error) => console.log("error", error));
   };
