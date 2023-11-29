@@ -6,7 +6,8 @@
     border: 1px solid rgb(240, 240, 240);
     border-radius: 10px;
     box-shadow: 0px 0px 20px 1px rgb(240, 240, 240);
-    margin-bottom: 10rem;
+    margin: 0.5rem;
+    margin-bottom: 8rem;
   }
   
   .product_card:hover {
@@ -27,7 +28,6 @@
     padding: 1rem;
     border-bottom-left-radius: 10px;
     border-bottom-right-radius: 10px;
-    height: 52%;
   }
   
   .product_name {
@@ -50,12 +50,11 @@
 
 .addToCartButton {
   /* Styles for the 'Add to Cart' button */
-  background-color: #007bff;
-  color: white;
+  background-color: #ffffff;
+  color: black;
   border: none;
   padding: 10px;
-  margin-top: 10px;
-  border-radius: 4px;
+  margin-top: 0.5rem;
+  border-radius: 10px;
   cursor: pointer;
-  /* Add additional styles as needed */
 }

@@ -1,6 +1,7 @@
 import React from "react";
 import ProductCard from "../ProductCard/ProductCard";
 import styles from "./ProductSection.module.css";
+import Link from "next/link";
 import {Product} from "@/app/home/page";
 
 type ProductSectionProps = {
@@ -13,7 +14,12 @@ const ProductSection: React.FC<ProductSectionProps> = ({ title, products }) => {
     <section className={styles.productSection}>
       <div className={styles.productGrid}>
         {products.map((product) => (
-          <ProductCard key={product.productId} product={product} />
+          <Link
+            key={product.productId}
+            href={`/home/productdetails/product-details?productId=${product.productId}`}
+          >
+              <ProductCard key={product.productId} product={product} />
+          </Link>
         ))}
       </div>
     </section>

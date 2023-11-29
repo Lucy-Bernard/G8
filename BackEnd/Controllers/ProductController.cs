@@ -63,9 +63,48 @@ namespace ExampleAPI.Controllers
 
 
         [HttpGet("{id}")]
-        public string Get(int id)
+        public IActionResult Get(int id)
         {
-            return "value";
+            try
+            {
+                using (SqlConnection connection = new(configuration.GetConnectionString("local_database")))
+                {
+                    SqlCommand command = new("GetProductById", connection)
+                    {
+                        CommandType = CommandType.StoredProcedure
+                    };
+
+                    command.Parameters.AddWithValue("@ProductId", id);
+
+                    connection.Open();
+
+                    using SqlDataReader reader = command.ExecuteReader();
+
+                    if (reader.Read())
+                    {
+                        Product product = new Product(
+                            reader.GetInt32(0),
+                            reader.GetInt32(1),
+                            reader.GetString(2),
+                            reader.GetDecimal(3),
+                            reader.GetString(4),
+                            reader.GetString(5),
+                            reader.GetDecimal(6),
+                            reader.GetString(7),
+                            reader.GetString(8));
+
+                        return Ok(product);
+                    }
+                    else
+                    {
+                        return NotFound($"Product with id {id} not found");
+                    }
+                }
+            }
+            catch (Exception exception)
+            {
+                return BadRequest(exception.Message);
+            }
         }
 
         [HttpPost]
