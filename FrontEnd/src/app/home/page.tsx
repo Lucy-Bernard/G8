@@ -91,7 +91,7 @@ export default function Home(props: {router: NextRouter}) {
               <ProductSection title="Outerwear" products={outerwearData} />
             </div>
             <div className={styles.headerDiv}>
-              <h2>Shoes</h2>
+              <h2>Shoes</h2> 
               <ProductSection title="Shoes" products={shoesData} />
             </div>
           </>
