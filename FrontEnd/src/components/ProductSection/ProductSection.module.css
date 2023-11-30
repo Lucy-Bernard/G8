@@ -1,2 +1,5 @@
-
-  
+.productSection {
+    display: flex;
+    gap: 2rem;
+    height: 350px;
+}

@@ -1,9 +1,9 @@
 "use client";
 
-import {useEffect, useState} from "react";
+import { useEffect, useState } from "react";
 import styles from "./page.module.css";
 import Link from "next/link";
-import {useRouter} from "next/navigation";
+import { useRouter } from "next/navigation";
 import { useUser } from "./user";
 
 export default function Login() {
@@ -22,7 +22,7 @@ export default function Login() {
    * then receives the data, processes the login request, and sends back a response.
    * @param event
    */
-  const handleSubmit = async (event: {preventDefault: () => void}) => {
+  const handleSubmit = async (event: { preventDefault: () => void }) => {
     event.preventDefault();
 
     // tracks whether a post/get request is loading or not
@@ -48,6 +48,7 @@ export default function Login() {
     })
       .then((response) => response.json())
       .then((result) => {
+        console.log(result);
         setUser(result);
         router.push("/home");
       })
