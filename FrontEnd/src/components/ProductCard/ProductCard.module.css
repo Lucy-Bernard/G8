@@ -1,61 +1,66 @@
 .product_card {
-    display:inline-flex;
-    flex-direction:column;
-    height: 250px;
-    width: 250px;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  height: 100%;
+  width: 250px;
+  cursor: pointer;
+
+  & .product_image {
+    height: 70%;
+    width: 100%;
+    object-fit: cover;
+    border-radius: 10px;
     border: 1px solid rgb(240, 240, 240);
     border-radius: 10px;
     box-shadow: 0px 0px 20px 1px rgb(240, 240, 240);
-    margin-bottom: 10rem;
-  }
+  }/*branch of prpoduct card*/
   
-  .product_card:hover {
-    cursor: pointer;
-  }
-  
-  .product_image {
-    height: 100%;
-    max-width: 100%;
-    object-fit: cover;
-    border-radius: 10px;
-  }
-  
-  .product_information {
+  & .product_information {
     display: flex;
     flex-direction: column;
     gap: 0.5rem;
     padding: 1rem;
     border-bottom-left-radius: 10px;
     border-bottom-right-radius: 10px;
-    height: 52%;
-  }
-  
-  .product_name {
-    font-size: 16px;
-    color: black;
-    overflow: hidden;
-    text-overflow: ellipsis;
-    white-space: nowrap;
-  }
-  
-  .unit_price {
-    font-size: 14px;
-    color: black;
-    overflow: hidden;
-    text-overflow: ellipsis;
-    white-space: nowrap;
-  }
+    height: 30%;
 
-  /* ProductCard.module.css */
+    & .product_name_price {
+      height: 70%;
+      width: 250px;
+      
 
-.addToCartButton {
-  /* Styles for the 'Add to Cart' button */
-  background-color: #007bff;
-  color: white;
-  border: none;
-  padding: 10px;
-  margin-top: 10px;
-  border-radius: 4px;
-  cursor: pointer;
-  /* Add additional styles as needed */
+      & .product_name {
+        font-size: 16px;
+        color: black;
+        overflow: hidden;
+        text-overflow: ellipsis;
+        white-space: nowrap;
+      }
+
+      & .unit_price {
+        font-size: 14px;
+        color: black;
+        overflow: hidden;
+        text-overflow: ellipsis;
+        white-space: nowrap;
+      }
+    }
+
+    & .addToCartButton {
+      /* Styles for the 'Add to Cart' button */
+      background-color: white;
+      color: black;
+      border: none;
+      border-radius: 10px;
+      cursor: pointer;
+      height: 30%;
+      width: 100%;
+    }
+  }
+}
+
+.product_name_price {
+  text-decoration: none;
 }

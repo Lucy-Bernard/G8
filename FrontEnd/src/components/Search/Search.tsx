@@ -8,15 +8,27 @@ import styles from './Search.module.css';
 
 // These keys MUST be in camel case
 export type Product = {
-    productId: number,
-    productName: string,
-    unitPrice: number
-}
+    productId: number;
+    categoryId: number;
+    productName: string;
+    unitPrice: number;
+    manufacturer: string;
+    description: string;
+    rating: number;
+    sku: string;
+    imageLink: string;
+  };
 
 export type SearchBarResults = {
-    productId: number,
-    productName: string,
-    unitPrice: number
+    productId: number;
+    categoryId: number;
+    productName: string;
+    unitPrice: number;
+    manufacturer: string;
+    description: string;
+    rating: number;
+    sku: string;
+    imageLink: string;
 }
 
 const SearchButtonThatSlides: React.FC = () => {
@@ -72,8 +84,23 @@ const SearchButtonThatSlides: React.FC = () => {
         if (searchBarResults.length === 0) {
             alert('There are no matches!')
         }
-        router.push('/product/' + searchBarResults[0].productId)
-        return false
+        if(searchBarResults[0].categoryId == 1){
+            router.push('/home/tops') 
+            return false
+        }
+        if(searchBarResults[0].categoryId == 2){
+            router.push('/home/bottoms') 
+            return false
+        }
+        if(searchBarResults[0].categoryId == 3){
+            router.push('/home/outerwear') 
+            return false
+        }
+        if(searchBarResults[0].categoryId == 4){
+            router.push('/home/shoes') 
+            return false
+        }
+
     }
 
     return (

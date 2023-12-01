@@ -6,36 +6,21 @@
   flex-direction: column;
   align-items: center;
   justify-content: center;
-  padding: 20px;
-  margin: 0 auto;
+  /* padding: 20px; */
   background-color: #d1b8a3;
 }
 
-.padding {
-  padding-top: 4.5rem;
-}
-
-.product-section {
-  margin-top: 20px;
-  display:inline;
-}
-
-.product-section h2 {
-  font-size: 24px;
-  margin-bottom: 3rem;
-}
-
 .footer {
+  height: 3rem;
+  width: 100vw;
   text-align: right;
   font-size: small;
   padding: 5px;
   background-color: transparent;
-  position: sticky;
-  bottom: 0;
+  position: relative;
 }
 
 .headerDiv h2 {
   font-size: 24px;
-  padding: 10px;
-  margin-bottom: 10px;
+  /* padding: 10px; */
 }

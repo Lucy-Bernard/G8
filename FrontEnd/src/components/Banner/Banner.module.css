@@ -1,14 +1,12 @@
 .banner {
     position: relative;
-    display: flex;
-    justify-content: center;
-    align-items: center;
     height: 500px; /* Adjust the height as needed */
-    width: 1300px;
+    width: 100vw;
+    background-color: #d1b8a3;
   }
   
   .bannerImage {
-    max-width: 100%vp;
+    max-width: 100%;
     max-height: 100%;
   }
   
