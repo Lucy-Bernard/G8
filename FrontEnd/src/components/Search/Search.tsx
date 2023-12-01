@@ -1,4 +1,4 @@
-// SearchButtonThatSlides.tsx
+
 
 "use client";
 
@@ -6,7 +6,7 @@ import { useEffect, useState } from "react";
 import { useRouter } from 'next/navigation'
 import styles from './Search.module.css';
 
-// These keys MUST be in camel case
+
 export type Product = {
     productId: number;
     categoryId: number;
@@ -36,9 +36,7 @@ const SearchButtonThatSlides: React.FC = () => {
     const [searchBarResults, setSearchBarResults] = useState<SearchBarResults[]>([])
     const [isLoading, setIsLoading] = useState(true);
     const [productsData, setProductsData] = useState<Product[]>([]);
-    // const [bottomsData, setBottomsData] = useState([]);
-    // const [outerwearData, setOuterwearData] = useState([]);
-    // const [shoesData, setShoesData] = useState([]);
+
     const [error, setError] = useState<string | null>(null);
 
     useEffect(() => {
@@ -59,19 +57,7 @@ const SearchButtonThatSlides: React.FC = () => {
             .finally(() => setIsLoading(false));
     }, []);
 
-    /**
-     * TO DO:: get categories and products into state
-     * onchange will filter through and look for 
-     * values in state
-     * 
-     * onchange the input will search the product_list
-     * and categories that are stored in the state
-     * if exact mathc is found it will go to page
-     * if not will throw an exception
-     * 
-     * @param event 
-     * @returns 
-     */
+ 
     const handleChange = (event: any) => {
         const available = productsData.filter(obj => {
             return obj.productName.toLowerCase().includes(event.target.value.toLowerCase())
@@ -84,7 +70,7 @@ const SearchButtonThatSlides: React.FC = () => {
         if (searchBarResults.length === 0) {
             alert('There are no matches!')
         }
-        if(searchBarResults[0].categoryId == 1){
+     /*   if(searchBarResults[0].categoryId == 1){
             router.push('/home/tops') 
             return false
         }
@@ -99,9 +85,13 @@ const SearchButtonThatSlides: React.FC = () => {
         if(searchBarResults[0].categoryId == 4){
             router.push('/home/shoes') 
             return false
-        }
+        }*/
 
+        router.push('/home/productdetails?productId=' + searchBarResults[0].productId)
+        return false
     }
+
+  
 
     return (
         <div className={styles.searchButton}>
