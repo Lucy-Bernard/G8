@@ -1,24 +1,17 @@
-const ProductDetails = () => {
+"use client"
 
-  // Fetch product details based on the productId and manage state with useState
+import React, { useState } from "react";
+import ProductDetails from "@/components/ProductDetails/ProductDetails";
 
-  // useEffect(() => {
-  //   var myHeaders = new Headers();
-  //   myHeaders.append("Content-Type", "application/json");
+const ProductDetailsPage = () => {
+  const [selectedProductId, setSelectedProductId] = useState<string | null>(null);
 
-  //   fetch("http://localhost:5165/api/product", {
-  //     method: "GET",
-  //     headers: myHeaders,
-  //     redirect: "follow",
-  //   })
-  // }, [productId]);
 
   return (
     <div>
-      <h1>Product Details</h1>
-      {/* Display product details using the state */}
+      <ProductDetails productId={1} unitPrice={0} imageLink={""} productName={""} manufacturer={""} description={""} rating={0} sku={""} />
     </div>
   );
 };
 
-export default ProductDetails;
+export default ProductDetailsPage;
