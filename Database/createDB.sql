@@ -13,7 +13,7 @@ DROP TABLE IF EXISTS Category;
 
 DROP PROCEDURE IF EXISTS AuthenticateUser;
 DROP PROCEDURE IF EXISTS GetProduct;
-DROP PROCEDURE IF EXISTS GetProductsWithCategory;
+DROP PROCEDURE IF EXISTS GetProductById;
 DROP PROCEDURE IF EXISTS GetOrderItem;
 DROP PROCEDURE IF EXISTS GetCategory;
 DROP PROCEDURE IF EXISTS GetAddress;
@@ -26,8 +26,6 @@ DROP PROCEDURE IF EXISTS GetSale;
 DROP PROCEDURE IF EXISTS GetOrderItem;
 DROP PROCEDURE IF EXISTS GetUserCart;
 DROP PROCEDURE IF EXISTS GetImagesOfProduct;
-DROP PROCEDURE IF EXISTS GetCartItemsForUser;
-DROP PROCEDURE IF EXISTS AddProductToCart;
 
 CREATE TABLE Category
 (
@@ -99,7 +97,9 @@ CREATE TABLE CartItem
 	cartItemId INT PRIMARY KEY IDENTITY(1, 1) NOT NULL,
 	productId INT FOREIGN KEY REFERENCES Product (productId) NOT NULL, 
 	cartId INT FOREIGN KEY REFERENCES Cart (cartId) NOT NULL,
-	quantity INT
+	quantity INT NOT NULL,
+	size VARCHAR(20), --to allow for shoe sizes, pant sizes as ints, or letters like XS, S, XXL, etc. nullable if we sell accessories
+	color VARCHAR(100) NOT NULL
 );
 
 --updpate what fields we need for this table
@@ -142,30 +142,33 @@ VALUES ('Top'),
 
 INSERT INTO Product (categoryId, productName, unitPrice, manufacturer, description, rating, sku, imageLink)
 VALUES (2, 'Homme Graphic Jogger', 21.00, 'manufacturer 1', 'description 1', 4.6, '123456','Homme Graphic Jogger.jpeg'),
-       (1, 'Corduroy Patchwork Long Sleeve Shirts', 26.00, 'manufacturer 3', 'description 3', 4.5, '234234','Corduroy Patchwork Long Sleeve Shirts.webp'),
-       (4, 'Men''s Nike Air Max 90 Casual Shoes', 130.00, 'manufacturer 8', 'description 8', 4.8, '234245','Mens Nike Air Max 90 Casual Shoes.jpeg'),
-       (3, 'Women''s Grey Full Zip Jacket', 60.00, 'manufacturer 9', 'description 9', 4.5, '234225','Womens Grey Full Zip Jacket.jpg'),
-       (1, 'Half Button Drop Shoulder Tee',13.99,'manufacturer DI','description 124',4.9,'129389','shoulder-tee.png'),
-       (1,'Long Sleeve Knit Top',46.00,'manufacturer 39','description 23',4.8,'123987','longsleeve-knittop.png'),
-       (1,'Ribbed Front Cutout Knitwear',26.00,'manufacturer 32','description 13',3.8,'283729','cutout-knitwear.png'),
-       (4,'Platform HighHeeled Ankle Boots',46.29,'manu 3','description 98',4.7,'109389','boots.png'),
-       (4,'Comat Boots', 29.23,'manufacturer 4','description 293',4.9,'198222','combat-boots.png'),
-       (4,'Brown Preppy Style Color Block Sneakers',22.80,'manufacturer 32','description 17',4.9,'120274','block-sneakers.png'),
-       (4,'Jumpman MPV Shoes',165.00,'manufacturer Jordan','description 23',5.0,'','jordans.png'),
-       (3,'Car Coat',418.00,'manufacturer 2','description28',4.9,'129811','car-cote.jpeg'),
-       (3,'Harris Jacket',168.00,'manufacturer 23','description 37',4.1,'293819','harris-jacket.png'),
-       (3,'Raincoat Hoodie Jacket',35.99,'manufacturer 12','description 29',3.9,'120654','raincoat-hoodie.png'),
-       (3,'Hooded Puffer Jacket',147.00,'manufacturer 12','description 14',4.9,'127654','hooded-puffer-jacket.png'),
-       (3,'Tailored Long Coat',120,'manufacturer 25','description 16',4.9,'2765782','tailored-long.png'),
-       (3,'Puffer Jacket',185.00,'manufacturer 25','description 17',4.5,'','puffer-jacket.png'),
-       (3, 'Brown Fleece Hoodie',39.00,'manufacturer 24','description 18',4.1,'589263','fleece-hoodie.png'),
-       (2, 'Multi Cargo Slim Fit Joggers', 42.45, 'manufacturer 2','description 32', 4.2, '328933','cargo-pants.png'),
-       (2, 'HighWaste Straight Leg Denim Jeans', 40.23, 'manu 4', 'description 13', 4.8, '238941', 'denim.jpg'),
-       (2, 'Womans Pinstripe Trousers', 19.99, 'manu 2', 'description 232', 4.2, '190472', 'pin-stripe-trousers.png'),
-       (2, 'High Waisted Plicated Side Pocket Wide Leg Waffle Casual Pants',29.95,'manu 4','description 21',4.1,'098901','widelegwafflepants.png'),
-       (1,'Crew Neck T-Shirt',14.00,'manufacturer 3','description 42',4.9,'929999','crew-neck.png'),
-          (4,'Gladiator Point Toe Heels',28.00,'manufacturer 100','description 32',3.9,'938729','gold-heels.png'),
-       (2,'Pleated Midi Skirt',60.00,'manufacturer 392','description sendit',4.8,'120411','pleated-midi-skirt.png');
+	   (1, 'Corduroy Patchwork Long Sleeve Shirts', 26.00, 'manufacturer 3', 'description 3', 4.5, '234234','Corduroy Patchwork Long Sleeve Shirts.webp'),
+	   (4, 'Men''s Nike Air Max 90 Casual Shoes', 130.00, 'manufacturer 8', 'description 8', 4.8, '234245','Mens Nike Air Max 90 Casual Shoes.jpeg'),
+	   (3, 'Women''s Grey Full Zip Jacket', 60.00, 'manufacturer 9', 'description 9', 4.5, '234225','Womens Grey Full Zip Jacket.jpg'),
+	   (1, 'Half Button Drop Shoulder Tee',13.99,'manufacturer DI','description 124',4.9,'129389','shoulder-tee.png'),
+	   (1,'Long Sleeve Knit Top',46.00,'manufacturer 39','description 23',4.8,'123987','longsleeve-knittop.png'),
+	   (1,'Ribbed Front Cutout Knitwear',26.00,'manufacturer 32','description 13',3.8,'283729','cutout-knitwear.png'),
+	   (4,'Platform HighHeeled Ankle Boots',46.29,'manu 3','description 98',4.7,'109389','boots.png'),
+	   (4,'Comat Boots', 29.23,'manufacturer 4','description 293',4.9,'198222','combat-boots.png'),
+	   (4,'Brown Preppy Style Color Block Sneakers',22.80,'manufacturer 32','description 17',4.9,'120274','block-sneakers.png'),
+	   (4,'Jumpman MPV Shoes',165.00,'manufacturer Jordan','description 23',5.0,'','jordans.png'),
+	   (3,'Car Coat',418.00,'manufacturer 2','description28',4.9,'129811','car-cote.jpeg'),
+	   (3,'Harris Jacket',168.00,'manufacturer 23','description 37',4.1,'293819','harris-jacket.png'),
+	   (3,'Raincoat Hoodie Jacket',35.99,'manufacturer 12','description 29',3.9,'120654','raincoat-hoodie.png'),
+	   (3,'Hooded Puffer Jacket',147.00,'manufacturer 12','description 14',4.9,'127654','hooded-puffer-jacket.png'),
+	   (3,'Tailored Long Coat',120,'manufacturer 25','description 16',4.9,'2765782','tailored-long.png'),
+	   (3,'Puffer Jacket',185.00,'manufacturer 25','description 17',4.5,'','puffer-jacket.png'),
+	   (3, 'Brown Fleece Hoodie',39.00,'manufacturer 24','description 18',4.1,'589263','fleece-hoodie.png'),
+	   (2, 'Multi Cargo Slim Fit Joggers', 42.45, 'manufacturer 2','description 32', 4.2, '328933','cargo-pants.png'),
+	   (2, 'HighWaste Straight Leg Denim Jeans', 40.23, 'manu 4', 'description 13', 4.8, '238941', 'denim.jpg'),
+	   (2, 'Womans Pinstripe Trousers', 19.99, 'manu 2', 'description 232', 4.2, '190472', 'pin-stripe-trousers.png'),
+	   (2, 'High Waisted Plicated Side Pocket Wide Leg Waffle Casual Pants',29.95,'manu 4','description 21',4.1,'098901','widelegwafflepants.png'),
+	   (1,'Crew Neck T-Shirt',14.00,'manufacturer 3','description 42',4.9,'929999','crew-neck.png'),
+  		(4,'Gladiator Point Toe Heels',28.00,'manufacturer 100','description 32',3.9,'938729','gold-heels.png'),
+	   (2,'Pleated Midi Skirt',60.00,'manufacturer 392','description sendit',4.8,'120411','pleated-midi-skirt.png');
+
+select * from Product;
+
 
 INSERT INTO [Address] (street, city, state, zip, country)
 VALUES ('11 Mallard Park', 'Sacramento', 'California', 94245, 'United States'),
@@ -203,22 +206,22 @@ VALUES (1),
 	   (5),
 	   (6);
 
--- INSERT INTO CartItem (cartId, productId, quantity)
--- VALUES (1, 2, 1),	   
--- 	   (3, 1, 1),
--- 	   (3, 4, 1),
--- 	   (6, 3, 2);
+INSERT INTO CartItem (cartId, productId, quantity, size, color)
+VALUES (1, 2, 1, '6', 'Grey'),	   
+	   (3, 1, 1, 'L', 'Grey' ),
+	   (3, 4, 1, 'M', 'Black'),
+	   (6, 3, 1, 'L', 'Navy/Brown');
 
 INSERT INTO [Order] (UserId, paymentId, shippingAddressId, orderNumber, orderDate)
 VALUES (1, 1, 7, 'ORD724806','2023-09-10'),
 	   (3, 2, 3, 'ORD806664','2023-06-22'),
 	   (5, 3, 5, 'ORD115687', '2023-11-11');
 
--- INSERT INTO OrderItem (orderId, cartItemId)
--- VALUES (1, 1),
--- 	   (1, 2),
--- 	   (1, 3),
--- 	   (1, 4);
+INSERT INTO OrderItem (orderId, cartItemId)
+VALUES (1, 1),
+	   (1, 2),
+	   (1, 3),
+	   (1, 4);
     
 INSERT INTO Sale (startDate, endDate, promoCode, saleName)
 VALUES ('2023-11-27', '2023-11-28', 'cyber23', 'Cyber Monday'),
@@ -242,14 +245,17 @@ GO
 EXECUTE GetProduct;
 GO
 
---Gets the Product details along with Category it's associated with
-CREATE PROCEDURE GetProductsWithCategory
+--Gets the Product by Id
+CREATE PROCEDURE GetProductById @productId INT
 AS
 BEGIN
-    SELECT p.ProductId, p.ProductName, p.UnitPrice, p.Manufacturer, p.Description, p.Rating, p.SKU, c.name AS categoryName
-    FROM Product p
-    INNER JOIN Category c ON p.categoryId = c.categoryId;
+    SELECT ProductId, CategoryId, ProductName, UnitPrice, Manufacturer, Description, Rating, SKU, imageLink
+    FROM Product
+    WHERE productId = @productId;
 END
+GO
+
+EXECUTE GetProductById 5;
 GO
 
 
@@ -336,30 +342,16 @@ CREATE PROCEDURE GetOrderItem @orderId INT
 	END
 Go
 
-CREATE PROCEDURE GetCartItemsForUser
-    @UserId INT
-AS
-BEGIN
-    SELECT 
-        ci.cartItemId, 
-        ci.productId, 
-        ci.quantity, 
-        p.productName, 
-        p.unitPrice, 
-        p.manufacturer, 
-        p.description, 
-        p.rating, 
-        p.sku, 
-        p.imageLink
-    FROM CartItem ci
-    INNER JOIN Cart c ON ci.cartId = c.cartId
-    INNER JOIN Product p ON ci.productId = p.productId
-    WHERE c.userId = @UserId;
-END
-GO
 
-EXECUTE GetCartItemsForUser @UserId = 1;
-
+CREATE PROCEDURE GetUserCart @userId INT
+	AS
+	BEGIN
+		SELECT ci.cartItemId, p.productName AS productName, ci.quantity, ci.size, ci.color
+		FROM CartItem ci
+		INNER JOIN Product p ON ci.productId = p.productId
+		WHERE ci.cartId = (SELECT cartId FROM Cart WHERE userId = @userId);
+	END
+Go
 
 -- Example of Calling it:
 --EXEC GetImagesOfProduct 1;
@@ -372,7 +364,7 @@ EXECUTE GetCartItemsForUser @UserId = 1;
 -- GO
 
 
-GO
+
 CREATE PROCEDURE AuthenticateUser @Email VARCHAR(255), @Password_ VARCHAR(255)
 	AS
 	BEGIN
@@ -382,31 +374,7 @@ CREATE PROCEDURE AuthenticateUser @Email VARCHAR(255), @Password_ VARCHAR(255)
 	END
 Go
 
-CREATE PROCEDURE AddProductToCart
-    @UserId INT,
-    @ProductId INT
-AS
-BEGIN
-    DECLARE @CartId INT;
+-- select * from [User];
 
-    -- Check if cart exists for the user
-    SELECT @CartId = cartId FROM Cart WHERE userId = @UserId;
-
-    -- If no cart exists, create one
-    IF @CartId IS NULL
-    BEGIN
-        INSERT INTO Cart (userId) VALUES (@UserId);
-        SET @CartId = SCOPE_IDENTITY();
-    END
-
-    -- Add product to cart
-    INSERT INTO CartItem (cartId, productId, quantity) 
-    VALUES (@CartId, @ProductId, 1); -- Assuming default quantity as 1
-
-END
-GO
-EXECUTE AddProductToCart 1, 1;
-select * from [User];
-select * from CartItem
 -- Use this to check whether a stored procedure is working
 -- EXECUTE AuthenticateUser "johndoe217@email.com", "P@ssw0rd143";
