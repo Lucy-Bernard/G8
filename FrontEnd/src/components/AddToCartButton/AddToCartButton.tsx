@@ -32,8 +32,8 @@ const AddToCartButton: React.FC<AddToCartButtonProps> = ({ productId }) => {
 
   return (
     <button onClick={handleAddToCart} className={styles.addToCartButton}>
-          Add to Cart
-        </button>
+      Add to Cart
+    </button>
   );
 };
 
