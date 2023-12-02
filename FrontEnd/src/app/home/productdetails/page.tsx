@@ -2,23 +2,23 @@
 
 import React, { useEffect, useState } from "react";
 import { useSearchParams } from "next/navigation";
-import styles from "../page.module.css";
-
+import styles from "./page.module.css";
+import Image from 'next/image';
+import ProductCard from "@/components/ProductCard/ProductCard";
+import Rating from "@mui/material/Rating";
 
 const ProductDetails = () => {
   const [productDetails, setProductDetails] = useState<any>(null);
   const [isLoading, setIsLoading] = useState(true);
   const [error, setError] = useState<string | null>(null);
 
-  const searchParams = useSearchParams();
-  const productId = searchParams.get("productId");
-
-  const product_image = require(`@/assets/Product Images/${productDetails?.imageLink}`);
-
   const US_dollar = new Intl.NumberFormat("en-US", {
     style: "currency",
     currency: "USD",
   });
+
+  const searchParams = useSearchParams();
+  const productId = searchParams.get("productId");
 
   useEffect(() => {
     const myHeaders = new Headers();
@@ -36,43 +36,36 @@ const ProductDetails = () => {
   }, []);
 
   return (
-    <main>
-      <h1>Product Details</h1>
+    <main className={styles.main}>
       {productDetails ? (
-        <div>
-          <div className={styles.product_productId}>
-            <p>ProductId: {productId}</p>
-          </div>
+        <div className={styles.product_details_container}>
 
-          <img
-            className={styles.product_image}
-            src={product_image}
-            alt={productDetails?.productName}
-            height={175}
-            width={250}
-            loading="lazy"
-          />
+          <ProductCard product={productDetails} productDetailsPage={true} />
 
-          <h2>{productDetails.productName}</h2>
+          <div className={styles.details}>
+            <h2>{productDetails.productName}</h2>
 
-          <div className={styles.unit_price}>
-            {US_dollar.format(productDetails.unitPrice)}
-          </div>
+            <div className={styles.unit_price}>
+              {US_dollar.format(productDetails.unitPrice)}
+            </div>
 
-          <div className={styles.product_manufacturer}>
-            <p>Manufacturer: {productDetails.manufacturer}</p>
-          </div>
 
-          <div className={styles.product_description}>
-            <p>Description: {productDetails.description}</p>
-          </div>
+            <div className={styles.product_manufacturer}>
+              <p>Manufacturer: {productDetails.manufacturer}</p>
+            </div>
 
-          <div className={styles.product_rating}>
-            <p>Rating: {productDetails.rating}</p>
-          </div>
+            <div className={styles.product_description}>
+              <p>Description: {productDetails.description}</p>
+            </div>
 
-          <div className={styles.product_sku}>
-            <p>SKU: {productDetails.sku}</p>
+            <div className={styles.product_rating}>
+              <p>Rating: {productDetails.rating}</p>
+              <Rating name="half-rating-read" defaultValue={productDetails.rating} precision={0.5} readOnly />
+            </div>
+            <div className={styles.product_sku}>
+              <p>SKU: {productDetails.sku}</p>
+            </div>
+
           </div>
         </div>
       ) : (

@@ -9,6 +9,7 @@ import { useContext, useState } from "react";
 
 type ProductCardProps = {
   product: Product;
+  productDetailsPage?: boolean; // Add a prop to indicate the ProductDetails page
 };
 
 export default function ProductCard(props: ProductCardProps) {
@@ -21,7 +22,7 @@ export default function ProductCard(props: ProductCardProps) {
   });
 
   return (
-    <div className={styles.product_card}>
+    <div className={`${styles.product_card} ${props.productDetailsPage ? styles.product_details_page : ''}`}>
       <Image
         className={styles.product_image}
         src={product_image}

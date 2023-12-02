@@ -1,7 +1,10 @@
 "use client";
 
 import Link from "next/link";
-import React, {useState} from "react";
+import React, { useState } from "react";
+import styles from "./page.module.css";
+import RemoveCircleIcon from '@mui/icons-material/RemoveCircle';
+import AddCircleIcon from '@mui/icons-material/AddCircle';
 
 // Existing CartItem type
 type CartItem = {
@@ -46,7 +49,7 @@ const Cart = () => {
   const handleQuantityChange = (itemId: number, newQuantity: number) => {
     const updatedCartItems = cartItems.map((item) => {
       if (item.id === itemId) {
-        return {...item, quantity: Math.max(1, newQuantity)};
+        return { ...item, quantity: Math.max(1, newQuantity) };
       }
       return item;
     });
@@ -79,88 +82,42 @@ const Cart = () => {
     return formatPrice(price * quantity);
   };
 
-  // Inline styles
-  const styles = {
-    cartContainer: {
-      maxWidth: "800px",
-      margin: "auto",
-      padding: "20px",
-    },
-    cartItem: {
-      border: "1px solid #ddd",
-      padding: "15px",
-      marginBottom: "20px",
-      display: "flex",
-      alignItems: "center",
-    },
-    cartItemImage: {
-      maxWidth: "150px",
-      marginRight: "20px",
-      borderRadius: "4px",
-    },
-    cartItemDetails: {
-      flexGrow: 1,
-    },
-    cartItemButton: {
-      backgroundColor: "#007bff",
-      color: "white",
-      padding: "10px 15px",
-      border: "none",
-      borderRadius: "4px",
-      cursor: "pointer",
-    },
-    proceedButton: {
-      backgroundColor: "green",
-      color: "white",
-      padding: "10px 20px",
-      border: "none",
-      borderRadius: "4px",
-      cursor: "pointer",
-    },
-    quantityButton: {
-      backgroundColor: "white",
-      color: "black",
-      padding: "5px 10px",
-      border: "none",
-      borderRadius: "4px",
-      cursor: "pointer",
-      margin: "0 5px",
-    },
-  };
-
   return (
-    <div style={styles.cartContainer}>
+    <div className={styles.cartContainer}>
       <h1>Your Shopping Cart</h1>
       {cartItems.length === 0 ? (
         <p>Your cart is empty</p>
       ) : (
         cartItems.map((item) => (
-          <div key={item.id} style={styles.cartItem}>
+          <div key={item.id} className={styles.cartItem}>
             <img
               src={item.imageUrl}
               alt={item.name}
-              style={styles.cartItemImage}
+              className={styles.cartItemImage}
             />
-            <div style={styles.cartItemDetails}>
+            <div className={styles.cartItemDetails}>
               <h2>{item.name}</h2>
-              <p>Total: ${calculateItemTotal(item.price, item.quantity)}</p>
+              <div className={styles.cartItemPrice}>
+                <p>Total: ${calculateItemTotal(item.price, item.quantity)}</p>
+              </div>
               <div>
                 <button
-                  style={styles.quantityButton}
+                  className={styles.quantityButton}
                   onClick={() => decrementQuantity(item.id)}
                 >
-                  -
+                  <RemoveCircleIcon />
                 </button>
+
                 <span>{item.quantity}</span>
                 <button
-                  style={styles.quantityButton}
+                  className={styles.quantityButton}
                   onClick={() => incrementQuantity(item.id)}
                 >
-                  +
+                  <AddCircleIcon />
                 </button>
               </div>
               <button
-                style={styles.cartItemButton}
+                className={styles.cartItemButton}
                 onClick={() => handleRemoveItem(item.id)}
               >
                 Remove
@@ -172,7 +129,7 @@ const Cart = () => {
       <div>
         <h3>Total Cost: ${formatPrice(calculateTotal(cartItems))}</h3>
         <Link href="/home/cart/checkout">
-          <button style={styles.proceedButton}>Proceed to Checkout</button>
+          <button className={styles.proceedButton}>Proceed to Checkout</button>
         </Link>
       </div>
     </div>
