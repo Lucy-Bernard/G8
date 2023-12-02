@@ -2,12 +2,9 @@
 
 import styles from "./page.module.css";
 import Banner from "@/components/Banner/Banner";
-import NavigationBar from "@/components/NavigationBar/NavigationBar";
 import ProductSection from "@/components/ProductSection/ProductSection";
 import { useEffect, useState } from "react";
-import Link from "next/link";
 import { withRouter, NextRouter } from "next/router";
-import { useUser } from "../user";
 
 export type Product = {
   productId: number;
