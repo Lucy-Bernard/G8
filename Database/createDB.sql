@@ -13,7 +13,7 @@ DROP TABLE IF EXISTS Category;
 
 DROP PROCEDURE IF EXISTS AuthenticateUser;
 DROP PROCEDURE IF EXISTS GetProduct;
-DROP PROCEDURE IF EXISTS GetProductById;
+DROP PROCEDURE IF EXISTS GetProductsWithCategory;
 DROP PROCEDURE IF EXISTS GetOrderItem;
 DROP PROCEDURE IF EXISTS GetCategory;
 DROP PROCEDURE IF EXISTS GetAddress;
@@ -28,6 +28,9 @@ DROP PROCEDURE IF EXISTS GetUserCart;
 DROP PROCEDURE IF EXISTS GetImagesOfProduct;
 DROP PROCEDURE IF EXISTS GetCartItemsForUser;
 DROP PROCEDURE IF EXISTS AddProductToCart;
+DROP PROCEDURE IF EXISTS GetProductById;
+DROP PROCEDURE IF EXISTS RemoveProductFromCart;
+DROP PROCEDURE IF EXISTS UpdateCartItemQuantity;
 
 CREATE TABLE Category
 (
@@ -228,6 +231,7 @@ GO
 
 
 
+
 -- *** STORED PROCEDURES ******
 --   * to make viewing information easier; can create more as we see fit
 --	 * (some of these may not be needed)
@@ -388,6 +392,7 @@ CREATE PROCEDURE AddProductToCart
 AS
 BEGIN
     DECLARE @CartId INT;
+    DECLARE @ExistingQuantity INT;
 
     -- Check if cart exists for the user
     SELECT @CartId = cartId FROM Cart WHERE userId = @UserId;
@@ -399,17 +404,62 @@ BEGIN
         SET @CartId = SCOPE_IDENTITY();
     END
 
-    -- Add product to cart
-    INSERT INTO CartItem (cartId, productId, quantity) 
-    VALUES (@CartId, @ProductId, 1); -- Assuming default quantity as 1
+    -- Check if product already exists in cart
+    SELECT @ExistingQuantity = quantity FROM CartItem 
+    WHERE cartId = @CartId AND productId = @ProductId;
 
+    IF @ExistingQuantity IS NULL
+    BEGIN
+        -- Product does not exist in cart, insert new cart item
+        INSERT INTO CartItem (cartId, productId, quantity) 
+        VALUES (@CartId, @ProductId, 1);
+    END
+    ELSE
+    BEGIN
+        -- Product exists, update quantity
+        UPDATE CartItem
+        SET quantity = @ExistingQuantity + 1
+        WHERE cartId = @CartId AND productId = @ProductId;
+    END
+END
+GO
+
+CREATE PROCEDURE RemoveProductFromCart
+    @cartItemId INT
+AS
+BEGIN
+    DELETE FROM CartItem WHERE cartItemId = @cartItemId;
 END
 GO
 
 
--- EXECUTE GetProductById @ProductId = 1;
+CREATE PROCEDURE GetProductById
+    @ProductId INT
+AS
+BEGIN
+    SELECT productId, categoryId, productName, unitPrice, manufacturer, description, rating, sku, imageLink
+    FROM Product
+    WHERE productId = @ProductId;
+END
+GO
 
-EXECUTE AddProductToCart 1, 1;
+CREATE PROCEDURE UpdateCartItemQuantity
+    @CartItemId INT,
+    @NewQuantity INT
+AS
+BEGIN
+    -- Check if the cart item exists
+    IF EXISTS (SELECT 1 FROM CartItem WHERE cartItemId = @CartItemId)
+    BEGIN
+        -- Update the quantity of the cart item
+        UPDATE CartItem
+        SET quantity = @NewQuantity
+        WHERE cartItemId = @CartItemId;
+    END
+END
+GO
+
+
 select * from [User];
 select * from CartItem
 -- Use this to check whether a stored procedure is working
