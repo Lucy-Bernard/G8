@@ -3,7 +3,7 @@
 import React, { useEffect, useState } from "react";
 import { useSearchParams } from "next/navigation";
 import styles from "../page.module.css";
-import { Product } from "../page";
+
 
 const ProductDetails = () => {
   const [productDetails, setProductDetails] = useState<any>(null);
@@ -12,6 +12,13 @@ const ProductDetails = () => {
 
   const searchParams = useSearchParams();
   const productId = searchParams.get("productId");
+
+  const product_image = require(`@/assets/Product Images/${productDetails?.imageLink}`);
+
+  const US_dollar = new Intl.NumberFormat("en-US", {
+    style: "currency",
+    currency: "USD",
+  });
 
   useEffect(() => {
     const myHeaders = new Headers();
@@ -37,11 +44,20 @@ const ProductDetails = () => {
             <p>ProductId: {productId}</p>
           </div>
 
-          <img src={productDetails?.imageLink} alt={productDetails?.productName} />
+          <img
+            className={styles.product_image}
+            src={product_image}
+            alt={productDetails?.productName}
+            height={175}
+            width={250}
+            loading="lazy"
+          />
 
           <h2>{productDetails.productName}</h2>
 
-          <p>Price: ${productDetails.unitPrice}</p>
+          <div className={styles.unit_price}>
+            {US_dollar.format(productDetails.unitPrice)}
+          </div>
 
           <div className={styles.product_manufacturer}>
             <p>Manufacturer: {productDetails.manufacturer}</p>
