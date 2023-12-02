@@ -1,17 +1,20 @@
-namespace unit_tests_final361;
+using System;
+using NUnit.Framework;
+
+namespace ExampleAPI{
 
 public class UserNameTests
 
 {
     //imported this will update when we actually have the functions to test
- [Fact]
+ [Test]
         public void Duplicate_UserName_ShouldPass()
         {
              
    
         }
 
-        [Fact]
+        [Test]
         public void Duplicate_UserName_ShouldFail()
         {
  

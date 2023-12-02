@@ -13,7 +13,7 @@ DROP TABLE IF EXISTS Category;
 
 DROP PROCEDURE IF EXISTS AuthenticateUser;
 DROP PROCEDURE IF EXISTS GetProduct;
-DROP PROCEDURE IF EXISTS GetProductsWithCategory;
+DROP PROCEDURE IF EXISTS GetProductById;
 DROP PROCEDURE IF EXISTS GetOrderItem;
 DROP PROCEDURE IF EXISTS GetCategory;
 DROP PROCEDURE IF EXISTS GetAddress;
@@ -242,13 +242,13 @@ GO
 EXECUTE GetProduct;
 GO
 
---Gets the Product details along with Category it's associated with
-CREATE PROCEDURE GetProductsWithCategory
+--Gets the Product by Id
+CREATE PROCEDURE GetProductById @productId INT
 AS
 BEGIN
-    SELECT p.ProductId, p.ProductName, p.UnitPrice, p.Manufacturer, p.Description, p.Rating, p.SKU, c.name AS categoryName
-    FROM Product p
-    INNER JOIN Category c ON p.categoryId = c.categoryId;
+    SELECT ProductId, CategoryId, ProductName, UnitPrice, Manufacturer, Description, Rating, SKU, imageLink
+    FROM Product
+    WHERE productId = @productId;
 END
 GO
 
@@ -405,6 +405,10 @@ BEGIN
 
 END
 GO
+
+
+-- EXECUTE GetProductById @ProductId = 1;
+
 EXECUTE AddProductToCart 1, 1;
 select * from [User];
 select * from CartItem
