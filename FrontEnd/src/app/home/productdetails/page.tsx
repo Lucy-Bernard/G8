@@ -6,6 +6,7 @@ import styles from "./page.module.css";
 import Image from 'next/image';
 import ProductCard from "@/components/ProductCard/ProductCard";
 import Rating from "@mui/material/Rating";
+import AddToCartButton from "@/components/AddToCartButton/AddToCartButton";
 
 const ProductDetails = () => {
   const [productDetails, setProductDetails] = useState<any>(null);
@@ -18,7 +19,8 @@ const ProductDetails = () => {
   });
 
   const searchParams = useSearchParams();
-  const productId = searchParams.get("productId");
+  const productIdString = searchParams.get("productId");
+  const productId = productIdString ? Number(productIdString) : null;
 
   useEffect(() => {
     const myHeaders = new Headers();
@@ -65,11 +67,14 @@ const ProductDetails = () => {
             <div className={styles.product_sku}>
               <p>SKU: {productDetails.sku}</p>
             </div>
-
           </div>
         </div>
       ) : (
         <p>Loading...</p>
+      )}
+      {/** convert product id into a number for add to cart button */}
+      {productId && !isNaN(productId) && (
+        <AddToCartButton productId={productId} />
       )}
     </main>
   );
