@@ -8,7 +8,7 @@ import AddCircleIcon from "@mui/icons-material/AddCircle";
 
 // Existing CartItem type
 
-type CartItem = {
+export type CartItem = {
   cartItemId: number;
   productId: number;
   quantity: number;
