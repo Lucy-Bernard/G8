@@ -42,32 +42,47 @@ const Cart = () => {
   const calculateTotal = (items: CartItem[]) =>
     items.reduce((acc, item) => acc + item.unitPrice * item.quantity, 0);
 
-  // const totalCost = calculateTotal(cartItems);
   // Function to format price
   const formatPrice = (price: number) => price.toFixed(2);
 
   // Function to handle quantity change
-  const handleQuantityChange = (cartItemId: number, newQuantity: number) => {
-    const updatedCartItems = cartItems.map((item) => {
-      if (item.cartItemId === cartItemId) {
-        return { ...item, quantity: Math.max(1, newQuantity) };
-      }
-      return item;
-    });
-    setCartItems(updatedCartItems);
+  const handleQuantityChange = (cartItemId, newQuantity) => {
+    newQuantity = Math.max(1, newQuantity); // Ensure the quantity is at least 1
+
+    fetch(`http://localhost:5165/api/cart/${cartItemId}/${newQuantity}`, {
+      method: "PUT",
+      headers: { "Content-Type": "application/json" },
+    })
+      .then((response) => {
+        if (!response.ok) {
+          throw new Error("Failed to update quantity");
+        }
+        return response.text();
+      })
+      .then(() => {
+        const updatedCartItems = cartItems.map((item) => {
+          if (item.cartItemId === cartItemId) {
+            return { ...item, quantity: newQuantity };
+          }
+          return item;
+        });
+        setCartItems(updatedCartItems);
+      })
+      .catch((error) => {
+        console.error("Error:", error);
+      });
   };
 
   // Function to increment quantity
   const incrementQuantity = (cartItemId: number) => {
-    handleQuantityChange(cartItemId, getItemQuantity(cartItemId) + 1);
+    const currentQuantity = getItemQuantity(cartItemId);
+    handleQuantityChange(cartItemId, currentQuantity + 1);
   };
 
   // Function to decrement quantity
   const decrementQuantity = (cartItemId: number) => {
-    handleQuantityChange(
-      cartItemId,
-      Math.max(1, getItemQuantity(cartItemId) - 1)
-    );
+    const currentQuantity = getItemQuantity(cartItemId);
+    handleQuantityChange(cartItemId, Math.max(1, currentQuantity - 1));
   };
 
   // Helper function to get item quantity
@@ -80,20 +95,21 @@ const Cart = () => {
   // Function to remove an item from the cart
   const handleRemoveItem = (cartItemId: number) => {
     fetch(`http://localhost:5165/api/cart/${cartItemId}`, {
-      method: 'DELETE',
-      headers: { 'Content-Type': 'application/json' }
+      method: "DELETE",
+      headers: { "Content-Type": "application/json" },
     })
-      .then(response => {
+      .then((response) => {
         if (!response.ok) {
-          throw new Error('Failed to remove item from cart');
+          throw new Error("Failed to remove item from cart");
         }
         // Filter out the removed item from the cartItems state
-        const updatedCartItems = cartItems.filter((item) => item.cartItemId !== cartItemId);
+        const updatedCartItems = cartItems.filter(
+          (item) => item.cartItemId !== cartItemId
+        );
         setCartItems(updatedCartItems);
       })
-      .catch(error => console.error('Error:', error));
+      .catch((error) => console.error("Error:", error));
   };
-
 
   // Function to calculate and format item total
   const calculateItemTotal = (unitPrice: number, quantity: number) => {
@@ -109,7 +125,7 @@ const Cart = () => {
         cartItems.map((item) => (
           <div key={item.cartItemId} className={styles.cartItem}>
             <img
-              src={item.imageLink}
+              src={require("@/assets/Product Images/" + item.imageLink)}
               alt={item.productName}
               className={styles.cartItemImage}
             />

@@ -11,12 +11,9 @@ DROP TABLE IF EXISTS [Address];
 DROP TABLE IF EXISTS Product;
 DROP TABLE IF EXISTS Category;
 
-DROP PROCEDURE IF EXISTS GetCartItemsForUser;
-DROP PROCEDURE IF EXISTS AddProductToCart;
-DROP PROCEDURE IF EXISTS RemoveProductFromCart;
 DROP PROCEDURE IF EXISTS AuthenticateUser;
 DROP PROCEDURE IF EXISTS GetProduct;
-DROP PROCEDURE IF EXISTS GetProductById;
+DROP PROCEDURE IF EXISTS GetProductsWithCategory;
 DROP PROCEDURE IF EXISTS GetOrderItem;
 DROP PROCEDURE IF EXISTS GetCategory;
 DROP PROCEDURE IF EXISTS GetAddress;
@@ -31,6 +28,9 @@ DROP PROCEDURE IF EXISTS GetUserCart;
 DROP PROCEDURE IF EXISTS GetImagesOfProduct;
 DROP PROCEDURE IF EXISTS GetCartItemsForUser;
 DROP PROCEDURE IF EXISTS AddProductToCart;
+DROP PROCEDURE IF EXISTS GetProductById;
+DROP PROCEDURE IF EXISTS RemoveProductFromCart;
+DROP PROCEDURE IF EXISTS UpdateCartItemQuantity;
 
 CREATE TABLE Category
 (
@@ -228,6 +228,7 @@ VALUES ('2023-11-27', '2023-11-28', 'cyber23', 'Cyber Monday'),
 	   ('2023-12-18', '2023-12-24', 'jolly30', 'Holiday Sale'),
 	   ('2023-12-31', '2024-01-01', 'NYE24!', 'New Year Sale');
 GO
+
 
 
 
@@ -431,12 +432,23 @@ BEGIN
 END
 GO
 
+CREATE PROCEDURE UpdateCartItemQuantity
+    @CartItemId INT,
+    @NewQuantity INT
+AS
+BEGIN
+    -- Check if the cart item exists
+    IF EXISTS (SELECT 1 FROM CartItem WHERE cartItemId = @CartItemId)
+    BEGIN
+        -- Update the quantity of the cart item
+        UPDATE CartItem
+        SET quantity = @NewQuantity
+        WHERE cartItemId = @CartItemId;
+    END
+END
+GO
 
 
-
--- EXECUTE GetProductById @ProductId = 1;
-
-EXECUTE AddProductToCart 1, 1;
 select * from [User];
 select * from CartItem
 -- Use this to check whether a stored procedure is working

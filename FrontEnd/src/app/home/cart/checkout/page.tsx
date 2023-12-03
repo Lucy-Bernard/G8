@@ -36,10 +36,6 @@ const theme = createTheme({
 
 const steps = ['Shipping', 'Payment', 'Review & Order'];
 
-const calculateTax = (total: number): number => {
-  const taxRate = 0.30; // 30%
-  return total * taxRate;
-};
 
 export default function Checkout() {
 
