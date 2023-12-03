@@ -2,6 +2,7 @@
 
 import Link from "next/link";
 import React, { useEffect, useState } from "react";
+
 import styles from "./page.module.css";
 import RemoveCircleIcon from "@mui/icons-material/RemoveCircle";
 import AddCircleIcon from "@mui/icons-material/AddCircle";
@@ -52,6 +53,7 @@ const Cart = () => {
     fetch(`http://localhost:5165/api/cart/${cartItemId}/${newQuantity}`, {
       method: "PUT",
       headers: { "Content-Type": "application/json" },
+
     })
       .then((response) => {
         if (!response.ok) {
@@ -62,7 +64,9 @@ const Cart = () => {
       .then(() => {
         const updatedCartItems = cartItems.map((item) => {
           if (item.cartItemId === cartItemId) {
+
             return { ...item, quantity: newQuantity };
+
           }
           return item;
         });
@@ -96,7 +100,9 @@ const Cart = () => {
   const handleRemoveItem = (cartItemId: number) => {
     fetch(`http://localhost:5165/api/cart/${cartItemId}`, {
       method: "DELETE",
+
       headers: { "Content-Type": "application/json" },
+
     })
       .then((response) => {
         if (!response.ok) {

@@ -429,7 +429,7 @@ CREATE PROCEDURE RemoveProductFromCart
 AS
 BEGIN
     DELETE FROM CartItem WHERE cartItemId = @cartItemId;
-END
+
 GO
 
 CREATE PROCEDURE UpdateCartItemQuantity
