@@ -1,6 +1,6 @@
 "use client";
 
-import * as React from 'react';
+// import * as React from 'react';
 import OrderSummary from "@/components/OrderSummary/OrderSummary";
 import ReviewOrder from "@/components/ReviewOrder/ReviewOrder";
 import Box from '@mui/material/Box';
@@ -10,7 +10,6 @@ import StepLabel from '@mui/material/StepLabel';
 import Button from '@mui/material/Button';
 import Typography from '@mui/material/Typography';
 import TextField from '@mui/material/TextField';
-import Grid from '@mui/material/Grid';
 import InputAdornment from '@mui/material/InputAdornment';
 import Tooltip from '@mui/material/Tooltip';
 import InfoIcon from '@mui/icons-material/Info';
@@ -20,6 +19,7 @@ import { createTheme, ThemeProvider } from '@mui/material/styles';
 import { Snackbar, SnackbarContent } from '@mui/material';
 import { useRouter } from 'next/navigation';
 import styles from "./page.module.css";
+import React, { useEffect, useState } from "react";
 
 // -----------Font -------------------------------------
 const theme = createTheme({
@@ -34,13 +34,13 @@ const theme = createTheme({
 // const stepHeight = '100px'; 
 // -------------------Checkout------------------------------
 
-
 const steps = ['Shipping', 'Payment', 'Review & Order'];
-
 
 
 export default function Checkout() {
 
+
+  // ----------------------------------------------------------------------------------------
 
   const [formError, setFormError] = React.useState(false);
   const [openSnackbar, setOpenSnackbar] = React.useState(false);
@@ -382,14 +382,7 @@ export default function Checkout() {
         </Box>
         <Box sx={{ marginTop: '-100px' }}>
           {/* Order Summary */}
-          <OrderSummary
-            subtotal={408.28}
-            discounts={0.41}
-            tax={0.00}
-            delivery={'FREE'}
-            total={407.87}
-            savings={85.41}
-          />
+          <OrderSummary />
         </Box>
       </Box>
       {/* Snackbar notification */}

@@ -429,18 +429,7 @@ CREATE PROCEDURE RemoveProductFromCart
 AS
 BEGIN
     DELETE FROM CartItem WHERE cartItemId = @cartItemId;
-END
-GO
 
-
-CREATE PROCEDURE GetProductById
-    @ProductId INT
-AS
-BEGIN
-    SELECT productId, categoryId, productName, unitPrice, manufacturer, description, rating, sku, imageLink
-    FROM Product
-    WHERE productId = @ProductId;
-END
 GO
 
 CREATE PROCEDURE UpdateCartItemQuantity

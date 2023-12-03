@@ -42,7 +42,6 @@ export default function ProductCard(props: ProductCardProps) {
             {US_dollar.format(props.product.unitPrice)}
           </div>
         </div>
-        
       </div>
     </div>
   );
