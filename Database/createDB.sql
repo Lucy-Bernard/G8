@@ -11,6 +11,9 @@ DROP TABLE IF EXISTS [Address];
 DROP TABLE IF EXISTS Product;
 DROP TABLE IF EXISTS Category;
 
+DROP PROCEDURE IF EXISTS GetCartItemsForUser;
+DROP PROCEDURE IF EXISTS AddProductToCart;
+DROP PROCEDURE IF EXISTS RemoveProductFromCart;
 DROP PROCEDURE IF EXISTS AuthenticateUser;
 DROP PROCEDURE IF EXISTS GetProduct;
 DROP PROCEDURE IF EXISTS GetProductById;
@@ -388,6 +391,7 @@ CREATE PROCEDURE AddProductToCart
 AS
 BEGIN
     DECLARE @CartId INT;
+    DECLARE @ExistingQuantity INT;
 
     -- Check if cart exists for the user
     SELECT @CartId = cartId FROM Cart WHERE userId = @UserId;
@@ -399,12 +403,35 @@ BEGIN
         SET @CartId = SCOPE_IDENTITY();
     END
 
-    -- Add product to cart
-    INSERT INTO CartItem (cartId, productId, quantity) 
-    VALUES (@CartId, @ProductId, 1); -- Assuming default quantity as 1
+    -- Check if product already exists in cart
+    SELECT @ExistingQuantity = quantity FROM CartItem 
+    WHERE cartId = @CartId AND productId = @ProductId;
 
+    IF @ExistingQuantity IS NULL
+    BEGIN
+        -- Product does not exist in cart, insert new cart item
+        INSERT INTO CartItem (cartId, productId, quantity) 
+        VALUES (@CartId, @ProductId, 1);
+    END
+    ELSE
+    BEGIN
+        -- Product exists, update quantity
+        UPDATE CartItem
+        SET quantity = @ExistingQuantity + 1
+        WHERE cartId = @CartId AND productId = @ProductId;
+    END
 END
 GO
+
+CREATE PROCEDURE RemoveProductFromCart
+    @cartItemId INT
+AS
+BEGIN
+    DELETE FROM CartItem WHERE cartItemId = @cartItemId;
+END
+GO
+
+
 
 
 -- EXECUTE GetProductById @ProductId = 1;
