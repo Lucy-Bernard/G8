@@ -1,54 +1,55 @@
 "use client";
 
 import Link from "next/link";
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import styles from "./page.module.css";
-import RemoveCircleIcon from '@mui/icons-material/RemoveCircle';
-import AddCircleIcon from '@mui/icons-material/AddCircle';
+import RemoveCircleIcon from "@mui/icons-material/RemoveCircle";
+import AddCircleIcon from "@mui/icons-material/AddCircle";
 
 // Existing CartItem type
-type CartItem = {
-  id: number;
-  name: string;
-  price: number;
-  quantity: number;
-  imageUrl: string;
-};
 
-// Initial mock data for cart items
-const initialCartItems: CartItem[] = [
-  {
-    id: 1,
-    name: "Sample Cart Item 1",
-    price: 15.99,
-    quantity: 2,
-    imageUrl: "https://via.placeholder.com/150",
-  },
-  {
-    id: 2,
-    name: "Sample Cart Item 2",
-    price: 45.5,
-    quantity: 1,
-    imageUrl: "https://via.placeholder.com/150",
-  },
-  // Add more cart items if needed
-];
+export type CartItem = {
+  cartItemId: number;
+  productId: number;
+  quantity: number;
+  productName: string;
+  unitPrice: number;
+  manufacturer: string;
+  description: string;
+  rating: number;
+  sku: string;
+  imageLink: string;
+};
 
 const Cart = () => {
   // State to track cart items
-  const [cartItems, setCartItems] = useState<CartItem[]>(initialCartItems);
+  const [cartItems, setCartItems] = useState<CartItem[]>([]);
+  const [error, setError] = useState<string | null>(null);
 
+  useEffect(() => {
+    // Replace '1' with the actual user ID you need to fetch
+    fetch(`http://localhost:5165/api/cart/1`)
+      .then((response) => {
+        if (!response.ok) {
+          throw new Error("Failed to fetch cart items");
+        }
+        return response.json();
+      })
+      .then(setCartItems)
+      .catch((error) => setError(error.message));
+  }, []);
   // Function to calculate total price
   const calculateTotal = (items: CartItem[]) =>
-    items.reduce((acc, item) => acc + item.price * item.quantity, 0);
+    items.reduce((acc, item) => acc + item.unitPrice * item.quantity, 0);
 
+  // const totalCost = calculateTotal(cartItems);
   // Function to format price
   const formatPrice = (price: number) => price.toFixed(2);
 
   // Function to handle quantity change
-  const handleQuantityChange = (itemId: number, newQuantity: number) => {
+  const handleQuantityChange = (cartItemId: number, newQuantity: number) => {
     const updatedCartItems = cartItems.map((item) => {
-      if (item.id === itemId) {
+      if (item.cartItemId === cartItemId) {
         return { ...item, quantity: Math.max(1, newQuantity) };
       }
       return item;
@@ -57,29 +58,46 @@ const Cart = () => {
   };
 
   // Function to increment quantity
-  const incrementQuantity = (itemId: number) => {
-    handleQuantityChange(itemId, getItemQuantity(itemId) + 1);
+  const incrementQuantity = (cartItemId: number) => {
+    handleQuantityChange(cartItemId, getItemQuantity(cartItemId) + 1);
   };
 
   // Function to decrement quantity
-  const decrementQuantity = (itemId: number) => {
-    handleQuantityChange(itemId, Math.max(1, getItemQuantity(itemId) - 1));
+  const decrementQuantity = (cartItemId: number) => {
+    handleQuantityChange(
+      cartItemId,
+      Math.max(1, getItemQuantity(cartItemId) - 1)
+    );
   };
 
   // Helper function to get item quantity
-  const getItemQuantity = (itemId: number) => {
-    return cartItems.find((item) => item.id === itemId)?.quantity || 0;
+  const getItemQuantity = (cartItemId: number) => {
+    return (
+      cartItems.find((item) => item.cartItemId === cartItemId)?.quantity || 0
+    );
   };
 
   // Function to remove an item from the cart
-  const handleRemoveItem = (itemId: number) => {
-    const updatedCartItems = cartItems.filter((item) => item.id !== itemId);
-    setCartItems(updatedCartItems);
+  const handleRemoveItem = (cartItemId: number) => {
+    fetch(`http://localhost:5165/api/cart/${cartItemId}`, {
+      method: 'DELETE',
+      headers: { 'Content-Type': 'application/json' }
+    })
+      .then(response => {
+        if (!response.ok) {
+          throw new Error('Failed to remove item from cart');
+        }
+        // Filter out the removed item from the cartItems state
+        const updatedCartItems = cartItems.filter((item) => item.cartItemId !== cartItemId);
+        setCartItems(updatedCartItems);
+      })
+      .catch(error => console.error('Error:', error));
   };
 
+
   // Function to calculate and format item total
-  const calculateItemTotal = (price: number, quantity: number) => {
-    return formatPrice(price * quantity);
+  const calculateItemTotal = (unitPrice: number, quantity: number) => {
+    return formatPrice(unitPrice * quantity);
   };
 
   return (
@@ -89,36 +107,34 @@ const Cart = () => {
         <p>Your cart is empty</p>
       ) : (
         cartItems.map((item) => (
-          <div key={item.id} className={styles.cartItem}>
+          <div key={item.cartItemId} className={styles.cartItem}>
             <img
-              src={item.imageUrl}
-              alt={item.name}
+              src={item.imageLink}
+              alt={item.productName}
               className={styles.cartItemImage}
             />
             <div className={styles.cartItemDetails}>
-              <h2>{item.name}</h2>
-              <div className={styles.cartItemPrice}>
-                <p>Total: ${calculateItemTotal(item.price, item.quantity)}</p>
-              </div>
+              <h2>{item.productName}</h2>
+              <p>Price: ${formatPrice(item.unitPrice)}</p>
+              <p>Total: ${calculateItemTotal(item.unitPrice, item.quantity)}</p>
               <div>
                 <button
                   className={styles.quantityButton}
-                  onClick={() => decrementQuantity(item.id)}
+                  onClick={() => decrementQuantity(item.cartItemId)}
                 >
-                  <RemoveCircleIcon />
+                  -
                 </button>
-
                 <span>{item.quantity}</span>
                 <button
                   className={styles.quantityButton}
-                  onClick={() => incrementQuantity(item.id)}
+                  onClick={() => incrementQuantity(item.cartItemId)}
                 >
-                  <AddCircleIcon />
+                  +
                 </button>
               </div>
               <button
                 className={styles.cartItemButton}
-                onClick={() => handleRemoveItem(item.id)}
+                onClick={() => handleRemoveItem(item.cartItemId)}
               >
                 Remove
               </button>

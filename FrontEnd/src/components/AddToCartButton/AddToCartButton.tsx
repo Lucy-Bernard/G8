@@ -40,9 +40,7 @@ const AddToCartButton: React.FC<AddToCartButtonProps> = (props: AddToCartButtonP
     <button onClick={handleAddToCart} className={styles.addToCartButton}>
       Add to Cart
     </button>
-    // <IconButton onClick={handleAddToCart} className={styles.addToCartButton} color="primary" aria-label="add to shopping cart">
-    //   <AddShoppingCartIcon />
-    // </IconButton>
+
   );
 };
 

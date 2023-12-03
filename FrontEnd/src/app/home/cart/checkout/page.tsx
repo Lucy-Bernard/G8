@@ -1,6 +1,6 @@
 "use client";
 
-import * as React from 'react';
+// import * as React from 'react';
 import OrderSummary from "@/components/OrderSummary/OrderSummary";
 import ReviewOrder from "@/components/ReviewOrder/ReviewOrder";
 import Box from '@mui/material/Box';
@@ -10,7 +10,6 @@ import StepLabel from '@mui/material/StepLabel';
 import Button from '@mui/material/Button';
 import Typography from '@mui/material/Typography';
 import TextField from '@mui/material/TextField';
-import Grid from '@mui/material/Grid';
 import InputAdornment from '@mui/material/InputAdornment';
 import Tooltip from '@mui/material/Tooltip';
 import InfoIcon from '@mui/icons-material/Info';
@@ -20,6 +19,8 @@ import { createTheme, ThemeProvider } from '@mui/material/styles';
 import { Snackbar, SnackbarContent } from '@mui/material';
 import { useRouter } from 'next/navigation';
 import styles from "./page.module.css";
+import React, { useEffect, useState } from "react";
+import { CartItem } from '@/app/home/cart/page';
 
 // -----------Font -------------------------------------
 const theme = createTheme({
@@ -37,15 +38,60 @@ const theme = createTheme({
 
 const steps = ['Shipping', 'Payment', 'Review & Order'];
 
-
+// type CartItem = {
+//   cartItemId: number;
+//   productId: number;
+//   quantity: number;
+//   productName: string;
+//   unitPrice: number;
+//   manufacturer: string;
+//   description: string;
+//   rating: number;
+//   sku: string;
+//   imageLink: string;
+// };
 
 export default function Checkout() {
+
+  const [cartItems, setCartItems] = useState<CartItem[]>([]);
+  const [error, setError] = useState<string | null>(null);
+
+  useEffect(() => {
+    // Replace '1' with the actual user ID you need to fetch
+    fetch(`http://localhost:5165/api/cart/1`)
+      .then((response) => {
+        if (!response.ok) {
+          throw new Error("Failed to fetch cart items");
+        }
+        return response.json();
+      })
+      .then(setCartItems)
+      .catch((error) => setError(error.message));
+  }, []);
+  // Function to calculate total price
+  const calculateTotal = (items: CartItem[]) =>
+    items.reduce((acc, item) => acc + item.unitPrice * item.quantity, 0);
+
 
 
   const [formError, setFormError] = React.useState(false);
   const [openSnackbar, setOpenSnackbar] = React.useState(false);
   const [orderSubmitted, setOrderSubmitted] = React.useState(false);
   const router = useRouter();
+
+  //---------------Order Summary------------------------
+  // const [totalCost, setTotalCost] = useState<number>(0);
+  // useEffect(() => {
+  //   // Check if the router is ready and has query parameters
+  //   if (router.isReady) {
+  //     const totalQueryParam = router.query.total as string;
+  //     if (totalQueryParam) {
+  //       setTotalCost(parseFloat(totalQueryParam));
+  //     }
+  //   }
+  // }, [router.isReady, router.query]);
+
+
 
   // ---------------Shipping Input----------------------------
   const [activeStep, setActiveStep] = React.useState(0);
@@ -383,12 +429,11 @@ export default function Checkout() {
         <Box sx={{ marginTop: '-100px' }}>
           {/* Order Summary */}
           <OrderSummary
-            subtotal={408.28}
-            discounts={0.41}
+            // subtotal={totalCost}
+            subtotal={calculateTotal(cartItems)}
             tax={0.00}
-            delivery={'FREE'}
             total={407.87}
-            savings={85.41}
+
           />
         </Box>
       </Box>
