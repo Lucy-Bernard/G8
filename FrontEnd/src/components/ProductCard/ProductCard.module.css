@@ -48,23 +48,12 @@
   white-space: nowrap;
 }
 
-.addToCartButton {
-  /* Styles for the 'Add to Cart' button */
-  background-color: white;
-  color: black;
-  border: none;
-  border-radius: 10px;
-  cursor: pointer;
-  height: 30%;
-  width: 100%;
-}
-
 .product_name_price {
   text-decoration: none;
 }
 
 .product_details_page .product_name_price {
-  display: none; /* Change the order to move it to the right of the image */
+  display: none;
 }
 
 .product_details_page .product_name_price {

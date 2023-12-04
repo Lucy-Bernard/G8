@@ -1,7 +1,6 @@
 "use client";
 
 import styles from "../page.module.css";
-import NavigationBar from "@/components/NavigationBar/NavigationBar";
 import ProductSection from "@/components/ProductSection/ProductSection";
 import { useEffect, useState } from "react";
 
@@ -35,7 +34,7 @@ export default function TopsPage() {
       .then((result) => filterCategory(result))
       .catch((error) => setError(error.message))
       .finally(() => setIsLoading(false));
-    }, []);
+  }, []);
 
   function filterCategory(result: Product[]) {
     const filteredTops = result.filter((product) => product.categoryId === 1);
