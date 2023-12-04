@@ -10,7 +10,8 @@ namespace ExampleAPI.Models
 
         public int AddressId { get; set; }
 
-        public User() {
+        public User()
+        {
 
         }
 
@@ -23,8 +24,17 @@ namespace ExampleAPI.Models
             this.Password_ = Password_;
             this.Email = Email;
         }
-/*Constructor for authentication purposes*/
-        public User( string Email, string password_) {
+
+        public User(int UserId, string Email, string password_)
+        {
+            this.UserId = UserId;
+            this.Email = Email;
+            this.Password_ = password_;
+        }
+
+        /*Constructor for authentication purposes*/
+        public User(string Email, string password_)
+        {
             this.Email = Email;
             this.Password_ = password_;
         }
