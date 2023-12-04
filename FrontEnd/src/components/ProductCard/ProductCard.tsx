@@ -4,9 +4,8 @@ import React from "react";
 import Image from "next/image";
 import styles from "./ProductCard.module.css";
 import { Product } from "@/app/home/page";
-
 import AddToCartButton from "../AddToCartButton/AddToCartButton";
-import { useContext, useState } from "react";
+import {useContext, useState} from "react";
 
 type ProductCardProps = {
   product: Product;
@@ -37,9 +36,7 @@ export default function ProductCard(props: ProductCardProps) {
 
       <div className={styles.product_information}>
         <div className={styles.product_name_price}>
-          <div className={styles.product_name}>
-            {props.product.productName}
-          </div>
+          <div className={styles.product_name}>{props.product.productName}</div>
 
           <div className={styles.unit_price}>
             {US_dollar.format(props.product.unitPrice)}

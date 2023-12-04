@@ -1,5 +1,8 @@
 .productSection {
-    display: flex;
-    gap: 2rem;
-    height: 350px;
+  display: flex;
+  flex-wrap: wrap;
+  gap: 2.25rem; /* Adjust as needed */
+  justify-content: center; /* Center cards horizontally */
+  align-items: stretch; /* Stretch cards to fill vertical space */
+  padding: 20px; /* Add some padding around the container */
 }
