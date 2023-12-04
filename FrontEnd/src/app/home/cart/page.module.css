@@ -3,6 +3,10 @@
   margin: auto;
   padding: 20px;
 }
+.YourShoppingCartHeader {
+  margin-top: 1rem;
+  margin-bottom: 1.5rem;
+}
 
 .cartItem {
   border: "1px solid #ddd"; /* Thicker and colored border */
@@ -12,7 +16,7 @@
   display: flex;
   align-items: center;
   border-radius: 5px; /* Rounded corners */
-  background-color: #d1b8a3;
+  background-color: #ffffff;
   gap: 1rem;
 }
 
@@ -81,3 +85,4 @@
       cursor: pointer;
       margin: 0 5px;
 }
+

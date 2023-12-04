@@ -5,5 +5,16 @@
     border-radius: 10px;
     cursor: pointer;
     height: 30%;
-    width: 100%;
+    width: 15rem;
+}
+
+
+  
+  .addToCartButton:active {
+    transform: scale(
+      0.9
+    ); /* This will make the button scale down to 90% of its original size */
+ /* This will make the button scale down to 90% of its original size */
+    transition: transform 0.3s;
   }
+  

@@ -7,6 +7,9 @@ import Image from 'next/image';
 import ProductCard from "@/components/ProductCard/ProductCard";
 import Rating from "@mui/material/Rating";
 import AddToCartButton from "@/components/AddToCartButton/AddToCartButton";
+import Snackbar from '@mui/material/Snackbar';
+import MuiAlert from '@mui/material/Alert';
+import SnackbarContent from "@mui/material/SnackbarContent";
 
 const ProductDetails = () => {
   const [productDetails, setProductDetails] = useState<any>(null);
@@ -21,6 +24,23 @@ const ProductDetails = () => {
   const searchParams = useSearchParams();
   const productIdString = searchParams.get("productId");
   const productId = productIdString ? Number(productIdString) : null;
+
+  // Snackbar state
+  const [openSnackbar, setOpenSnackbar] = useState(false);
+
+  // Function to open the snackbar
+  const showSnackbar = () => {
+    setOpenSnackbar(true);
+  };
+
+  // Function to close the snackbar
+  const handleCloseSnackbar = (event: any, reason: string) => {
+    if (reason === 'clickaway') {
+      return;
+    }
+    setOpenSnackbar(false);
+  };
+
 
   useEffect(() => {
     const myHeaders = new Headers();
@@ -39,6 +59,19 @@ const ProductDetails = () => {
 
   return (
     <main className={styles.main}>
+
+      <Snackbar
+        open={openSnackbar}
+        autoHideDuration={6000}
+        onClose={handleCloseSnackbar}
+        anchorOrigin={{ vertical: 'top', horizontal: 'center' }}
+      >
+        <SnackbarContent
+          message="Cart updated successfully!"
+          style={{ backgroundColor: 'green' }}
+        />
+      </Snackbar>
+
       {productDetails ? (
         <div className={styles.product_details_container}>
 
@@ -74,7 +107,7 @@ const ProductDetails = () => {
       )}
       {/** convert product id into a number for add to cart button */}
       {productId && !isNaN(productId) && (
-        <AddToCartButton productId={productId} />
+        <AddToCartButton productId={productId} onAddToCart={showSnackbar} />
       )}
     </main>
   );

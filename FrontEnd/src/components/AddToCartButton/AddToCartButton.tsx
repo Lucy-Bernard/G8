@@ -6,11 +6,14 @@ import AddShoppingCartIcon from '@mui/icons-material/AddShoppingCart';
 
 type AddToCartButtonProps = {
   productId: number;
+  onAddToCart: () => void;
 };
 
 const AddToCartButton: React.FC<AddToCartButtonProps> = (props: AddToCartButtonProps) => {
   const [isLoading, setIsLoading] = useState(false);
   const [error, setError] = useState("");
+
+
 
   const handleAddToCart = async () => {
     console.log("Add to Cart Clicked for Product:", props.productId);
@@ -34,6 +37,8 @@ const AddToCartButton: React.FC<AddToCartButtonProps> = (props: AddToCartButtonP
       .then(() => console.log("Product added to cart"))
       .catch(error => console.error('Error:', error))
       .finally(() => setIsLoading(false));
+
+    // onAddToCart(); 
   };
 
   return (
@@ -45,3 +50,7 @@ const AddToCartButton: React.FC<AddToCartButtonProps> = (props: AddToCartButtonP
 };
 
 export default AddToCartButton;
+
+function onAddToCart() {
+  throw new Error("Function not implemented.");
+}
