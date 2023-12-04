@@ -66,3 +66,20 @@
 .product_details_page .product_name_price {
   display: none; /* Change the order to move it to the right of the image */
 }
+
+.product_details_page .product_name_price {
+  display: none;
+}
+
+.cart_page .product_name_price {
+  display: none;
+}
+
+.cart_page .product_image {
+  height: 10rem;
+  width: 9rem;
+  object-fit:fill;
+  border-radius: 10px;
+  border: 1px solid rgb(240, 240, 240);
+  box-shadow: 0px 0px 20px 1px rgb(240, 240, 240);
+}

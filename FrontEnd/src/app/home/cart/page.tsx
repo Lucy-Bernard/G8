@@ -5,12 +5,14 @@ import React, { useEffect, useState } from "react";
 import styles from "./page.module.css";
 import RemoveCircleIcon from "@mui/icons-material/RemoveCircle";
 import AddCircleIcon from "@mui/icons-material/AddCircle";
+import ProductCard from "@/components/ProductCard/ProductCard";
 
 // Existing CartItem type
 
 export type CartItem = {
   cartItemId: number;
   productId: number;
+  categoryId: number;
   quantity: number;
   productName: string;
   unitPrice: number;
@@ -46,7 +48,7 @@ const Cart = () => {
   const formatPrice = (price: number) => price.toFixed(2);
 
   // Function to handle quantity change
-  const handleQuantityChange = (cartItemId, newQuantity) => {
+  const handleQuantityChange = (cartItemId: number, newQuantity: number) => {
     newQuantity = Math.max(1, newQuantity); // Ensure the quantity is at least 1
 
     fetch(`http://localhost:5165/api/cart/${cartItemId}/${newQuantity}`, {
@@ -118,17 +120,15 @@ const Cart = () => {
 
   return (
     <div className={styles.cartContainer}>
-      <h1>Your Shopping Cart</h1>
+      <h1 className={styles.YourShoppingCartHeader}>Your Shopping Cart</h1>
       {cartItems.length === 0 ? (
         <p>Your cart is empty</p>
       ) : (
         cartItems.map((item) => (
           <div key={item.cartItemId} className={styles.cartItem}>
-            <img
-              src={require("@/assets/Product Images/" + item.imageLink)}
-              alt={item.productName}
-              className={styles.cartItemImage}
-            />
+
+            <ProductCard product={item} cartPage={true} />
+
             <div className={styles.cartItemDetails}>
               <h2>{item.productName}</h2>
               <p>Price: ${formatPrice(item.unitPrice)}</p>
