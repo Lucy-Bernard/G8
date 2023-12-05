@@ -1,10 +1,6 @@
-# E-Commerce - Software Engineering Capstone
+## E-Commerce - Software Engineering Capstone
 
 # Database
-
-The idea behind the setup of this database is to make it as easy as possible for every student in the group to have access to the data without needing anyone to pay for hosting capabilities. To achieve this, **every student in the group needs to have their own local, identical copy of the database**.
-
-This means that each student in the group will need to have their own installation of SQL Server and will need to manually insert the data into their own database. It also means that the students will not be able to access data from any other student's database. However, if each student has an identical copy of the database and of the data within the database, it will *appear* as though you all are working from the same database.
 
 ## Steps To Recreate The Project (Mac/Windows/Linux)
 
