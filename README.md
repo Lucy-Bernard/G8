@@ -32,4 +32,4 @@
     GO
     ```
 
-5. After you have created the database, you can now use the script '''createDB.sql'''.
+5. After you have created the database, you can now use the script "createDB.sql".
