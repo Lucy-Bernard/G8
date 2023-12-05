@@ -19,7 +19,9 @@ const ProductSection: React.FC<ProductSectionProps> = (
         <Link
           className={styles.link}
           key={index}
-          href={`/home/productdetails?productId=${product.productId}`}
+          href={`/home/productdetails?productId=${product.productId}`
+        }
+        
         >
           <ProductCard key={product.productId} product={product} />
         </Link>

@@ -3,7 +3,7 @@
 import React from "react";
 import Image from "next/image";
 import styles from "./ProductCard.module.css";
-import { Product } from "@/app/home/page";
+import {Product} from "@/app/home/page";
 import AddToCartButton from "../AddToCartButton/AddToCartButton";
 import {useContext, useState} from "react";
 
@@ -23,8 +23,11 @@ export default function ProductCard(props: ProductCardProps) {
   });
 
   return (
-    <div className={`${styles.product_card} ${props.productDetailsPage ? styles.product_details_page : ''} ${props.cartPage ? styles.cart_page : ''}`}>
-
+    <div
+      className={`${styles.product_card} ${
+        props.productDetailsPage ? styles.product_details_page : ""
+      } ${props.cartPage ? styles.cart_page : ""}`}
+    >
       <Image
         className={styles.product_image}
         src={product_image}
