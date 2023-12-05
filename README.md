@@ -1,8 +1,8 @@
-## E-Commerce - Software Engineering Capstone
+# E-Commerce - Software Engineering Capstone
 
-# Database
+### Database
 
-## Steps To Recreate The Project (Mac/Windows/Linux)
+#### Steps To Recreate The Project (Mac/Windows/Linux)
 
 1. Download the following tools (if you haven't already):
 
