@@ -1,0 +1,63 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`Header component renders as expected 1`] = `
+<div>
+  <div
+    class="headerContainer"
+  >
+    <a
+      href="/home"
+    >
+      <div
+        class="logoContainer headerItemImage"
+      >
+        <img
+          alt="Logo"
+          src="[object Object]"
+        />
+      </div>
+    </a>
+    <div
+      class="headerItemsContainer"
+    >
+      <div
+        class="headerItem"
+      >
+        <div
+          class="searchButton"
+        >
+          <input
+            class="searchInput"
+            placeholder="Search"
+            type="text"
+          />
+        </div>
+      </div>
+      <a
+        href="/home/userprofile"
+      >
+        <div
+          class="headerItem"
+        >
+          <img
+            alt="User Profile"
+            src="[object Object]"
+          />
+        </div>
+      </a>
+      <a
+        href="/home/cart"
+      >
+        <div
+          class="headerItem"
+        >
+          <img
+            alt="Cart"
+            src="[object Object]"
+          />
+        </div>
+      </a>
+    </div>
+  </div>
+</div>
+`;

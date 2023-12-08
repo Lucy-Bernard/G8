@@ -1,0 +1,24 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`Banner component renders as expected 1`] = `
+<div>
+  <div
+    class="banner"
+  >
+    <a
+      href="home/sales"
+    >
+      <div
+        class="banner bannerImage"
+      >
+        <img
+          alt="banner image"
+          class="bannerImage"
+          layout="responsive"
+          src="[object Object]"
+        />
+      </div>
+    </a>
+  </div>
+</div>
+`;
