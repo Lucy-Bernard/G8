@@ -1,0 +1,11 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`component renders as expected 1`] = `
+<div>
+  <button
+    class="addToCartButton"
+  >
+    Add to Cart
+  </button>
+</div>
+`;
