@@ -70,4 +70,4 @@ This section contains all of the necessary steps to create an API that connects 
     ```
     http://localhost:3000/
     ```
-3. At this point we are at the website, use the database to find an example user's login information. Use it to sign in. Now you may use the E-Commerce app to purchase items.
+3. At this point we are at the website, use the database to find an example user's login information. For the purpose of testing the code use the following username: "johndoe217@email.com" and password: "P@ssw0rd143" Use it to sign in. Now you may use the E-Commerce app to purchase items. 
