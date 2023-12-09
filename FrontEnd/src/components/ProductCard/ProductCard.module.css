@@ -65,6 +65,16 @@
   display: none;
 }
 
+/* Adjust styles for the image on the Cart page */
+.product_details_page .product_image {
+  height: 100%;
+  width: 100%;
+  object-fit: fill;
+  border-radius: 10px;
+  border: 1px solid rgb(240, 240, 240);
+  box-shadow: 0px 0px 20px 1px rgb(240, 240, 240);
+}
+
 /* Hide product name and price on the Cart page */
 .cart_page .product_name_price {
   display: none;
