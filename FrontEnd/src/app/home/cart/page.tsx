@@ -1,3 +1,9 @@
+/**
+* Author: Isaiah Stone
+* 
+* Cart page.
+**/
+
 "use client";
 
 import Link from "next/link";
