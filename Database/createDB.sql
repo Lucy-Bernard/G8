@@ -389,4 +389,6 @@ END
 GO
 
 select * from [User];
+
 select * from CartItem
+
