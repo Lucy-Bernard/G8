@@ -1,11 +1,30 @@
+/*
+ * Home Page Component
+ * 
+ * This component represents the home page of the online store. It fetches products
+ * from a specified API endpoint, categorizes them, and displays them in different
+ * sections on the page. The component uses Next.js for routing and includes
+ * sections for Tops, Bottoms, Outerwear, and Shoes. Loading and error states are
+ * managed, and the page structure is styled using CSS modules.
+ *
+ * Component Structure:
+ * - Banner: Displays a banner component at the top of the page.
+ * - Product Sections: Displays categorized product sections with a title and product data.
+ * - Loading State: Displays a loading message while data is being fetched.
+ * - Error State: Displays an error message if there is an issue fetching data.
+ *
+ */
+
+
 "use client";
 
 import styles from "./page.module.css";
 import Banner from "@/components/Banner/Banner";
 import ProductSection from "@/components/ProductSection/ProductSection";
-import {useEffect, useState} from "react";
-import {withRouter, NextRouter} from "next/router";
+import { useEffect, useState } from "react";
+import { withRouter, NextRouter } from "next/router";
 
+// Define the Product type
 export type Product = {
   productId: number;
   categoryId: number;
@@ -18,7 +37,9 @@ export type Product = {
   imageLink: string;
 };
 
-export default function Home(props: {router: NextRouter}) {
+// Define the Home component
+export default function Home(props: { router: NextRouter }) {
+  // State variables to manage loading, product data, errors, and badge number
   const [isLoading, setIsLoading] = useState(true);
   const [topsData, setTopsData] = useState<Product[]>([]);
   const [bottomsData, setBottomsData] = useState<Product[]>([]);
@@ -32,6 +53,7 @@ export default function Home(props: {router: NextRouter}) {
     const myHeaders = new Headers();
     myHeaders.append("Content-Type", "application/json");
 
+    // Fetch data from the product API endpoint
     fetch("http://localhost:5165/api/product", {
       method: "GET",
       headers: myHeaders,
@@ -50,6 +72,7 @@ export default function Home(props: {router: NextRouter}) {
     const newOuterwearData: Product[] = [];
     const newShoesData: Product[] = [];
 
+    // Iterate through the fetched products and categorize them
     result.forEach((product) => {
       if (newTopsData.length < 4 && product.categoryId === 1) {
         newTopsData.push(product);
@@ -62,6 +85,7 @@ export default function Home(props: {router: NextRouter}) {
       }
     });
 
+    // Update state with the categorized data
     setTopsData(newTopsData);
     setBottomsData(newBottomsData);
     setOuterwearData(newOuterwearData);

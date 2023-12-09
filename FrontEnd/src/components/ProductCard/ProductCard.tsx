@@ -1,20 +1,30 @@
-"use client";
+/*
+ * ProductCard Component
+ * 
+ * This component represents a card displaying product information. It can be used
+ * in different contexts such as on the home page, product details page, or the cart page.
+ * It receives a `Product` object as a prop to display relevant information and has optional
+ * props to customize its appearance based on the context.
+ */
 
 import React from "react";
 import Image from "next/image";
 import styles from "./ProductCard.module.css";
-import {Product} from "@/app/home/page";
+import { Product } from "@/app/home/page";
 
+// Define the props for the ProductCard component
 type ProductCardProps = {
-  product: Product;
-  productDetailsPage?: boolean; // Add a prop to indicate the ProductDetails page
-  cartPage?: boolean;
+  product: Product; // The product to display on the card
+  productDetailsPage?: boolean; // Prop to indicate if the card is used on the ProductDetails page
+  cartPage?: boolean; // Prop to indicate if the card is used on the Cart page
 };
 
+// ProductCard Component Function
 export default function ProductCard(props: ProductCardProps) {
+  // Dynamically import the product image based on the provided imageLink
   const product_image = require("@/assets/Product Images/" +
     props.product.imageLink);
-
+  // Format currency using the US dollar format
   const US_dollar = new Intl.NumberFormat("en-US", {
     style: "currency",
     currency: "USD",
@@ -22,9 +32,8 @@ export default function ProductCard(props: ProductCardProps) {
 
   return (
     <div
-      className={`${styles.product_card} ${
-        props.productDetailsPage ? styles.product_details_page : ""
-      } ${props.cartPage ? styles.cart_page : ""}`}
+      className={`${styles.product_card} ${props.productDetailsPage ? styles.product_details_page : ""
+        } ${props.cartPage ? styles.cart_page : ""}`}
     >
       <Image
         className={styles.product_image}

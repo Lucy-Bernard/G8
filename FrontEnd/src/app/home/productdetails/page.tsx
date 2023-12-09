@@ -1,46 +1,39 @@
+/*
+ * Product Details Component
+ * 
+ * This component displays detailed information about a specific product. It fetches
+ * the product details from an API endpoint and renders them along with additional
+ * information such as price, manufacturer, description, rating, and SKU.
+ * The component also provides an option to add the product to the shopping cart.
+ */
+
 "use client";
 
-import React, {useEffect, useState} from "react";
-import {useSearchParams} from "next/navigation";
+import React, { useEffect, useState } from "react";
+import { useSearchParams } from "next/navigation";
 import styles from "./page.module.css";
-import Image from "next/image";
 import ProductCard from "@/components/ProductCard/ProductCard";
 import Rating from "@mui/material/Rating";
 import AddToCartButton from "@/components/AddToCartButton/AddToCartButton";
-import Snackbar from "@mui/material/Snackbar";
-import MuiAlert from "@mui/material/Alert";
-import SnackbarContent from "@mui/material/SnackbarContent";
 
+// Define the ProductDetails functional component
 const ProductDetails = () => {
   const [productDetails, setProductDetails] = useState<any>(null);
   const [isLoading, setIsLoading] = useState(true);
   const [error, setError] = useState<string | null>(null);
 
+  // Formatter for US dollar currency
   const US_dollar = new Intl.NumberFormat("en-US", {
     style: "currency",
     currency: "USD",
   });
 
+  // Access the product ID from the URL query parameters
   const searchParams = useSearchParams();
   const productIdString = searchParams.get("productId");
   const productId = productIdString ? Number(productIdString) : null;
 
-  // Snackbar state
-  const [openSnackbar, setOpenSnackbar] = useState(false);
-
-  // Function to open the snackbar
-  const showSnackbar = () => {
-    setOpenSnackbar(true);
-  };
-
-  // Function to close the snackbar
-  const handleCloseSnackbar = (event: any, reason: string) => {
-    if (reason === "clickaway") {
-      return;
-    }
-    setOpenSnackbar(false);
-  };
-
+  // Fetch product details from the API when the component mounts
   useEffect(() => {
     const myHeaders = new Headers();
     myHeaders.append("Content-Type", "application/json");
@@ -58,18 +51,6 @@ const ProductDetails = () => {
 
   return (
     <main className={styles.main}>
-      <Snackbar
-        open={openSnackbar}
-        autoHideDuration={6000}
-        onClose={handleCloseSnackbar}
-        anchorOrigin={{vertical: "top", horizontal: "center"}}
-      >
-        <SnackbarContent
-          message="Cart updated successfully!"
-          style={{backgroundColor: "green"}}
-        />
-      </Snackbar>
-
       {productDetails ? (
         <div className={styles.product_details_container}>
           <ProductCard product={productDetails} productDetailsPage={true} />
@@ -108,7 +89,7 @@ const ProductDetails = () => {
       )}
       {/** convert product id into a number for add to cart button */}
       {productId && !isNaN(productId) && (
-        <AddToCartButton productId={productId} onAddToCart={showSnackbar} />
+        <AddToCartButton productId={productId} />
       )}
     </main>
   );

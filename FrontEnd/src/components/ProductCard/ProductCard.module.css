@@ -1,3 +1,11 @@
+/*
+ * Product Card Styling
+ * 
+ * Styling rules for the product card component, used to display product information.
+ * The card layout includes an image, product name, and unit price. Different styles
+ * are applied based on the context, such as the ProductDetails page or Cart page.
+ */
+
 .product_card {
   display: flex;
   flex-direction: column;
@@ -52,18 +60,17 @@
   text-decoration: none;
 }
 
+/* Hide product name and price on the ProductDetails page */
 .product_details_page .product_name_price {
   display: none;
 }
 
-.product_details_page .product_name_price {
-  display: none;
-}
-
+/* Hide product name and price on the Cart page */
 .cart_page .product_name_price {
   display: none;
 }
 
+/* Adjust styles for the image on the Cart page */
 .cart_page .product_image {
   height: 10rem;
   width: 9rem;

@@ -1,26 +1,26 @@
+/*
+ * Outerwears Page Component
+ * 
+ * This component represents the page displaying products in the "Outerwear" category.
+ * It fetches data from the API, filters products based on the category ID, and renders
+ * the filtered products using the ProductSection component. It also handles loading and
+ * error states during the data retrieval process.
+ */
+
 "use client";
 
 import styles from "../page.module.css";
 import ProductSection from "@/components/ProductSection/ProductSection";
-import {useEffect, useState} from "react";
+import { useEffect, useState } from "react";
+import { Product } from "@/app/home/page";
 
-export type Product = {
-  productId: number;
-  categoryId: number;
-  productName: string;
-  unitPrice: number;
-  manufacturer: string;
-  description: string;
-  rating: number;
-  sku: string;
-  imageLink: string;
-};
-
+// Outerwears Page Component Function
 export default function OuterwearsPage() {
   const [isLoading, setIsLoading] = useState(true);
   const [outerwearData, setOuterwearData] = useState<Product[]>([]);
   const [error, setError] = useState<string | null>(null);
 
+  // Fetch product data from the API when the component mounts
   useEffect(() => {
     var myHeaders = new Headers();
     myHeaders.append("Content-Type", "application/json");
@@ -36,6 +36,7 @@ export default function OuterwearsPage() {
       .finally(() => setIsLoading(false));
   }, []);
 
+  // Filter products based on the category ID (3 for Outerwear)
   function filterCategory(result: Product[]) {
     const filteredTops = result.filter((product) => product.categoryId === 3);
     setOuterwearData(filteredTops);
