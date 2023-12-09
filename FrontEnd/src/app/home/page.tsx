@@ -3,9 +3,7 @@
  * 
  * This component represents the home page of the online store. It fetches products
  * from a specified API endpoint, categorizes them, and displays them in different
- * sections on the page. The component uses Next.js for routing and includes
- * sections for Tops, Bottoms, Outerwear, and Shoes. Loading and error states are
- * managed, and the page structure is styled using CSS modules.
+ * sections on the page. 
  *
  * Component Structure:
  * - Banner: Displays a banner component at the top of the page.

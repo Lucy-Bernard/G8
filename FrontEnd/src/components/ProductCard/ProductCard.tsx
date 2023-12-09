@@ -1,10 +1,7 @@
 /*
  * ProductCard Component
  * 
- * This component represents a card displaying product information. It can be used
- * in different contexts such as on the home page, product details page, or the cart page.
- * It receives a `Product` object as a prop to display relevant information and has optional
- * props to customize its appearance based on the context.
+ * This component represents a card displaying product information. 
  */
 
 import React from "react";

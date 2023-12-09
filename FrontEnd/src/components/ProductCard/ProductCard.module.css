@@ -2,8 +2,7 @@
  * Product Card Styling
  * 
  * Styling rules for the product card component, used to display product information.
- * The card layout includes an image, product name, and unit price. Different styles
- * are applied based on the context, such as the ProductDetails page or Cart page.
+ * Different styles are applied based on the context, such as the ProductDetails page or Cart page.
  */
 
 .product_card {

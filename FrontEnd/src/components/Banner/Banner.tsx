@@ -1,3 +1,9 @@
+/*
+ * Banner Component
+ * 
+ * This React component displays a banner with a link to the "sales" page.
+ */
+
 import React from "react";
 import Link from "next/link";
 import Image from "next/image";

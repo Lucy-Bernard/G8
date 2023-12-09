@@ -3,7 +3,6 @@
  * 
  * This component serves as the layout for the home page. It includes the site header,
  * navigation bar, main content (passed as children), and a footer with copyright information.
- * The layout uses the Quicksand font and includes metadata for the page.
  */
 
 import type { Metadata } from "next";

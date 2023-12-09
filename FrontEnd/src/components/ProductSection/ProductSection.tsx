@@ -2,9 +2,7 @@
  * ProductSection Component
  * 
  * This component represents a section containing a title and a list of products displayed
- * using the ProductCard component. It utilizes the Next.js Link component to create links
- * to individual product details pages. The component receives a title and an array of products
- * as props to populate the section.
+ * using the ProductCard component. 
  */
 
 import React from "react";

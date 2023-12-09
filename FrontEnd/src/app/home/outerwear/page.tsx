@@ -2,9 +2,7 @@
  * Outerwears Page Component
  * 
  * This component represents the page displaying products in the "Outerwear" category.
- * It fetches data from the API, filters products based on the category ID, and renders
- * the filtered products using the ProductSection component. It also handles loading and
- * error states during the data retrieval process.
+ *
  */
 
 "use client";

@@ -1,9 +1,7 @@
 /*
  * Product Details Component
  * 
- * This component displays detailed information about a specific product. It fetches
- * the product details from an API endpoint and renders them along with additional
- * information such as price, manufacturer, description, rating, and SKU.
+ * This component displays detailed information about a specific product. 
  * The component also provides an option to add the product to the shopping cart.
  */
 

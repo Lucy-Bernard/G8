@@ -1,5 +1,4 @@
 /**
-* Author: Isaiah Stone
 * 
 * Cart page.
 **/
