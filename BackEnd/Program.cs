@@ -1,3 +1,11 @@
+/*
+ * ExampleAPI Program
+ * 
+ * This class represents the entry point of the ExampleAPI application.
+ * It configures and builds the application using the WebApplicationBuilder,
+ * adds necessary services to the container, and defines startup configurations.
+ */
+
 namespace ExampleAPI
 {
   public class Program

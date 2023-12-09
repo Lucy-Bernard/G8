@@ -1,12 +1,14 @@
+/*
+* Controller responsible for user-related actions.
+*/
+
 using Microsoft.AspNetCore.Mvc;
 using System.Data;
 using System.Data.SqlClient;
 using ExampleAPI.Models;
 
 namespace ExampleAPI.Controllers
-{   /*
-    Controller responsible for user-related actions.
-    */
+{   
     [Route("api/[controller]")]
     [ApiController]
     public class UserController : ControllerBase

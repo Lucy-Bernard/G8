@@ -1,3 +1,9 @@
+/*
+ * User Context
+ * 
+ * This module defines a React context for managing user-related state across the application.
+ */
+
 "use client";
 
 import { createContext, useContext, useState, ReactNode } from "react";

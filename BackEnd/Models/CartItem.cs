@@ -1,3 +1,10 @@
+/*
+ * CartItem Model
+ * 
+ * This class represents an item in the shopping cart with various properties 
+ * such as CartItemId, ProductId, etc.
+ */
+
 namespace ExampleAPI.Models
 {
     public class CartItem

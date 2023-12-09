@@ -1,3 +1,9 @@
+/*
+ * Sales Component
+ * 
+ * This component represents the sales page of the application.
+ */
+
 import React from "react";
 import Link from "next/link";
 import styles from "../page.module.css";
