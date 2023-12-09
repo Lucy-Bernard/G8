@@ -1,3 +1,5 @@
+
+/* Non-functional */
 public interface IConfigurationWrapper
 {
     string GetConnectionString(string name);
