@@ -1,9 +1,3 @@
-/**
-* Author: Isaiah Stone
-* 
-* Used to pass user through child pages
-**/
-
 "use client";
 
 import { createContext, useContext, useState, ReactNode } from "react";

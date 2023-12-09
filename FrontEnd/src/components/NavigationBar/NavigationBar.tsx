@@ -1,9 +1,3 @@
-/**
- * Author: Isaiah Stone
- * 
- * Navitaion Bar.
- */
-
 import React from "react";
 import Link from "next/link";
 import styles from "./NavigationBar.module.css";
