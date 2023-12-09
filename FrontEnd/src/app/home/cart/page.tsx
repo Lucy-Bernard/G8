@@ -1,9 +1,3 @@
-/**
-* Author: Isaiah Stone
-* 
-* Cart page.
-**/
-
 "use client";
 
 import Link from "next/link";
@@ -12,7 +6,12 @@ import styles from "./page.module.css";
 import ProductCard from "@/components/ProductCard/ProductCard";
 import { useUser } from "@/app/user";
 
-// Existing CartItem type
+/**
+ * Cart page
+ *
+ * This page is responsible for displaying and managing the user's shopping cart in the online store.
+ * It imports necessary modules and components and utilizes React hooks for state management.
+ */
 
 export type CartItem = {
   cartItemId: number;

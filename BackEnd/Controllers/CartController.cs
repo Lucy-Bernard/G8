@@ -1,8 +1,10 @@
-/**
-* Author: Isaiah Stone
-* 
-* Controller for cart related CRUD operations.
-**/
+/*
+ * CartController Class
+ * 
+ * This controller class handles HTTP requests related to shopping cart operations in the ExampleAPI.
+ * It interacts with a local SQL Server database using stored procedures to perform CRUD operations.
+ * The class is annotated with attributes to define its routing and behavior as an API controller.
+ */
 
 using Microsoft.Extensions.Configuration;
 using System.Collections.Generic;
@@ -31,6 +33,13 @@ namespace ExampleAPI.Controllers
             return Ok("test");
         }
 
+        /*
+         * GET method to retrieve cart items for a specific user
+         * 
+         * Responds to HTTP GET requests at the route "api/cart/{userId}".
+         * Fetches cart items for a specific user from the local database using the "GetCartItemsForUser" stored procedure.
+         * Returns a list of cart items in the response.
+         */
         [HttpGet("{userId}")]
         public ActionResult<List<CartItem>> GetCartItemsForUser(int userId)
         {
@@ -76,6 +85,13 @@ namespace ExampleAPI.Controllers
             }
         }
 
+        /*
+         * POST method to add a product to the cart
+         * 
+         * Responds to HTTP POST requests at the route "api/cart".
+         * Adds a product to the cart for a specific user using the "AddProductToCart" stored procedure.
+         * Returns a success message in the response if the operation is successful.
+         */
         [HttpPost]
         public ActionResult Post([FromBody] CartItem cartItem)
         {
@@ -103,6 +119,13 @@ namespace ExampleAPI.Controllers
             }
         }
 
+        /*
+         * PUT method to update the quantity of a cart item
+         * 
+         * Responds to HTTP PUT requests at the route "api/cart/{cartItemId}/{quantity}".
+         * Updates the quantity of a cart item using the "UpdateCartItemQuantity" stored procedure.
+         * Returns a success message in the response if the operation is successful.
+         */
         [HttpPut("{cartItemId}/{quantity}")]
         public ActionResult Put(int cartItemId, int quantity)
         {
@@ -130,6 +153,13 @@ namespace ExampleAPI.Controllers
             }
         }
 
+        /*
+         * DELETE method to remove a product from the cart
+         * 
+         * Responds to HTTP DELETE requests at the route "api/cart/{cartItemId}".
+         * Removes a product from the cart using the "RemoveProductFromCart" stored procedure.
+         * Returns a success message in the response if the operation is successful.
+         */
         [HttpDelete("{cartItemId}")]
         public ActionResult Delete(int cartItemId)
         {

@@ -1,9 +1,3 @@
-/**
-* Author: Isaiah Stone
-* 
-* Model for cart items.
-**/
-
 namespace ExampleAPI.Models
 {
     public class CartItem
