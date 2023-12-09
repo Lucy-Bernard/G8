@@ -1,14 +1,10 @@
-/* SearchButtonThatSlides.css */
-
 .searchButton {
-  /* Add your button styles */
   color: white;
   border-radius: 0.25rem;
   outline: none;
 }
 
 .searchInput {
-  /* Add your input styles */
   border-radius: 0.25rem;
   padding: 0.5rem;
   border: 10px;

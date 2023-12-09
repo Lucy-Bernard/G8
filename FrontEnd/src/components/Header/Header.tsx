@@ -1,8 +1,8 @@
-import React from 'react';
-import Image from 'next/image';
-import styles from './Header.module.css'; // Ensure this file name matches your actual CSS module file
-import Link from 'next/link';
-import SearchButtonThatSlides from '../Search/Search';
+import React from "react";
+import Image from "next/image";
+import styles from "./Header.module.css";
+import Link from "next/link";
+import SearchButtonThatSlides from "../Search/Search";
 
 const Header: React.FC = () => {
   const logoImage = require("@/assets/Header Images/G8.png");
@@ -24,9 +24,9 @@ const Header: React.FC = () => {
         </div>
       </Link>
       <div className={styles.headerItemsContainer}>
-          <div className={styles.headerItem}>
+        <div className={styles.headerItem}>
           <SearchButtonThatSlides />
-          </div>
+        </div>
         <Link href="/home/userprofile">
           <div className={styles.headerItem}>
             <Image
@@ -51,7 +51,6 @@ const Header: React.FC = () => {
         </Link>
       </div>
     </div>
-    
   );
 };
 

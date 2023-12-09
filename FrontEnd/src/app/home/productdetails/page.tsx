@@ -1,14 +1,14 @@
 "use client";
 
-import React, { useEffect, useState } from "react";
-import { useSearchParams } from "next/navigation";
+import React, {useEffect, useState} from "react";
+import {useSearchParams} from "next/navigation";
 import styles from "./page.module.css";
-import Image from 'next/image';
+import Image from "next/image";
 import ProductCard from "@/components/ProductCard/ProductCard";
 import Rating from "@mui/material/Rating";
 import AddToCartButton from "@/components/AddToCartButton/AddToCartButton";
-import Snackbar from '@mui/material/Snackbar';
-import MuiAlert from '@mui/material/Alert';
+import Snackbar from "@mui/material/Snackbar";
+import MuiAlert from "@mui/material/Alert";
 import SnackbarContent from "@mui/material/SnackbarContent";
 
 const ProductDetails = () => {
@@ -35,12 +35,11 @@ const ProductDetails = () => {
 
   // Function to close the snackbar
   const handleCloseSnackbar = (event: any, reason: string) => {
-    if (reason === 'clickaway') {
+    if (reason === "clickaway") {
       return;
     }
     setOpenSnackbar(false);
   };
-
 
   useEffect(() => {
     const myHeaders = new Headers();
@@ -59,22 +58,20 @@ const ProductDetails = () => {
 
   return (
     <main className={styles.main}>
-
       <Snackbar
         open={openSnackbar}
         autoHideDuration={6000}
         onClose={handleCloseSnackbar}
-        anchorOrigin={{ vertical: 'top', horizontal: 'center' }}
+        anchorOrigin={{vertical: "top", horizontal: "center"}}
       >
         <SnackbarContent
           message="Cart updated successfully!"
-          style={{ backgroundColor: 'green' }}
+          style={{backgroundColor: "green"}}
         />
       </Snackbar>
 
       {productDetails ? (
         <div className={styles.product_details_container}>
-
           <ProductCard product={productDetails} productDetailsPage={true} />
 
           <div className={styles.details}>
@@ -83,7 +80,6 @@ const ProductDetails = () => {
             <div className={styles.unit_price}>
               {US_dollar.format(productDetails.unitPrice)}
             </div>
-
 
             <div className={styles.product_manufacturer}>
               <p>Manufacturer: {productDetails.manufacturer}</p>
@@ -95,7 +91,12 @@ const ProductDetails = () => {
 
             <div className={styles.product_rating}>
               <p>Rating: {productDetails.rating}</p>
-              <Rating name="half-rating-read" defaultValue={productDetails.rating} precision={0.5} readOnly />
+              <Rating
+                name="half-rating-read"
+                defaultValue={productDetails.rating}
+                precision={0.5}
+                readOnly
+              />
             </div>
             <div className={styles.product_sku}>
               <p>SKU: {productDetails.sku}</p>

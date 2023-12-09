@@ -28,6 +28,7 @@ const Cart = () => {
   const [error, setError] = useState<string | null>(null);
   const {user, setUser} = useUser();
 
+  // Sends API call to backend to get cart for the user's userId
   useEffect(() => {
     fetch(`http://localhost:5165/api/cart/${user?.userId}`)
       .then((response) => {
