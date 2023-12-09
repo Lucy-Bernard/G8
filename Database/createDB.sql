@@ -40,23 +40,15 @@ CREATE TABLE Category
 CREATE TABLE Product
 (
     productId INT PRIMARY KEY IDENTITY(1, 1) NOT NULL,
-	categoryId INT FOREIGN KEY REFERENCES Category (categoryId), --allowed to be null for now
+	categoryId INT FOREIGN KEY REFERENCES Category (categoryId),
     productName VARCHAR(100) NOT NULL,
     unitPrice MONEY NOT NULL,
-	manufacturer VARCHAR(MAX) NOT NULL,--Review data type
-	description VARCHAR(MAX), --would include dimensions if we still want that; nullable for basic items?
-	--  can display size and color on front end and only update this field in ItemsInCart when a user selects one option
-	rating DECIMAL(2,1), --allow nullable to distinguish between a product with a 0 rating a product that has no reviews yet
+	manufacturer VARCHAR(MAX) NOT NULL,
+	description VARCHAR(MAX), 
+	rating DECIMAL(2,1), -- nullable to distinguish between product with a 0 rating and product with no ratings yet
 	sku VARCHAR(15) NOT NULL,
     imageLink VARCHAR(MAX) NOT NULL
 );
-
--- CREATE TABLE Images
--- (
--- 	imageId INT PRIMARY KEY IDENTITY(1, 1) NOT NULL,
--- 	productId INT FOREIGN KEY REFERENCES Products (productId) NOT NULL,
--- 	imageLink VARCHAR(MAX) NOT NULL
--- );
 
 CREATE TABLE [Address]
 (
@@ -71,13 +63,12 @@ CREATE TABLE [Address]
 CREATE TABLE Payment
 (
 	paymentId INT PRIMARY KEY IDENTITY(1, 1) NOT NULL,
-	billingAddressId INT FOREIGN KEY REFERENCES [Address] (addressId) NOT NULL, -- if it DNE, create an address
+	billingAddressId INT FOREIGN KEY REFERENCES [Address] (addressId) NOT NULL,
 	cardNumber VARCHAR(16) NOT NULL,
 	nameOnCard VARCHAR(50) NOT NULL,
 	expirationMonth VARCHAR(2) NOT NULL,
 	expirationYear VARCHAR(4) NOT NULL,
 	cvv VARCHAR(4) NOT NULL
-	-- cardType? or could this info just be provided when filling out the form
 );
 
 CREATE TABLE [User]
@@ -104,7 +95,6 @@ CREATE TABLE CartItem
 	quantity INT
 );
 
---updpate what fields we need for this table
 CREATE TABLE [Order]
 (
     orderId INT PRIMARY KEY IDENTITY(1, 1) NOT NULL,
@@ -115,7 +105,6 @@ CREATE TABLE [Order]
 	orderDate DATE NOT NULL
 );
 
---updpate what fields we need for this table
 CREATE TABLE OrderItem
 (
     orderItemId INT PRIMARY KEY IDENTITY(1, 1) NOT NULL,
@@ -128,10 +117,6 @@ CREATE TABLE Sale
 	saleId INT PRIMARY KEY IDENTITY(1, 1) NOT NULL,
 	startDate VARCHAR(10) NOT NULL,
 	endDate VARCHAR(10) NOT NULL,
-	-- if implementing Sales, we would need to establish a discount type.
-	-- amount off certain products, amount off certain categories, and an amount off the entire cart
-	-- would also need to establish the format of the discount; is the amount diccounted a certain dollar amount? or will it be a percentage (provided as a decimal) where we need to do math with whichever discount type it is above?
-	-- discount ,
 	promoCode VARCHAR(50) NOT NULL,
 	saleName VARCHAR(100) NOT NULL
 );
@@ -166,7 +151,7 @@ VALUES (2, 'Homme Graphic Jogger', 21.00, 'manufacturer 1', 'description 1', 4.6
        (2, 'Womans Pinstripe Trousers', 19.99, 'manu 2', 'description 232', 4.2, '190472', 'pin-stripe-trousers.png'),
        (2, 'High Waisted Plicated Side Pocket Wide Leg Waffle Casual Pants',29.95,'manu 4','description 21',4.1,'098901','widelegwafflepants.png'),
        (1,'Crew Neck T-Shirt',14.00,'manufacturer 3','description 42',4.9,'929999','crew-neck.png'),
-          (4,'Gladiator Point Toe Heels',28.00,'manufacturer 100','description 32',3.9,'938729','gold-heels.png'),
+       (4,'Gladiator Point Toe Heels',28.00,'manufacturer 100','description 32',3.9,'938729','gold-heels.png'),
        (2,'Pleated Midi Skirt',60.00,'manufacturer 392','description sendit',4.8,'120411','pleated-midi-skirt.png');
 
 INSERT INTO [Address] (street, city, state, zip, country)
@@ -205,22 +190,11 @@ VALUES (1),
 	   (5),
 	   (6);
 
--- INSERT INTO CartItem (cartId, productId, quantity)
--- VALUES (1, 2, 1),	   
--- 	   (3, 1, 1),
--- 	   (3, 4, 1),
--- 	   (6, 3, 2);
-
 INSERT INTO [Order] (UserId, paymentId, shippingAddressId, orderNumber, orderDate)
 VALUES (1, 1, 7, 'ORD724806','2023-09-10'),
 	   (3, 2, 3, 'ORD806664','2023-06-22'),
 	   (5, 3, 5, 'ORD115687', '2023-11-11');
 
--- INSERT INTO OrderItem (orderId, cartItemId)
--- VALUES (1, 1),
--- 	   (1, 2),
--- 	   (1, 3),
--- 	   (1, 4);
     
 INSERT INTO Sale (startDate, endDate, promoCode, saleName)
 VALUES ('2023-11-27', '2023-11-28', 'cyber23', 'Cyber Monday'),
@@ -229,11 +203,7 @@ VALUES ('2023-11-27', '2023-11-28', 'cyber23', 'Cyber Monday'),
 GO
 
 
-
-
--- *** STORED PROCEDURES ******
---   * to make viewing information easier; can create more as we see fit
---	 * (some of these may not be needed)
+-- *** STORED PROCEDURES ****
 CREATE PROCEDURE GetProduct
 AS
 BEGIN
@@ -245,7 +215,6 @@ GO
 EXECUTE GetProduct;
 GO
 
---Gets the Product by Id
 CREATE PROCEDURE GetProductById @productId INT
 AS
 BEGIN
@@ -255,20 +224,12 @@ BEGIN
 END
 GO
 
-
 CREATE PROCEDURE GetCategory
     AS
     BEGIN
         SELECT * FROM Category
     END
 GO
-
--- CREATE PROCEDURE GetImages
---     AS
---     BEGIN
---         SELECT * FROM Images
---     END
--- GO
 
 
 CREATE PROCEDURE GetAddress
@@ -278,14 +239,12 @@ CREATE PROCEDURE GetAddress
     END
 GO
 
-
 CREATE PROCEDURE GetPayment
     AS
     BEGIN
         SELECT * FROM Payment
     END
 GO
-
 
 CREATE PROCEDURE GetUser
     AS
@@ -294,14 +253,12 @@ CREATE PROCEDURE GetUser
     END
 GO
 
-
 CREATE PROCEDURE GetCart
     AS
     BEGIN
         SELECT * FROM Cart
     END
 GO
-
 
 CREATE PROCEDURE GetCartItem
     AS
@@ -310,14 +267,12 @@ CREATE PROCEDURE GetCartItem
     END
 GO
 
-
 CREATE PROCEDURE GetOrder
     AS
     BEGIN
         SELECT * FROM [Order]
     END
 GO
-
 
 CREATE PROCEDURE GetSale
     AS
@@ -326,8 +281,6 @@ CREATE PROCEDURE GetSale
     END
 GO
 
--- Example of Calling it:
---EXEC GetOrderItems 1;
 CREATE PROCEDURE GetOrderItem @orderId INT
 	AS
 	BEGIN
@@ -361,19 +314,7 @@ BEGIN
 END
 GO
 
-EXECUTE GetCartItemsForUser @UserId = 1;
-
-
--- Example of Calling it:
---EXEC GetImagesOfProduct 1;
--- CREATE PROCEDURE GetImagesOfProduct @productId INT
--- 	AS
--- 	BEGIN
--- 		SELECT * FROM Image
--- 		WHERE productId = @productId;
--- 	END
--- GO
-
+EXECUTE GetCartItemsForUser @UserId = 1
 
 GO
 CREATE PROCEDURE AuthenticateUser @Email VARCHAR(255), @Password_ VARCHAR(255)
@@ -447,8 +388,5 @@ BEGIN
 END
 GO
 
-
 select * from [User];
 select * from CartItem
--- Use this to check whether a stored procedure is working
--- EXECUTE AuthenticateUser "johndoe217@email.com", "P@ssw0rd143";
