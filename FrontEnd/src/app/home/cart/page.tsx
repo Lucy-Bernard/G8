@@ -7,9 +7,9 @@ import ProductCard from "@/components/ProductCard/ProductCard";
 import {useUser} from "@/app/user";
 
 /**
- * Cart Component for Online Store
+ * Cart page
  *
- * This component is responsible for displaying and managing the user's shopping cart in the online store.
+ * This page is responsible for displaying and managing the user's shopping cart in the online store.
  * It imports necessary modules and components and utilizes React hooks for state management.
  */
 
