@@ -32,4 +32,42 @@
     GO
     ```
 
-5. After you have created the database, you can now use the script "createDB.sql".
+5. After you have created the database, you will now run the sql script "createDB.sql".
+
+### API
+
+This section contains all of the necessary steps to create an API that connects to a local instance of a SQL Server database. 
+
+- [Steps To Recreate The Project: (Mac/Windows/Linux)](#steps-to-recreate-the-project-macwindowslinux)
+
+#### Steps To Recreate The Project: (Mac/Windows/Linux)
+
+01. Download the following tools (if you haven't already):
+
+- [Dotnet 7.0](https://dotnet.microsoft.com/en-us/download/dotnet/7.0)
+- [Postman](https://www.postman.com/)
+- [Visual Studio Code](https://code.visualstudio.com/)
+  - **Visual NuGet** extension from Full Stack Spiders
+
+2. Navigate to the "Backend" directory and start the API by running the following command in the terminal:
+
+    ```bash
+    dotnet run
+    ```
+
+3. Open Postman and send a get request to make sure the database connection is working properly by using this url:
+    ```
+    http://localhost:5165/api/product
+    ```
+
+### FrontEnd
+
+1. Navigate to the "FrontEnd" directory and run the following command in the terminal simultaneously with the backend:
+    ```
+    npm run dev
+    ```
+2. Now go to the following webpage:
+    ```
+    http://localhost:3000/
+    ```
+3. At this point we are at the website, use the database to find an example user's login information. For the purpose of testing the code use the following username: "johndoe217@email.com" and password: "P@ssw0rd143" Use it to sign in. Now you may use the E-Commerce app to purchase items. 

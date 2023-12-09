@@ -5,7 +5,6 @@ import Banner from "@/components/Banner/Banner";
 import ProductSection from "@/components/ProductSection/ProductSection";
 import {useEffect, useState} from "react";
 import {withRouter, NextRouter} from "next/router";
-import {useUser} from "../user";
 
 export type Product = {
   productId: number;
@@ -26,8 +25,9 @@ export default function Home(props: {router: NextRouter}) {
   const [outerwearData, setOuterwearData] = useState<Product[]>([]);
   const [shoesData, setShoesData] = useState<Product[]>([]);
   const [error, setError] = useState<string | null>(null);
-  const [badgeNumber, setBadgeNumber] = useState(0)
+  const [badgeNumber, setBadgeNumber] = useState(0);
 
+  // Sends API call to get products from the database
   useEffect(() => {
     const myHeaders = new Headers();
     myHeaders.append("Content-Type", "application/json");
@@ -43,6 +43,7 @@ export default function Home(props: {router: NextRouter}) {
       .finally(() => setIsLoading(false));
   }, []);
 
+  // Separates products based on their categories to display on the home page
   function filterCategory(result: Product[]) {
     const newTopsData: Product[] = [];
     const newBottomsData: Product[] = [];

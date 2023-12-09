@@ -1,10 +1,10 @@
-import React from 'react';
-import Link from 'next/link';
-import Image from 'next/image';
-import styles from './Banner.module.css';
+import React from "react";
+import Link from "next/link";
+import Image from "next/image";
+import styles from "./Banner.module.css";
 
 const Banner: React.FC = () => {
-  const bannerImage = require('@/assets/Banner Images/G8.png'); //filler image
+  const bannerImage = require("@/assets/Banner Images/G8.png");
 
   return (
     <div className={styles.banner}>
@@ -15,7 +15,6 @@ const Banner: React.FC = () => {
             alt="banner image"
             className={styles.bannerImage}
             layout="responsive"
-
             objectFit=""
             objectPosition="center"
           />
@@ -26,4 +25,3 @@ const Banner: React.FC = () => {
 };
 
 export default Banner;
-

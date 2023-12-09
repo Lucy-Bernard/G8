@@ -3,7 +3,6 @@ import ProductCard from "../ProductCard/ProductCard";
 import styles from "./ProductSection.module.css";
 import Link from "next/link";
 import {Product} from "@/app/home/page";
-import AddToCartButton from "../AddToCartButton/AddToCartButton";
 
 type ProductSectionProps = {
   title: string;
@@ -19,9 +18,7 @@ const ProductSection: React.FC<ProductSectionProps> = (
         <Link
           className={styles.link}
           key={index}
-          href={`/home/productdetails?productId=${product.productId}`
-        }
-        
+          href={`/home/productdetails?productId=${product.productId}`}
         >
           <ProductCard key={product.productId} product={product} />
         </Link>

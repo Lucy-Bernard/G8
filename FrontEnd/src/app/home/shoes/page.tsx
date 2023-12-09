@@ -2,7 +2,7 @@
 
 import styles from "../page.module.css";
 import ProductSection from "@/components/ProductSection/ProductSection";
-import { useEffect, useState } from "react";
+import {useEffect, useState} from "react";
 
 export type Product = {
   productId: number;
