@@ -15,11 +15,17 @@ jest.mock('next/navigation', () => ({
   },
 }));
 
+// Mocking the global fetch function
 fetch = jest.fn(() => Promise.resolve());
 
 describe('Header component', () => {
+    /**
+   * Test case: Renders the component and matches the snapshot.
+   */
   it('renders as expected', () => {
+    // Render the Header component
     const { container } = render(<Header />);
+    // Assert that the rendered component matches the snapshot
     expect(container).toMatchSnapshot();
   });
 });

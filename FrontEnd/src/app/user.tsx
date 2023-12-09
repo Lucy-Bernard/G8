@@ -1,6 +1,6 @@
 "use client";
 
-import {createContext, useContext, useState, ReactNode} from "react";
+import { createContext, useContext, useState, ReactNode } from "react";
 
 type User = {
   userId: number;
@@ -16,7 +16,7 @@ type UserContextType = {
 // Create the context with a default value
 const UserContext = createContext<UserContextType>({
   user: null,
-  setUser: () => {},
+  setUser: () => { },
 });
 
 // Props interface for the provider
@@ -25,11 +25,11 @@ type UserProviderProps = {
 };
 
 // The provider component
-export function UserProvider({children}: UserProviderProps) {
+export function UserProvider({ children }: UserProviderProps) {
   const [user, setUser] = useState<User | null>(null);
 
   // The value that will be supplied to the context
-  const value = {user, setUser};
+  const value = { user, setUser };
 
   return <UserContext.Provider value={value}>{children}</UserContext.Provider>;
 }
