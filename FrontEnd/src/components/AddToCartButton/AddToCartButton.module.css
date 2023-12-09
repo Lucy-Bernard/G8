@@ -15,10 +15,6 @@
 .addToCartButton:active {
   transform: scale(
     0.9
-<<<<<<< HEAD
-  ); 
-=======
   );
->>>>>>> main
   transition: transform 0.3s;
 }
