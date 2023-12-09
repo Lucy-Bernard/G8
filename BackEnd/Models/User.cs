@@ -1,5 +1,8 @@
 namespace ExampleAPI.Models
 {
+    /*
+    Represents a user entity with properties for identification and access
+    */
     public class User
     {
         public int UserId { get; set; }

@@ -14,15 +14,24 @@ jest.mock('react', () => ({
   useContext: jest.fn(),
 }));
 
+/**
+ * Unit tests for the ProductCard component.
+ */
 describe('ProductCard component', () => {
+    /**
+   * Test case: Renders the component with sample product data and matches the snapshot.
+   */
   it('renders as expected', () => {
+    // Sample product data for testing
     const product = {
       productName: 'Test Product',
       unitPrice: 10.99,
       imageLink: 'test-image.jpg',
     };
 
+    // Render the ProductCard component with sample product data
     const { container } = render(<ProductCard product={product} />);
+    // Assert that the rendered component matches the snapshot
     expect(container).toMatchSnapshot();
   });
 });

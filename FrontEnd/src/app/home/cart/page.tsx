@@ -1,12 +1,17 @@
 "use client";
 
 import Link from "next/link";
-import React, {useEffect, useState} from "react";
+import React, { useEffect, useState } from "react";
 import styles from "./page.module.css";
 import ProductCard from "@/components/ProductCard/ProductCard";
-import {useUser} from "@/app/user";
+import { useUser } from "@/app/user";
 
-// Existing CartItem type
+/**
+ * Cart page
+ *
+ * This page is responsible for displaying and managing the user's shopping cart in the online store.
+ * It imports necessary modules and components and utilizes React hooks for state management.
+ */
 
 export type CartItem = {
   cartItemId: number;
@@ -26,7 +31,7 @@ const Cart = () => {
   // State to track cart items
   const [cartItems, setCartItems] = useState<CartItem[]>([]);
   const [error, setError] = useState<string | null>(null);
-  const {user, setUser} = useUser();
+  const { user, setUser } = useUser();
 
   // Sends API call to backend to get cart for the user's userId
   useEffect(() => {
@@ -53,7 +58,7 @@ const Cart = () => {
 
     fetch(`http://localhost:5165/api/cart/${cartItemId}/${newQuantity}`, {
       method: "PUT",
-      headers: {"Content-Type": "application/json"},
+      headers: { "Content-Type": "application/json" },
     })
       .then((response) => {
         if (!response.ok) {
@@ -64,7 +69,7 @@ const Cart = () => {
       .then(() => {
         const updatedCartItems = cartItems.map((item) => {
           if (item.cartItemId === cartItemId) {
-            return {...item, quantity: newQuantity};
+            return { ...item, quantity: newQuantity };
           }
           return item;
         });
@@ -99,7 +104,7 @@ const Cart = () => {
     fetch(`http://localhost:5165/api/cart/${cartItemId}`, {
       method: "DELETE",
 
-      headers: {"Content-Type": "application/json"},
+      headers: { "Content-Type": "application/json" },
     })
       .then((response) => {
         if (!response.ok) {

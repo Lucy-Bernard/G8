@@ -1,25 +1,37 @@
-import React, {useState} from "react";
+/*
+ * AddToCartButton Component
+ * 
+ * This React component represents a button for adding a product to the user's cart.
+ */
+
+import React, { useState } from "react";
 import styles from "./AddToCartButton.module.css";
+import { useUser } from "@/app/user";
 
 type AddToCartButtonProps = {
   productId: number;
-  onAddToCart: () => void;
 };
 
+/*
+* Handles the click event for the "Add to Cart" button.
+* Sends a request to the server to add the specified product to the user's cart.
+*/
 const AddToCartButton: React.FC<AddToCartButtonProps> = (
   props: AddToCartButtonProps
 ) => {
   const [isLoading, setIsLoading] = useState(false);
   const [error, setError] = useState("");
+  const { user, setUser } = useUser();
 
   const handleAddToCart = async () => {
     console.log("Add to Cart Clicked for Product:", props.productId);
 
-    const userId = 1; // This gets updated to the actual userId later
+    const userId = user?.userId;
+
 
     fetch(`http://localhost:5165/api/cart`, {
       method: "POST",
-      headers: {"Content-Type": "application/json"},
+      headers: { "Content-Type": "application/json" },
       body: JSON.stringify({
         userId: userId,
         productId: props.productId,
@@ -36,6 +48,11 @@ const AddToCartButton: React.FC<AddToCartButtonProps> = (
       .finally(() => setIsLoading(false));
   };
 
+  /*
+   * Renders the AddToCartButton component.
+   * 
+   * The component displays a button with the text "Add to Cart" and triggers the handleAddToCart function on click.
+   */
   return (
     <button onClick={handleAddToCart} className={styles.addToCartButton}>
       Add to Cart
@@ -44,3 +61,7 @@ const AddToCartButton: React.FC<AddToCartButtonProps> = (
 };
 
 export default AddToCartButton;
+
+function onAddToCart() {
+  throw new Error("Function not implemented.");
+}

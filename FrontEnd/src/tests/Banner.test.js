@@ -10,7 +10,9 @@ jest.mock('next/image', () => ({ src, alt, className, layout, objectFit, objectP
 
 describe('Banner component', () => {
   it('renders as expected', () => {
+    // Render the Banner component
     const { container } = render(<Banner />);
+        // Assert that the rendered component matches the snapshot
     expect(container).toMatchSnapshot();
   });
 });

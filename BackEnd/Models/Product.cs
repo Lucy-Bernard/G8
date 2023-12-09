@@ -1,3 +1,10 @@
+/*
+ * Product Model
+ * 
+ * This class represents a product with various properties such as ProductId, CategoryId, etc.
+ * 
+ */
+
 namespace ExampleAPI.Models
 {
     public class Product
@@ -12,6 +19,7 @@ namespace ExampleAPI.Models
         public string SKU { get; set; }
         public string ImageLink { get; set; }
 
+        // Constructor to initialize the properties of the product
         public Product(int productId, int categoryId, string productName, decimal unitPrice, string manufacturer, string description, decimal rating, string sku, string imageLink)
         {   
             this.ProductId = productId;

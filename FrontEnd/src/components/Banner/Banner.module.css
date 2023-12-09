@@ -1,6 +1,10 @@
+/**
+* Styling for banner
+**/
+
 .banner {
   position: relative;
-  height: 500px; /* Adjust the height as needed */
+  height: 500px;
   width: 100vw;
   background-color: #d1b8a3;
 }
