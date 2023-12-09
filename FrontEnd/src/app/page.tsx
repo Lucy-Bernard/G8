@@ -1,49 +1,50 @@
 "use client";
 
-import {useEffect, useState} from "react";
+import { useEffect, useState } from "react";
 import styles from "./page.module.css";
 import Link from "next/link";
-import {useRouter} from "next/navigation";
-import {useUser} from "./user";
-
+import { useRouter } from "next/navigation";
+import { useUser } from "./user";
+/**
+ * Represents the login page component.
+ *
+ * This component is responsible for rendering the login form and handling user authentication.
+ * It uses the useState hook to manage form inputs and submission state.
+ */
 export default function Login() {
-  const [email, setEmail] = useState(""); //holds username and pw provided by user
+
+  const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
-  const [is_loading, set_is_loading] = useState(false); // loading state for API call
+  const [is_loading, set_is_loading] = useState(false);
   const [error, setError] = useState("");
-  const router = useRouter(); // router to redirect users to other pages
-  const {user, setUser} = useUser();
-  //-----------------------------------------------------------------------------
+  const router = useRouter();
+  const { user, setUser } = useUser();
 
   /**
-   * When form is submitted (login button) this function will construct a fetch request to send these
-   * credentials to the backend. The email and password states which now contain the user's input. are
-   * used to create a json payload. The payload is included in the body of the fetch request. The api
-   * then receives the data, processes the login request, and sends back a response.
-   * @param event
+   * Handles the submission of the login form.
+   * Sends a POST request to the backend API with the user's credentials (email and password).
+   * On successful authentication, the user is redirected to the home page.
+   *
+   * @param {Object} event - The event object of the form submission.
    */
-  const handleSubmit = async (event: {preventDefault: () => void}) => {
+  const handleSubmit = async (event: { preventDefault: () => void }) => {
+
     event.preventDefault();
-
-    // tracks whether a post/get request is loading or not
     set_is_loading(true);
-    setError(""); // informs users of any potential errors
+    setError("");
 
-    // sets up HTTP headers and indicates that the payload is json
-    //  the header stuff is saying "HEY this is json"
     var myHeaders = new Headers();
     myHeaders.append("Content-Type", "application/json");
-    // converts user input into a json string and stores it into raw, preparing it for transmission in the HTTP req
     var raw = JSON.stringify({
       Email: email,
       Password_: password,
     });
 
-    // this sends a post request to the backend API with the users credentials
+    // POST request to the backend API with user credentials
     fetch("http://localhost:5165/api/user", {
-      method: "POST", //  the body of this is the payload
+      method: "POST",
       headers: myHeaders,
-      body: raw, // raw is the user input coverted into json format
+      body: raw,
       redirect: "follow",
     })
       .then((response) => response.json())
@@ -54,7 +55,7 @@ export default function Login() {
       })
       .catch((error) => console.log("error", error));
   };
-
+  // Render the login form
   return (
     <main className={styles.main}>
       <div className={styles.loginContainer}>

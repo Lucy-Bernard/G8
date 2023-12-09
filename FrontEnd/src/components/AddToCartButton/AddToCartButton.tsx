@@ -43,3 +43,7 @@ const AddToCartButton: React.FC<AddToCartButtonProps> = (
 };
 
 export default AddToCartButton;
+
+function onAddToCart() {
+  throw new Error("Function not implemented.");
+}

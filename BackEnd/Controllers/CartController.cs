@@ -1,3 +1,9 @@
+/**
+* Author: Isaiah Stone
+* 
+* Controller for cart related CRUD operations.
+**/
+
 using Microsoft.Extensions.Configuration;
 using System.Collections.Generic;
 using System.Data;
