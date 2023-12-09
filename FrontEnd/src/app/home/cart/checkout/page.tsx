@@ -12,8 +12,8 @@ import TextField from "@mui/material/TextField";
 import InputAdornment from "@mui/material/InputAdornment";
 import Tooltip from "@mui/material/Tooltip";
 import InfoIcon from "@mui/icons-material/Info";
-import "@fontsource/quicksand"; // Defaults to weight 400
-import "@fontsource/quicksand/400.css"; // Specify weight
+import "@fontsource/quicksand";
+import "@fontsource/quicksand/400.css";
 import { createTheme, ThemeProvider } from "@mui/material/styles";
 import { Snackbar, SnackbarContent } from "@mui/material";
 import { useRouter } from "next/navigation";
