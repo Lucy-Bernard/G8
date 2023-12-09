@@ -56,7 +56,5 @@ namespace ExampleAPI.UnitTests.Controllers
             // Assert
             Assert.IsInstanceOf<UnauthorizedObjectResult>(result);
         }
-
-        // Add more tests for different scenarios...
     }
 }
