@@ -3,8 +3,9 @@
 import styles from "./page.module.css";
 import Banner from "@/components/Banner/Banner";
 import ProductSection from "@/components/ProductSection/ProductSection";
-import { useEffect, useState } from "react";
-import { withRouter, NextRouter } from "next/router";
+import {useEffect, useState} from "react";
+import {withRouter, NextRouter} from "next/router";
+import {useUser} from "../user";
 
 export type Product = {
   productId: number;
@@ -18,13 +19,14 @@ export type Product = {
   imageLink: string;
 };
 
-export default function Home(props: { router: NextRouter }) {
+export default function Home(props: {router: NextRouter}) {
   const [isLoading, setIsLoading] = useState(true);
   const [topsData, setTopsData] = useState<Product[]>([]);
   const [bottomsData, setBottomsData] = useState<Product[]>([]);
   const [outerwearData, setOuterwearData] = useState<Product[]>([]);
   const [shoesData, setShoesData] = useState<Product[]>([]);
   const [error, setError] = useState<string | null>(null);
+  const [badgeNumber, setBadgeNumber] = useState(0)
 
   useEffect(() => {
     const myHeaders = new Headers();
@@ -73,7 +75,7 @@ export default function Home(props: { router: NextRouter }) {
           <p>Loading...</p>
         ) : error ? (
           <p>{error}</p>
-        ) :
+        ) : (
           <>
             <div className={styles.headerDiv}>
               <h2>Tops</h2>
@@ -92,7 +94,7 @@ export default function Home(props: { router: NextRouter }) {
               <ProductSection title="Shoes" products={shoesData} />
             </div>
           </>
-        }
+        )}
       </div>
     </main>
   );

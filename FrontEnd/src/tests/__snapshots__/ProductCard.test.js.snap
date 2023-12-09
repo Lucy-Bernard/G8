@@ -1,0 +1,35 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`ProductCard component renders as expected 1`] = `
+<div>
+  <div
+    class="product_card  "
+  >
+    <img
+      alt="Test Product"
+      height="175"
+      loading="lazy"
+      src="[object Object]"
+      width="250"
+    />
+    <div
+      class="product_information"
+    >
+      <div
+        class="product_name_price"
+      >
+        <div
+          class="product_name"
+        >
+          Test Product
+        </div>
+        <div
+          class="unit_price"
+        >
+          $10.99
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+`;

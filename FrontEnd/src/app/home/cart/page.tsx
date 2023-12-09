@@ -1,11 +1,10 @@
 "use client";
 
 import Link from "next/link";
-import React, { useEffect, useState } from "react";
+import React, {useEffect, useState} from "react";
 import styles from "./page.module.css";
-import RemoveCircleIcon from "@mui/icons-material/RemoveCircle";
-import AddCircleIcon from "@mui/icons-material/AddCircle";
 import ProductCard from "@/components/ProductCard/ProductCard";
+import {useUser} from "@/app/user";
 
 // Existing CartItem type
 
@@ -27,10 +26,10 @@ const Cart = () => {
   // State to track cart items
   const [cartItems, setCartItems] = useState<CartItem[]>([]);
   const [error, setError] = useState<string | null>(null);
+  const {user, setUser} = useUser();
 
   useEffect(() => {
-    // Replace '1' with the actual user ID you need to fetch
-    fetch(`http://localhost:5165/api/cart/1`)
+    fetch(`http://localhost:5165/api/cart/${user?.userId}`)
       .then((response) => {
         if (!response.ok) {
           throw new Error("Failed to fetch cart items");
@@ -53,7 +52,7 @@ const Cart = () => {
 
     fetch(`http://localhost:5165/api/cart/${cartItemId}/${newQuantity}`, {
       method: "PUT",
-      headers: { "Content-Type": "application/json" },
+      headers: {"Content-Type": "application/json"},
     })
       .then((response) => {
         if (!response.ok) {
@@ -64,7 +63,7 @@ const Cart = () => {
       .then(() => {
         const updatedCartItems = cartItems.map((item) => {
           if (item.cartItemId === cartItemId) {
-            return { ...item, quantity: newQuantity };
+            return {...item, quantity: newQuantity};
           }
           return item;
         });
@@ -98,7 +97,8 @@ const Cart = () => {
   const handleRemoveItem = (cartItemId: number) => {
     fetch(`http://localhost:5165/api/cart/${cartItemId}`, {
       method: "DELETE",
-      headers: { "Content-Type": "application/json" },
+
+      headers: {"Content-Type": "application/json"},
     })
       .then((response) => {
         if (!response.ok) {
@@ -126,7 +126,6 @@ const Cart = () => {
       ) : (
         cartItems.map((item) => (
           <div key={item.cartItemId} className={styles.cartItem}>
-
             <ProductCard product={item} cartPage={true} />
 
             <div className={styles.cartItemDetails}>

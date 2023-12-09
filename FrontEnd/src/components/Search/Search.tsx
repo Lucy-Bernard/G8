@@ -1,5 +1,3 @@
-
-
 "use client";
 
 import { useEffect, useState } from "react";
@@ -39,6 +37,7 @@ const SearchButtonThatSlides: React.FC = () => {
 
     const [error, setError] = useState<string | null>(null);
 
+
     useEffect(() => {
         var myHeaders = new Headers();
         myHeaders.append("Content-Type", "application/json");
@@ -62,33 +61,28 @@ const SearchButtonThatSlides: React.FC = () => {
         const available = productsData.filter(obj => {
             return obj.productName.toLowerCase().includes(event.target.value.toLowerCase())
         })
+        console.log(available)
         setSearchBarResults(available)
         return false
     }
+    const clearSearchBarResults = () => {
+        setSearchBarResults([]);
+    };
 
-    const goToPage = () => {
+    const goToPage = (target: any) => {
         if (searchBarResults.length === 0) {
             alert('There are no matches!')
         }
-     /*   if(searchBarResults[0].categoryId == 1){
-            router.push('/home/tops') 
-            return false
-        }
-        if(searchBarResults[0].categoryId == 2){
-            router.push('/home/bottoms') 
-            return false
-        }
-        if(searchBarResults[0].categoryId == 3){
-            router.push('/home/outerwear') 
-            return false
-        }
-        if(searchBarResults[0].categoryId == 4){
-            router.push('/home/shoes') 
-            return false
-        }*/
 
-        router.push('/home/productdetails?productId=' + searchBarResults[0].productId)
-        return false
+        if (window.location.href.indexOf('?productId=') === -1) {
+            router.push('/home/productdetails?productId=' + searchBarResults[0].productId)
+            target.value = ''
+        } else {
+            /**
+             * since the router.push(..) is pushing to the same url with different query paramters, this is how to reload the page with the new url and appropriate query parameter
+             */
+            location.href = location.origin + location.pathname + '?productId=' + searchBarResults[0].productId
+        }
     }
 
   
@@ -101,8 +95,8 @@ const SearchButtonThatSlides: React.FC = () => {
                 placeholder="Search"
                 onChange={handleChange}
                 onKeyDown={event => {
-                    if (event.key === 'Enter') {
-                      goToPage()
+                    if (event.key === 'Enter') { 
+                      goToPage(event.target)
                     }
                   }}
             />
@@ -110,4 +104,3 @@ const SearchButtonThatSlides: React.FC = () => {
     );
 };
 export default SearchButtonThatSlides;
-

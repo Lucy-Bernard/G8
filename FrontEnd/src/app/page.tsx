@@ -1,10 +1,10 @@
 "use client";
 
-import { useEffect, useState } from "react";
+import {useEffect, useState} from "react";
 import styles from "./page.module.css";
 import Link from "next/link";
-import { useRouter } from "next/navigation";
-import { useUser } from "./user";
+import {useRouter} from "next/navigation";
+import {useUser} from "./user";
 
 export default function Login() {
   const [email, setEmail] = useState(""); //holds username and pw provided by user
@@ -12,7 +12,7 @@ export default function Login() {
   const [is_loading, set_is_loading] = useState(false); // loading state for API call
   const [error, setError] = useState("");
   const router = useRouter(); // router to redirect users to other pages
-  const { user, setUser } = useUser();
+  const {user, setUser} = useUser();
   //-----------------------------------------------------------------------------
 
   /**
@@ -22,7 +22,7 @@ export default function Login() {
    * then receives the data, processes the login request, and sends back a response.
    * @param event
    */
-  const handleSubmit = async (event: { preventDefault: () => void }) => {
+  const handleSubmit = async (event: {preventDefault: () => void}) => {
     event.preventDefault();
 
     // tracks whether a post/get request is loading or not
@@ -48,7 +48,7 @@ export default function Login() {
     })
       .then((response) => response.json())
       .then((result) => {
-        console.log(result);
+        console.log(`result: ${result}`);
         setUser(result);
         router.push("/home");
       })
