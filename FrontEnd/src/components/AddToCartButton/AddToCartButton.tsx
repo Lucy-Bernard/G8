@@ -1,4 +1,4 @@
-import React, {useState} from "react";
+import React, { useState } from "react";
 import styles from "./AddToCartButton.module.css";
 
 type AddToCartButtonProps = {
@@ -19,7 +19,7 @@ const AddToCartButton: React.FC<AddToCartButtonProps> = (
 
     fetch(`http://localhost:5165/api/cart`, {
       method: "POST",
-      headers: {"Content-Type": "application/json"},
+      headers: { "Content-Type": "application/json" },
       body: JSON.stringify({
         userId: userId,
         productId: props.productId,
@@ -44,3 +44,7 @@ const AddToCartButton: React.FC<AddToCartButtonProps> = (
 };
 
 export default AddToCartButton;
+
+function onAddToCart() {
+  throw new Error("Function not implemented.");
+}
