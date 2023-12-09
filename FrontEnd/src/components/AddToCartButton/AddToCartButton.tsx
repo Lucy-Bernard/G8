@@ -15,7 +15,7 @@ const AddToCartButton: React.FC<AddToCartButtonProps> = (
   const handleAddToCart = async () => {
     console.log("Add to Cart Clicked for Product:", props.productId);
 
-    const userId = 1; // This gets updated to the actual userId later
+    const userId = 1;
 
     fetch(`http://localhost:5165/api/cart`, {
       method: "POST",
