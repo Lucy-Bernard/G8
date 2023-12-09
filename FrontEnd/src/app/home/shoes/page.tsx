@@ -1,26 +1,24 @@
+/*
+ * Shoes Page Component
+ * 
+ * This component represents the page displaying products in the "Shoes" category.
+ * 
+ */
+
 "use client";
 
 import styles from "../page.module.css";
 import ProductSection from "@/components/ProductSection/ProductSection";
-import {useEffect, useState} from "react";
+import { useEffect, useState } from "react";
+import { Product } from "@/app/home/page";
 
-export type Product = {
-  productId: number;
-  categoryId: number;
-  productName: string;
-  unitPrice: number;
-  manufacturer: string;
-  description: string;
-  rating: number;
-  sku: string;
-  imageLink: string;
-};
-
+// Shoes Page Component Function
 export default function ShoesPage() {
   const [isLoading, setIsLoading] = useState(true);
   const [shoesData, setShoesData] = useState<Product[]>([]);
   const [error, setError] = useState<string | null>(null);
 
+  // Fetch product data from the API when the component mounts
   useEffect(() => {
     var myHeaders = new Headers();
     myHeaders.append("Content-Type", "application/json");
@@ -36,6 +34,7 @@ export default function ShoesPage() {
       .finally(() => setIsLoading(false));
   }, []);
 
+  // Filter products based on the category ID (4 for Shoes)
   function filterCategory(result: Product[]) {
     const filteredTops = result.filter((product) => product.categoryId === 4);
     setShoesData(filteredTops);

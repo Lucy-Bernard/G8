@@ -1,3 +1,11 @@
+/**
+ * ProductController Class
+ * 
+ * This controller class handles HTTP requests related to products in the ExampleAPI.
+ * It interacts with a local SQL Server database using stored procedures to perform CRUD operations.
+ * The class is annotated with attributes to define its routing and behavior as an API controller.
+ **/
+
 using Microsoft.Extensions.Configuration;
 using System.Collections.Generic;
 using System.Data;
@@ -19,6 +27,13 @@ namespace ExampleAPI.Controllers
             this.configuration = configuration;
         }
 
+        /*
+         * GET method to retrieve all products
+         * 
+         * Responds to HTTP GET requests at the route "api/product".
+         * Fetches all products from the local database using the "GetProduct" stored procedure.
+         * Returns a list of products in the response.
+         */
         [HttpGet]
         public ObjectResult Get()
         {
@@ -61,7 +76,13 @@ namespace ExampleAPI.Controllers
             }
         }
 
-
+        /*
+         * GET method to retrieve a product by ID
+         * 
+         * Responds to HTTP GET requests at the route "api/product/{id}".
+         * Fetches a specific product from the local database using the "GetProductById" stored procedure.
+         * Returns the product in the response if found; otherwise, returns a 404 Not Found status.
+         */
         [HttpGet("{id}")]
         public IActionResult Get(int id)
         {
@@ -105,21 +126,6 @@ namespace ExampleAPI.Controllers
             {
                 return BadRequest(exception.Message);
             }
-        }
-
-        [HttpPost]
-        public void Post([FromBody] string value)
-        {
-        }
-
-        [HttpPut("{id}")]
-        public void Put(int id, [FromBody] string value)
-        {
-        }
-
-        [HttpDelete("{id}")]
-        public void Delete(int id)
-        {
         }
     }
 }
