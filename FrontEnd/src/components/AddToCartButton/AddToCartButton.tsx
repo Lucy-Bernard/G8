@@ -1,5 +1,6 @@
 import React, { useState } from "react";
 import styles from "./AddToCartButton.module.css";
+import { useUser } from "@/app/user";
 
 type AddToCartButtonProps = {
   productId: number;
@@ -11,11 +12,12 @@ const AddToCartButton: React.FC<AddToCartButtonProps> = (
 ) => {
   const [isLoading, setIsLoading] = useState(false);
   const [error, setError] = useState("");
+  const {user, setUser} = useUser();
 
   const handleAddToCart = async () => {
     console.log("Add to Cart Clicked for Product:", props.productId);
 
-    const userId = 1; // This gets updated to the actual userId later
+    const userId = user?.userId;
 
     fetch(`http://localhost:5165/api/cart`, {
       method: "POST",
