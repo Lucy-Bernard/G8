@@ -1,6 +1,5 @@
 "use client";
 
-// import * as React from 'react';
 import OrderSummary from "@/components/OrderSummary/OrderSummary";
 import ReviewOrder from "@/components/ReviewOrder/ReviewOrder";
 import Box from "@mui/material/Box";
@@ -15,35 +14,33 @@ import Tooltip from "@mui/material/Tooltip";
 import InfoIcon from "@mui/icons-material/Info";
 import "@fontsource/quicksand"; // Defaults to weight 400
 import "@fontsource/quicksand/400.css"; // Specify weight
-import {createTheme, ThemeProvider} from "@mui/material/styles";
-import {Snackbar, SnackbarContent} from "@mui/material";
-import {useRouter} from "next/navigation";
+import { createTheme, ThemeProvider } from "@mui/material/styles";
+import { Snackbar, SnackbarContent } from "@mui/material";
+import { useRouter } from "next/navigation";
 import styles from "./page.module.css";
-import React, {useEffect, useState} from "react";
+import React, { useEffect, useState } from "react";
 
-// -----------Font -------------------------------------
+/**
+ * Checkout component - Manages the checkout process including shipping, payment, and order review.
+ */
+
 const theme = createTheme({
   typography: {
     fontFamily: ["Quicksand", "sans-serif"].join(","),
   },
 });
 
-// const stepHeight = '100px';
-// -------------------Checkout------------------------------
-
 const steps = ["Shipping", "Payment", "Review & Order"];
 
 export default function Checkout() {
-  // ----------------------------------------------------------------------------------------
-
+  // States for managing form errors, snackbar notification, router navigation, and order submission status
   const [formError, setFormError] = React.useState(false);
   const [openSnackbar, setOpenSnackbar] = React.useState(false);
   const [orderSubmitted, setOrderSubmitted] = React.useState(false);
   const router = useRouter();
-
-  // ---------------Shipping Input----------------------------
   const [activeStep, setActiveStep] = React.useState(0);
 
+  // State and type for handling shipping details input
   const [shipping, setShipping] = React.useState<ShippingState>({
     firstName: "",
     lastName: "",
@@ -64,8 +61,7 @@ export default function Checkout() {
     postalCode: string;
   };
 
-  // ---------------Payment Input-------------------------
-
+  // State and type for handling payment details input
   const [payment, setPayment] = React.useState<PaymentState>({
     cardNumber: "",
     securityCode: "",
@@ -79,7 +75,7 @@ export default function Checkout() {
     expirationMonth: string;
     expirationYear: string;
   };
-  // -----------------Validation-----------------------------
+
   const validateShipping = () => {
     return (
       shipping.firstName &&
@@ -98,20 +94,18 @@ export default function Checkout() {
     );
   };
 
-  // ----------------------Next/Back/Home Buttons ------------
   const handleNext = () => {
-    // prevent from proceeding to next step if shipping fields not filled out
+
     if (activeStep === 0 && !validateShipping()) {
       setFormError(true);
       return;
     }
-    // prevent from proceeding to next step if payment fields not filled out
+
     if (activeStep === 1 && !validatePayment()) {
       setFormError(true);
       return;
     }
-    setFormError(false); // Reset error state if validation passes
-    // handle order submmission
+    setFormError(false);
     if (activeStep === steps.length - 1) {
       setOrderSubmitted(true);
       setOpenSnackbar(true);
@@ -120,7 +114,6 @@ export default function Checkout() {
     }
   };
 
-  // function to handle Snackbar close
   const handleCloseSnackbar = (event: any, reason: string) => {
     if (reason === "clickaway") {
       return;
@@ -136,10 +129,9 @@ export default function Checkout() {
     setActiveStep((prevActiveStep) => prevActiveStep - 1);
   };
 
+  // Render the Checkout component
   return (
     <ThemeProvider theme={theme}>
-      {/* Steps and Forms */}
-      {/*outter box */}
       <Box className={styles.content}>
         <Box>
           <Stepper activeStep={activeStep}>
@@ -154,13 +146,13 @@ export default function Checkout() {
             </Step>
           </Stepper>
 
-          {/* -------------------------------------------Shipping Form --------------------------------------------*/}
+          {/*Shipping Form*/}
           {activeStep === 0 && (
             <Box
               component="form"
               noValidate
               autoComplete="off"
-              sx={{mt: 2, maxWidth: "600px"}}
+              sx={{ mt: 2, maxWidth: "600px" }}
             >
               <TextField
                 required
@@ -170,7 +162,7 @@ export default function Checkout() {
                 variant="outlined"
                 margin="normal"
                 value={shipping.firstName}
-                sx={{width: "48%", marginRight: "13px"}}
+                sx={{ width: "48%", marginRight: "13px" }}
                 error={formError && !shipping.firstName}
                 helperText={
                   formError && !shipping.firstName
@@ -178,7 +170,7 @@ export default function Checkout() {
                     : ""
                 }
                 onChange={(e) =>
-                  setShipping({...shipping, firstName: e.target.value})
+                  setShipping({ ...shipping, firstName: e.target.value })
                 }
               />
 
@@ -187,7 +179,7 @@ export default function Checkout() {
                 id="lastName"
                 name="lastName"
                 label="Last Name "
-                sx={{width: "48%"}}
+                sx={{ width: "48%" }}
                 variant="outlined"
                 margin="normal"
                 value={shipping.lastName}
@@ -196,7 +188,7 @@ export default function Checkout() {
                   formError && !shipping.lastName ? "last name is required" : ""
                 }
                 onChange={(e) =>
-                  setShipping({...shipping, lastName: e.target.value})
+                  setShipping({ ...shipping, lastName: e.target.value })
                 }
               />
 
@@ -207,14 +199,14 @@ export default function Checkout() {
                 label="Address "
                 variant="outlined"
                 margin="normal"
-                sx={{width: "98%"}}
+                sx={{ width: "98%" }}
                 value={shipping.address}
                 error={formError && !shipping.address}
                 helperText={
                   formError && !shipping.address ? "address is required" : ""
                 }
                 onChange={(e) =>
-                  setShipping({...shipping, address: e.target.value})
+                  setShipping({ ...shipping, address: e.target.value })
                 }
               />
 
@@ -223,10 +215,10 @@ export default function Checkout() {
                 label="Apt, Suite, Floor (optional)"
                 variant="filled"
                 margin="normal"
-                sx={{width: "98%"}}
+                sx={{ width: "98%" }}
                 value={shipping.apt}
                 onChange={(e) =>
-                  setShipping({...shipping, apt: e.target.value})
+                  setShipping({ ...shipping, apt: e.target.value })
                 }
               />
               <TextField
@@ -236,14 +228,14 @@ export default function Checkout() {
                 label="City "
                 variant="outlined"
                 margin="normal"
-                sx={{width: "30%", marginRight: "13px"}}
+                sx={{ width: "30%", marginRight: "13px" }}
                 value={shipping.city}
                 error={formError && !shipping.city}
                 helperText={
                   formError && !shipping.city ? " city is required" : ""
                 }
                 onChange={(e) =>
-                  setShipping({...shipping, city: e.target.value})
+                  setShipping({ ...shipping, city: e.target.value })
                 }
               />
               <TextField
@@ -253,17 +245,16 @@ export default function Checkout() {
                 label="State"
                 variant="outlined"
                 margin="normal"
-                sx={{width: "30%", marginRight: "13px"}}
+                sx={{ width: "30%", marginRight: "13px" }}
                 value={shipping.state}
                 error={formError && !shipping.state}
                 helperText={
                   formError && !shipping.state ? " state is required" : ""
                 }
                 onChange={(e) =>
-                  setShipping({...shipping, state: e.target.value})
+                  setShipping({ ...shipping, state: e.target.value })
                 }
               />
-
               <TextField
                 required
                 id="postalCode"
@@ -271,7 +262,7 @@ export default function Checkout() {
                 label="Postal Code "
                 variant="outlined"
                 margin="normal"
-                sx={{width: "34%"}}
+                sx={{ width: "34%" }}
                 value={shipping.postalCode}
                 error={formError && !shipping.postalCode}
                 helperText={
@@ -280,32 +271,32 @@ export default function Checkout() {
                     : ""
                 }
                 onChange={(e) =>
-                  setShipping({...shipping, postalCode: e.target.value})
+                  setShipping({ ...shipping, postalCode: e.target.value })
                 }
               />
             </Box>
           )}
 
-          {/* ------------------------------------------------Payment Form ------------------------------------------------*/}
+          {/*Payment Form*/}
           {activeStep === 1 && (
             <Box
               component="form"
               noValidate
               autoComplete="off"
-              sx={{mt: 2, maxWidth: "600px"}}
+              sx={{ mt: 2, maxWidth: "600px" }}
             >
               <TextField
                 required
                 id="cardNumber"
                 name="cardNumber"
                 label="Credit Card Number"
-                sx={{width: "70%", marginRight: "13px"}}
+                sx={{ width: "70%", marginRight: "13px" }}
                 variant="outlined"
                 margin="normal"
                 value={payment.cardNumber}
                 error={formError && !payment.cardNumber}
                 onChange={(e) =>
-                  setPayment({...payment, cardNumber: e.target.value})
+                  setPayment({ ...payment, cardNumber: e.target.value })
                 }
                 helperText={
                   formError && !payment.cardNumber
@@ -317,7 +308,6 @@ export default function Checkout() {
                   minLength: 16,
                 }}
               />
-
               <TextField
                 required
                 id="securityCode"
@@ -326,27 +316,26 @@ export default function Checkout() {
                 fullWidth
                 variant="outlined"
                 margin="normal"
-                sx={{width: "27%"}}
+                sx={{ width: "27%" }}
                 value={payment.securityCode}
                 error={formError && !payment.securityCode}
                 helperText={
                   formError && !payment.securityCode ? "cvv is required" : ""
                 }
                 onChange={(e) =>
-                  setPayment({...payment, securityCode: e.target.value})
+                  setPayment({ ...payment, securityCode: e.target.value })
                 }
-                inputProps={{maxLength: 3}} // limit input to 3 characters
+                inputProps={{ maxLength: 3 }}
                 InputProps={{
                   endAdornment: (
                     <InputAdornment position="end">
                       <Tooltip title="The 3-digit code on the back of your card">
-                        <InfoIcon fontSize="small" sx={{color: "#1976d2"}} />
+                        <InfoIcon fontSize="small" sx={{ color: "#1976d2" }} />
                       </Tooltip>
                     </InputAdornment>
                   ),
                 }}
               />
-
               <TextField
                 required
                 id="expirationMonth"
@@ -355,7 +344,7 @@ export default function Checkout() {
                 fullWidth
                 variant="outlined"
                 margin="normal"
-                sx={{width: "14%", marginRight: "13px"}}
+                sx={{ width: "14%", marginRight: "13px" }}
                 value={payment.expirationMonth}
                 error={formError && !payment.expirationMonth}
                 helperText={
@@ -364,9 +353,9 @@ export default function Checkout() {
                     : ""
                 }
                 onChange={(e) =>
-                  setPayment({...payment, expirationMonth: e.target.value})
+                  setPayment({ ...payment, expirationMonth: e.target.value })
                 }
-                inputProps={{maxLength: 2}} // limit input to 2 characters
+                inputProps={{ maxLength: 2 }} // limit input to 2 characters
               />
 
               <TextField
@@ -377,7 +366,7 @@ export default function Checkout() {
                 fullWidth
                 variant="outlined"
                 margin="normal"
-                sx={{width: "14%"}}
+                sx={{ width: "14%" }}
                 value={payment.expirationYear}
                 error={formError && !payment.expirationYear}
                 helperText={
@@ -386,23 +375,22 @@ export default function Checkout() {
                     : ""
                 }
                 onChange={(e) =>
-                  setPayment({...payment, expirationYear: e.target.value})
+                  setPayment({ ...payment, expirationYear: e.target.value })
                 }
-                inputProps={{maxLength: 2}} // Limit input to 2 characters
+                inputProps={{ maxLength: 2 }} // Limit input to 2 characters
               />
-
               <Typography
                 variant="subtitle2"
                 gutterBottom
-                sx={{color: "#6f6f6f", textAlign: "left"}}
+                sx={{ color: "#6f6f6f", textAlign: "left" }}
               >
                 Expiration Date
               </Typography>
             </Box>
           )}
-          {/*----------------------------Review Order------------------------------------*/}
+
+          {/*Review Order*/}
           {activeStep === 2 && (
-            // <Box sx={{ mt: 2, maxWidth: '900px' }}>
 
             <ReviewOrder
               shippingDetails={shipping}
@@ -412,16 +400,15 @@ export default function Checkout() {
                 expirationYear: payment.expirationYear,
               }}
             />
-            // </Box>
           )}
 
-          {/*-------------------------------- Navigation Buttons --------------------------*/}
-          <Box sx={{display: "flex", flexDirection: "row", pt: 2, mt: 2}}>
+          {/* Navigation Buttons*/}
+          <Box sx={{ display: "flex", flexDirection: "row", pt: 2, mt: 2 }}>
             <Button
               color="inherit"
               disabled={activeStep === 0 || orderSubmitted}
               onClick={handleBack}
-              sx={{mr: 1}}
+              sx={{ mr: 1 }}
             >
               Back
             </Button>
@@ -435,7 +422,7 @@ export default function Checkout() {
             )}
           </Box>
         </Box>
-        <Box sx={{marginTop: "-100px"}}>
+        <Box sx={{ marginTop: "-100px" }}>
           {/* Order Summary */}
           <OrderSummary />
         </Box>
@@ -445,11 +432,11 @@ export default function Checkout() {
         open={openSnackbar}
         autoHideDuration={6000}
         onClose={handleCloseSnackbar}
-        anchorOrigin={{vertical: "top", horizontal: "center"}}
+        anchorOrigin={{ vertical: "top", horizontal: "center" }}
       >
         <SnackbarContent
           message="Order confirmed! You will receive a confirmation email."
-          style={{backgroundColor: "green"}} // Snackbar with green background
+          style={{ backgroundColor: "green" }}
         />
       </Snackbar>
     </ThemeProvider>

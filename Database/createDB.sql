@@ -51,12 +51,6 @@ CREATE TABLE Product
     imageLink VARCHAR(MAX) NOT NULL
 );
 
--- CREATE TABLE Images
--- (
--- 	imageId INT PRIMARY KEY IDENTITY(1, 1) NOT NULL,
--- 	productId INT FOREIGN KEY REFERENCES Products (productId) NOT NULL,
--- 	imageLink VARCHAR(MAX) NOT NULL
--- );
 
 CREATE TABLE [Address]
 (
