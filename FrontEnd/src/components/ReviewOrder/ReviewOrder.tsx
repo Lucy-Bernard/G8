@@ -1,3 +1,10 @@
+/**
+ * ReviewOrder Component
+ *
+ * This component displays a summary of shipping and payment details for the user to review
+ * before placing an order.
+ **/
+
 import React from "react";
 import Box from "@mui/material/Box";
 import Typography from "@mui/material/Typography";
@@ -29,7 +36,7 @@ const ReviewOrder: React.FC<ReviewOrderProps> = ({
   paymentDetails,
 }) => {
   return (
-    <Box sx={{mt: 5, width: "600px"}}>
+    <Box sx={{ mt: 5, width: "600px" }}>
       <Typography variant="h5" gutterBottom>
         Review and Place Order
       </Typography>
@@ -40,7 +47,7 @@ const ReviewOrder: React.FC<ReviewOrderProps> = ({
         This will complete your order and charge your payment method for the
         total amount due.
       </Typography>
-      <Divider sx={{my: 2}} />
+      <Divider sx={{ my: 2 }} />
       <Box>
         <Typography variant="h6" gutterBottom>
           Shipping Address
@@ -53,11 +60,11 @@ const ReviewOrder: React.FC<ReviewOrderProps> = ({
           {shippingDetails.city}, {shippingDetails.state}{" "}
           {shippingDetails.postalCode}
         </Typography>
-        <Button variant="outlined" sx={{mt: 1}}>
+        <Button variant="outlined" sx={{ mt: 1 }}>
           Change
         </Button>
       </Box>
-      <Divider sx={{my: 2}} />
+      <Divider sx={{ my: 2 }} />
       <Box>
         <Typography variant="h6" gutterBottom>
           Payment Information
@@ -67,7 +74,7 @@ const ReviewOrder: React.FC<ReviewOrderProps> = ({
           Expires {paymentDetails.expirationMonth}/
           {paymentDetails.expirationYear}
         </Typography>
-        <Button variant="outlined" sx={{mt: 1}}>
+        <Button variant="outlined" sx={{ mt: 1 }}>
           Change
         </Button>
       </Box>

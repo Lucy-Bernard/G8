@@ -1,8 +1,8 @@
+/*
+ * Represents a user entity with properties for identification and access
+ */
 namespace ExampleAPI.Models
 {
-    /*
-    Represents a user entity with properties for identification and access
-    */
     public class User
     {
         public int UserId { get; set; }
@@ -15,7 +15,6 @@ namespace ExampleAPI.Models
 
         public User()
         {
-
         }
 
         public User(int UserId, int AddressId, string FirstName, string LastName, string Email, string Password_)

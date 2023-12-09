@@ -81,8 +81,8 @@
 
 /* Adjust styles for the image on the Cart page */
 .cart_page .product_image {
-  height: 10rem;
-  width: 9rem;
+  height: 210px;
+  width: 200px;
   object-fit: fill;
   border-radius: 10px;
   border: 1px solid rgb(240, 240, 240);

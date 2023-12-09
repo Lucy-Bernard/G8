@@ -1,3 +1,10 @@
+/*
+ * Header Component
+ * 
+ * This component represents the header of the application, including the logo, search button,
+ * user profile, and cart icons.
+ */
+
 import React from "react";
 import Image from "next/image";
 import styles from "./Header.module.css";
