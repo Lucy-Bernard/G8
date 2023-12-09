@@ -37,6 +37,7 @@ const SearchButtonThatSlides: React.FC = () => {
 
     const [error, setError] = useState<string | null>(null);
 
+
     useEffect(() => {
         var myHeaders = new Headers();
         myHeaders.append("Content-Type", "application/json");

@@ -428,7 +428,10 @@ CREATE PROCEDURE RemoveProductFromCart
 AS
 BEGIN
     DELETE FROM CartItem WHERE cartItemId = @cartItemId;
+<<<<<<< HEAD
 
+=======
+>>>>>>> 32b63a980b67f48b6ef43934d51af906e6af93c0
 END
 GO
 
