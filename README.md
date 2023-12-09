@@ -78,3 +78,7 @@ This section contains all of the necessary steps to create an API that connects 
    ```
    npm run test
    ```
+
+### !Important!
+
+User must be logged in to add items to cart.
