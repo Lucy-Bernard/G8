@@ -315,7 +315,8 @@ END
 GO
 
 EXECUTE GetCartItemsForUser @UserId = 1
-
+-- if  user inputs the email is l@gmail.com; select * from [User] where email = ' , the SP is just going to have
+-- a quere that looks like Select u.userId, 'select* from [User] where email = ', u.pw and that iwll fail cause it makes nos sense
 GO
 CREATE PROCEDURE AuthenticateUser @Email VARCHAR(255), @Password_ VARCHAR(255)
 	AS
@@ -390,5 +391,5 @@ GO
 
 select * from [User];
 
-select * from CartItem
+select * from CartItem;
 

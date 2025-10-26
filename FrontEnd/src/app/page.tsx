@@ -13,6 +13,7 @@ import { useUser } from "./user";
  */
 export default function Login() {
 
+  // defined different states to track user input and interaction
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
   const [is_loading, set_is_loading] = useState(false);
@@ -29,10 +30,12 @@ export default function Login() {
    */
   const handleSubmit = async (event: { preventDefault: () => void }) => {
 
+    // construct the data packet to send
+
     event.preventDefault();
     set_is_loading(true);
     setError("");
-
+// construct the request headers and body
     var myHeaders = new Headers();
     myHeaders.append("Content-Type", "application/json");
     var raw = JSON.stringify({
@@ -95,7 +98,7 @@ export default function Login() {
           Forgot <Link href="https://www.google.com">Username / Password?</Link>
         </p>
         <p>
-          Don't have an account?{" "}
+          Don&apos;t have an account?{" "}
           <Link href="https://www.google.com">Sign up</Link>
         </p>
       </div>

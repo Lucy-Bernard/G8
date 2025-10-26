@@ -1,7 +1,7 @@
 /*
  * ProductCard Component
  * 
- * This component represents a card displaying product information. 
+ * This component represents a card displaying product information.
  */
 
 import React from "react";

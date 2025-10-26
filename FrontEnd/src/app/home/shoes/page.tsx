@@ -1,26 +1,25 @@
 /*
  * Shoes Page Component
- * 
- * This component represents the page displaying products in the "Shoes" category.
- * 
+ *
+ * This page displays all products in the "Shoes" category.
+ * Products are fetched from the API and rendered using the ProductCard component.
  */
 
 "use client";
 
-import styles from "../page.module.css";
-import ProductSection from "@/components/ProductSection/ProductSection";
+import styles from "../tops/page.module.css";
+import ProductCard from "@/components/ProductCard/ProductCard";
+import Link from "next/link";
 import { useEffect, useState } from "react";
 import { Product } from "@/app/home/page";
 
-// Shoes Page Component Function
 export default function ShoesPage() {
   const [isLoading, setIsLoading] = useState(true);
   const [shoesData, setShoesData] = useState<Product[]>([]);
   const [error, setError] = useState<string | null>(null);
 
-  // Fetch product data from the API when the component mounts
   useEffect(() => {
-    var myHeaders = new Headers();
+    const myHeaders = new Headers();
     myHeaders.append("Content-Type", "application/json");
 
     fetch("http://localhost:5165/api/product", {
@@ -34,24 +33,35 @@ export default function ShoesPage() {
       .finally(() => setIsLoading(false));
   }, []);
 
-  // Filter products based on the category ID (4 for Shoes)
+  // Filter products to show only Shoes (categoryId === 4)
   function filterCategory(result: Product[]) {
-    const filteredTops = result.filter((product) => product.categoryId === 4);
-    setShoesData(filteredTops);
+    const filteredShoes = result.filter((product) => product.categoryId === 4);
+    setShoesData(filteredShoes);
   }
 
   return (
     <main>
-      <div className={styles.main}>
-        <h1>Shoes</h1>
+      <div className={styles.pageContainer}>
+        <h1 className={styles.pageTitle}>Shoes</h1>
         {isLoading ? (
-          <p>Loading...</p>
+          <p className={styles.message}>Loading...</p>
         ) : error ? (
-          <p>{error}</p>
+          <p className={styles.error}>{error}</p>
         ) : (
-          <ProductSection title="Shoes" products={shoesData} />
+          <div className={styles.productsGrid}>
+            {shoesData.map((product) => (
+              <Link
+                key={product.productId}
+                href={`/home/productdetails?productId=${product.productId}`}
+                className={styles.productLink}
+              >
+                <ProductCard product={product} />
+              </Link>
+            ))}
+          </div>
         )}
       </div>
     </main>
   );
 }
+

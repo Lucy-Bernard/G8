@@ -7,7 +7,7 @@
 
 "use client";
 
-import React, { useEffect, useState } from "react";
+import React, { useEffect, useState, Suspense } from "react";
 import { useSearchParams } from "next/navigation";
 import styles from "./page.module.css";
 import ProductCard from "@/components/ProductCard/ProductCard";
@@ -15,7 +15,7 @@ import Rating from "@mui/material/Rating";
 import AddToCartButton from "@/components/AddToCartButton/AddToCartButton";
 
 // Define the ProductDetails functional component
-const ProductDetails = () => {
+function ProductDetailsContent() {
   const [productDetails, setProductDetails] = useState<any>(null);
   const [isLoading, setIsLoading] = useState(true);
   const [error, setError] = useState<string | null>(null);
@@ -91,6 +91,12 @@ const ProductDetails = () => {
       )}
     </main>
   );
-};
+}
 
-export default ProductDetails;
+export default function ProductDetails() {
+  return (
+    <Suspense fallback={<div>Loading product details...</div>}>
+      <ProductDetailsContent />
+    </Suspense>
+  );
+}

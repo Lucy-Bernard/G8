@@ -1,25 +1,23 @@
 /*
  * Home Page Component
- * 
+ *
  * This component represents the home page of the online store. It fetches products
- * from a specified API endpoint, categorizes them, and displays them in different
- * sections on the page. 
+ * from the API and displays them in a 4x4 grid layout with 4 products per category.
  *
- * Component Structure:
- * - Banner: Displays a banner component at the top of the page.
- * - Product Sections: Displays categorized product sections with a title and product data.
- * - Loading State: Displays a loading message while data is being fetched.
- * - Error State: Displays an error message if there is an issue fetching data.
- *
+ * Layout:
+ * - Row 1: Tops (4 items)
+ * - Row 2: Bottoms (4 items)
+ * - Row 3: Shoes (4 items)
+ * - Row 4: Outerwear (4 items)
  */
 
 "use client";
 
 import styles from "./page.module.css";
 import Banner from "@/components/Banner/Banner";
-import ProductSection from "@/components/ProductSection/ProductSection";
+import ProductCard from "@/components/ProductCard/ProductCard";
+import Link from "next/link";
 import { useEffect, useState } from "react";
-import { withRouter, NextRouter } from "next/router";
 
 // Define the Product type
 export type Product = {
@@ -35,22 +33,20 @@ export type Product = {
 };
 
 // Define the Home component
-export default function Home(props: { router: NextRouter }) {
-  // State variables to manage loading, product data, errors, and badge number
+export default function Home() {
+  // State variables to manage loading, product data, and errors
   const [isLoading, setIsLoading] = useState(true);
   const [topsData, setTopsData] = useState<Product[]>([]);
   const [bottomsData, setBottomsData] = useState<Product[]>([]);
-  const [outerwearData, setOuterwearData] = useState<Product[]>([]);
   const [shoesData, setShoesData] = useState<Product[]>([]);
+  const [outerwearData, setOuterwearData] = useState<Product[]>([]);
   const [error, setError] = useState<string | null>(null);
-  const [badgeNumber, setBadgeNumber] = useState(0);
 
-  // Sends API call to get products from the database
+  // Fetch products from the API
   useEffect(() => {
     const myHeaders = new Headers();
     myHeaders.append("Content-Type", "application/json");
 
-    // Fetch data from the product API endpoint
     fetch("http://localhost:5165/api/product", {
       method: "GET",
       headers: myHeaders,
@@ -62,31 +58,12 @@ export default function Home(props: { router: NextRouter }) {
       .finally(() => setIsLoading(false));
   }, []);
 
-  // Separates products based on their categories to display on the home page
+  // Filter and categorize products, limiting to 4 items per category
   function filterCategory(result: Product[]) {
-    const newTopsData: Product[] = [];
-    const newBottomsData: Product[] = [];
-    const newOuterwearData: Product[] = [];
-    const newShoesData: Product[] = [];
-
-    // Iterate through the fetched products and categorize them
-    result.forEach((product) => {
-      if (newTopsData.length < 4 && product.categoryId === 1) {
-        newTopsData.push(product);
-      } else if (newBottomsData.length < 4 && product.categoryId === 2) {
-        newBottomsData.push(product);
-      } else if (newOuterwearData.length < 4 && product.categoryId === 3) {
-        newOuterwearData.push(product);
-      } else if (newShoesData.length < 4 && product.categoryId === 4) {
-        newShoesData.push(product);
-      }
-    });
-
-    // Update state with the categorized data
-    setTopsData(newTopsData);
-    setBottomsData(newBottomsData);
-    setOuterwearData(newOuterwearData);
-    setShoesData(newShoesData);
+    setTopsData(result.filter((p) => p.categoryId === 1).slice(0, 4));
+    setBottomsData(result.filter((p) => p.categoryId === 2).slice(0, 4));
+    setShoesData(result.filter((p) => p.categoryId === 4).slice(0, 4));
+    setOuterwearData(result.filter((p) => p.categoryId === 3).slice(0, 4));
   }
 
   return (
@@ -98,26 +75,74 @@ export default function Home(props: { router: NextRouter }) {
         ) : error ? (
           <p>{error}</p>
         ) : (
-          <>
-            <div className={styles.headerDiv}>
-              <h2>Tops</h2>
-              <ProductSection title="Tops" products={topsData} />
+          <div className={styles.gridContainer}>
+            {/* Row 1: Tops */}
+            <div className={styles.categoryRow}>
+              <h2 className={styles.categoryTitle}>Tops</h2>
+              <div className={styles.productGrid}>
+                {topsData.map((product) => (
+                  <Link
+                    key={product.productId}
+                    href={`/home/productdetails?productId=${product.productId}`}
+                    className={styles.productLink}
+                  >
+                    <ProductCard product={product} />
+                  </Link>
+                ))}
+              </div>
             </div>
-            <div className={styles.headerDiv}>
-              <h2>Bottoms</h2>
-              <ProductSection title="Bottoms" products={bottomsData} />
+
+            {/* Row 2: Bottoms */}
+            <div className={styles.categoryRow}>
+              <h2 className={styles.categoryTitle}>Bottoms</h2>
+              <div className={styles.productGrid}>
+                {bottomsData.map((product) => (
+                  <Link
+                    key={product.productId}
+                    href={`/home/productdetails?productId=${product.productId}`}
+                    className={styles.productLink}
+                  >
+                    <ProductCard product={product} />
+                  </Link>
+                ))}
+              </div>
             </div>
-            <div className={styles.headerDiv}>
-              <h2>Outerwear</h2>
-              <ProductSection title="Outerwear" products={outerwearData} />
+
+            {/* Row 3: Shoes */}
+            <div className={styles.categoryRow}>
+              <h2 className={styles.categoryTitle}>Shoes</h2>
+              <div className={styles.productGrid}>
+                {shoesData.map((product) => (
+                  <Link
+                    key={product.productId}
+                    href={`/home/productdetails?productId=${product.productId}`}
+                    className={styles.productLink}
+                  >
+                    <ProductCard product={product} />
+                  </Link>
+                ))}
+              </div>
             </div>
-            <div className={styles.headerDiv}>
-              <h2>Shoes</h2>
-              <ProductSection title="Shoes" products={shoesData} />
+
+            {/* Row 4: Outerwear */}
+            <div className={styles.categoryRow}>
+              <h2 className={styles.categoryTitle}>Outerwear</h2>
+              <div className={styles.productGrid}>
+                {outerwearData.map((product) => (
+                  <Link
+                    key={product.productId}
+                    href={`/home/productdetails?productId=${product.productId}`}
+                    className={styles.productLink}
+                  >
+                    <ProductCard product={product} />
+                  </Link>
+                ))}
+              </div>
             </div>
-          </>
+          </div>
         )}
       </div>
     </main>
   );
 }
+

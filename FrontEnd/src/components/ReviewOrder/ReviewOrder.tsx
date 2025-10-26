@@ -41,7 +41,7 @@ const ReviewOrder: React.FC<ReviewOrderProps> = ({
         Review and Place Order
       </Typography>
       <Typography variant="body1">
-        Your order will not be placed until you click "Submit Order".
+        Your order will not be placed until you click &quot;Submit Order&quot;.
       </Typography>
       <Typography variant="body1">
         This will complete your order and charge your payment method for the

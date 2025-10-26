@@ -1,26 +1,25 @@
 /*
- * Outerwears Page Component
- * 
- * This component represents the page displaying products in the "Outerwear" category.
+ * Outerwear Page Component
  *
+ * This page displays all products in the "Outerwear" category.
+ * Products are fetched from the API and rendered using the ProductCard component.
  */
 
 "use client";
 
-import styles from "../page.module.css";
-import ProductSection from "@/components/ProductSection/ProductSection";
+import styles from "../tops/page.module.css";
+import ProductCard from "@/components/ProductCard/ProductCard";
+import Link from "next/link";
 import { useEffect, useState } from "react";
 import { Product } from "@/app/home/page";
 
-// Outerwears Page Component Function
-export default function OuterwearsPage() {
+export default function OuterwearPage() {
   const [isLoading, setIsLoading] = useState(true);
   const [outerwearData, setOuterwearData] = useState<Product[]>([]);
   const [error, setError] = useState<string | null>(null);
 
-  // Fetch product data from the API when the component mounts
   useEffect(() => {
-    var myHeaders = new Headers();
+    const myHeaders = new Headers();
     myHeaders.append("Content-Type", "application/json");
 
     fetch("http://localhost:5165/api/product", {
@@ -34,24 +33,35 @@ export default function OuterwearsPage() {
       .finally(() => setIsLoading(false));
   }, []);
 
-  // Filter products based on the category ID (3 for Outerwear)
+  // Filter products to show only Outerwear (categoryId === 3)
   function filterCategory(result: Product[]) {
-    const filteredTops = result.filter((product) => product.categoryId === 3);
-    setOuterwearData(filteredTops);
+    const filteredOuterwear = result.filter((product) => product.categoryId === 3);
+    setOuterwearData(filteredOuterwear);
   }
 
   return (
     <main>
-      <div className={styles.main}>
-        <h1>Outerwear</h1>
+      <div className={styles.pageContainer}>
+        <h1 className={styles.pageTitle}>Outerwear</h1>
         {isLoading ? (
-          <p>Loading...</p>
+          <p className={styles.message}>Loading...</p>
         ) : error ? (
-          <p>{error}</p>
+          <p className={styles.error}>{error}</p>
         ) : (
-          <ProductSection title="Outerwear" products={outerwearData} />
+          <div className={styles.productsGrid}>
+            {outerwearData.map((product) => (
+              <Link
+                key={product.productId}
+                href={`/home/productdetails?productId=${product.productId}`}
+                className={styles.productLink}
+              >
+                <ProductCard product={product} />
+              </Link>
+            ))}
+          </div>
         )}
       </div>
     </main>
   );
 }
+

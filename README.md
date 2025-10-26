@@ -1,84 +1,107 @@
-# E-Commerce - Software Engineering Capstone
+# Architecture Used
 
-### Database
+## Model View Controller
 
-#### Steps To Recreate The Project (Mac/Windows/Linux)
+- **Models**
+- **Controllers**
+- **View**
+  - React Pages and Components
 
-1. Download the following tools (if you haven't already):
+# Features
 
-- [Azure Data Studio](https://learn.microsoft.com/en-us/sql/azure-data-studio/download-azure-data-studio?view=sql-server-ver16&tabs=redhat-install%2Credhat-uninstall)
-- [Docker](https://www.docker.com/)
+- Cart Functionality
+- Login Functionality
+- Checkout Functionality
+- Search Functionality
 
-2. Since SQL Server is not native to Mac or Linux, we need to use Microsoft's official [Docker image](https://hub.docker.com/_/microsoft-mssql-server) to simulate an environment that can run SQL Server. Make sure that Docker is running and then open up a new Terminal/Powershell instance and run the following command:
+# BackEnd
 
-   ```bash
-   docker run -e "ACCEPT_EULA=Y" -e "MSSQL_SA_PASSWORD=P@ssw0rd" -p 1433:1433 -d mcr.microsoft.com/mssql/server:2022-latest
-   ```
+## Database
 
-   If you want to change the password, then, from the official documentation, the password needs to be "_at least 8 characters including uppercase, lowercase letters, base-10 digits and/or non-alphanumeric symbols._"
+Tools used: Azure Data Studio to run Microsoft SQL queries.
 
-   **Note:** any time you are trying to access the database, you need to ensure that the SQL Server container is running. You can do this by going to the _containers_ tab in Docker Desktop and hitting the play button next to the appropriate container.
+- In order to run SQL environment (sql isn't native to linux/mac), we use a docker image (microsoft provides this image) to simulate windows environment for SQL to run.
 
-3. Open Azure Data Studio and connect to the SQL Server instance using the following parameters:
+Docker Image that Microsoft provides to simulate windows environment:
 
-   ![SQL Server Connection](https://media.discordapp.net/attachments/929399365318115369/1143153990431936592/Azure_Data_Studio_Connection.png)
+[hub.docker.com](https://hub.docker.com/r/microsoft/mssql-server)
 
-   where your password is the password that you set up in step 2. If prompted, click _Enable Trust Server Certificate_.
+## Api
 
-4. Navigate to `File -> New Query` and run the following query:
+Tools used: Dotnet 7.0, Postman, VSCode extension: Visual NuGet
 
-   ```sql
-   CREATE DATABASE OnlineStore;
-   GO
-   ```
+**Dotnet7** is a **microsoft framework** that provides libraries, classes for databases, web APIS, file handling, runtime environments, etc for building a full stack application
 
-5. After you have created the database, you will now run the sql script "createDB.sql".
+# FrontEnd
 
-### API
+Tools Used: React/Next.js Framework
 
-This section contains all of the necessary steps to create an API that connects to a local instance of a SQL Server database.
+## App directory:
 
-- [Steps To Recreate The Project: (Mac/Windows/Linux)](#steps-to-recreate-the-project-macwindowslinux)
+These are all route directories that represent a different page/url in the app:
 
-#### Steps To Recreate The Project: (Mac/Windows/Linux)
+### Login Page
 
-1.  Download the following tools (if you haven't already):
+- **Components used:** None, just html tags like submitbutton and form
+- **API endpoint:**
+  - Uses the `user controller` to check whether the email and password provided exist in the database. If it does, the user is redirected to the homepage for that specific userid
+- **Protection Against SQL injection:**
+  - Used `String` placeholders for user input such as email and password so that the input is not mistaken for a SQL command
+    - **Flow:**
+      - User inputs email and pw
+      - Stored as strings
+      - Javascript converts the strings into json objects
+      - API call turns these into objects where email = string email and pw = string pw provided
+      - If user tries to type in a SQL command Password: `IgoB00m; DROP TABLE User;`
+        - When processed, the value for password will be treated as a string. So the password the user entered will be considered "Igob00m! DROP Table User;". The sql query will attempt to find this and return None since that pw doesn't exist
 
-- [Dotnet 7.0](https://dotnet.microsoft.com/en-us/download/dotnet/7.0)
-- [Postman](https://www.postman.com/)
-- [Visual Studio Code](https://code.visualstudio.com/)
-  - **Visual NuGet** extension from Full Stack Spiders
+### Home page
 
-2. Navigate to the "Backend" directory and start the API by running the following command in the terminal:
+- **Components used:**
+  - Header, NavigationBar, Product Section, Product Card, Search bar, Cart
+- **API endpoint:**
+  - Uses the `product controller` a result set of all unique products with their various details such as `name` `sku` etc.
+  - Converts data into json objects
+  - React takes json objects and converts them to javascript objects
+  - Stores data into an array for displaying across the Home Page UI when necessary
 
-   ```bash
-   dotnet run
-   ```
+### Cart page
 
-3. Open Postman and send a get request to make sure the database connection is working properly by using this url:
-   ```
-   http://localhost:5165/api/product
-   ```
+- **Components used:**
+  - Cart, Product Card
+- **State:**
+  - Kept track of cart Items
+  - Kept track of user
+- **API endpoint:**
+  - Uses the `cart Controller` to return the cart related to the specific user Id
+  - Converts data into json objects
+  - React takes json objects and converts them to javascript objects
+  - Take the data and store it into the a `cartItems` array to display cart items wherever necessary and also access any specific properties like quantity and/or prices in order to perform necessary calculations for checkout
+  - Additional endpoint is used to update the amount of items are in the users cart and also the quantity of a certain item - updates the database and returns the new result set
 
-### FrontEnd
+### Checkout Page
 
-1. Navigate to the "FrontEnd" directory and run the following command in the terminal simultaneously with the backend:
-   ```
-   npm run dev
-   ```
-2. Now go to the following webpage:
-   ```
-   http://localhost:3000/
-   ```
-3. At this point we are at the website, use the database to find an example user's login information. For the purpose of testing the code use the following username: "johndoe217@email.com" and password: "P@ssw0rd143" Use it to sign in. Now you may use the E-Commerce app to purchase items. One thing to be wary of is that if the website is rebuilt or refreshed, you will need to login again to add items to the cart.
+- **Components used:**
+  - Order Summary
+- **Card Validation:**
+  - Used regular expressions
+- **API endpoint:**
+  - Order Summary component used the `cart controller` to return all items in a cart and use data that would help with calculating Total or sales tax
 
-### Unit Tests
+## Components directory:
 
-1. Navigate to the "FrontEnd" directory and run the following command in the terminal to run the unit tests:
-   ```
-   npm run test
-   ```
+Components that are used throughout the app dynamically:
 
-### !Important!
+- Header
+- Banner
+- Product Section
+- Product Card
+- Cart
+- AddToCart
+- Footer
+- Search
 
-User must be logged in to add items to cart.
+## Test directory:
+
+- We only tested the front end and whether the items retrieved from the backend were correct
+- Used **Jest** Library to test React components

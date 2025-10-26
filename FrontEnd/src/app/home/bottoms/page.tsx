@@ -1,26 +1,25 @@
 /*
  * Bottoms Page Component
- * 
- * This component represents the page displaying products in the "Bottoms" category.
- * 
+ *
+ * This page displays all products in the "Bottoms" category.
+ * Products are fetched from the API and rendered using the ProductCard component.
  */
 
 "use client";
 
-import styles from "../page.module.css";
-import ProductSection from "@/components/ProductSection/ProductSection";
+import styles from "../tops/page.module.css";
+import ProductCard from "@/components/ProductCard/ProductCard";
+import Link from "next/link";
 import { useEffect, useState } from "react";
 import { Product } from "@/app/home/page";
 
-// Bottoms Page Component Function
 export default function BottomsPage() {
   const [isLoading, setIsLoading] = useState(true);
   const [bottomsData, setBottomsData] = useState<Product[]>([]);
   const [error, setError] = useState<string | null>(null);
 
-  // Fetch product data from the API when the component mounts
   useEffect(() => {
-    var myHeaders = new Headers();
+    const myHeaders = new Headers();
     myHeaders.append("Content-Type", "application/json");
 
     fetch("http://localhost:5165/api/product", {
@@ -34,24 +33,35 @@ export default function BottomsPage() {
       .finally(() => setIsLoading(false));
   }, []);
 
-  // Filter products based on the category ID (2 for Bottoms)
+  // Filter products to show only Bottoms (categoryId === 2)
   function filterCategory(result: Product[]) {
-    const filteredTops = result.filter((product) => product.categoryId === 2);
-    setBottomsData(filteredTops);
+    const filteredBottoms = result.filter((product) => product.categoryId === 2);
+    setBottomsData(filteredBottoms);
   }
 
   return (
     <main>
-      <div className={styles.main}>
-        <h1>Bottoms</h1>
+      <div className={styles.pageContainer}>
+        <h1 className={styles.pageTitle}>Bottoms</h1>
         {isLoading ? (
-          <p>Loading...</p>
+          <p className={styles.message}>Loading...</p>
         ) : error ? (
-          <p>{error}</p>
+          <p className={styles.error}>{error}</p>
         ) : (
-          <ProductSection title="Bottoms" products={bottomsData} />
+          <div className={styles.productsGrid}>
+            {bottomsData.map((product) => (
+              <Link
+                key={product.productId}
+                href={`/home/productdetails?productId=${product.productId}`}
+                className={styles.productLink}
+              >
+                <ProductCard product={product} />
+              </Link>
+            ))}
+          </div>
         )}
       </div>
     </main>
   );
 }
+
