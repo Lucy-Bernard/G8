@@ -34,18 +34,15 @@
 .productGrid {
   display: flex;
   flex-wrap: wrap;
-  gap: 1.5rem;
-  justify-content: flex-start;
+  gap: 3rem;
+  justify-content: center;
 }
-
 .productLink {
   text-decoration: none;
   color: inherit;
-  flex: 0 0 calc(25% - 1.125rem); /* 4 items per row with gap */
-  max-width: calc(25% - 1.125rem);
+  flex: 0 0 auto;
   transition: transform 0.2s ease;
 }
-
 .productLink:hover {
   transform: translateY(-5px);
 }
@@ -80,4 +77,3 @@
   padding: 5px;
   position: relative;
 }
-

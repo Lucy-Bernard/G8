@@ -1,41 +1,28 @@
-/*
- * Product Details Component
- * 
- * This component displays detailed information about a specific product. 
- * The component also provides an option to add the product to the shopping cart.
- */
-
 "use client";
-
 import React, { useEffect, useState, Suspense } from "react";
 import { useSearchParams } from "next/navigation";
 import styles from "./page.module.css";
-import ProductCard from "@/components/ProductCard/ProductCard";
 import Rating from "@mui/material/Rating";
 import AddToCartButton from "@/components/AddToCartButton/AddToCartButton";
+import Image from "next/image";
 
-// Define the ProductDetails functional component
 function ProductDetailsContent() {
   const [productDetails, setProductDetails] = useState<any>(null);
   const [isLoading, setIsLoading] = useState(true);
   const [error, setError] = useState<string | null>(null);
 
-  // Formatter for US dollar currency
   const US_dollar = new Intl.NumberFormat("en-US", {
     style: "currency",
     currency: "USD",
   });
 
-  // Access the product ID from the URL query parameters
   const searchParams = useSearchParams();
   const productIdString = searchParams.get("productId");
   const productId = productIdString ? Number(productIdString) : null;
 
-  // Fetch product details from the API when the component mounts
   useEffect(() => {
     const myHeaders = new Headers();
     myHeaders.append("Content-Type", "application/json");
-
     fetch(`http://localhost:5165/api/product/${productId}`, {
       method: "GET",
       headers: myHeaders,
@@ -47,47 +34,76 @@ function ProductDetailsContent() {
       .finally(() => setIsLoading(false));
   }, []);
 
+  if (isLoading) return <p className={styles.loading}>Loading...</p>;
+  if (error) return <p className={styles.error}>{error}</p>;
+  if (!productDetails) return null;
+
+  const product_image = require(
+    "@/assets/Product Images/" + productDetails.imageLink,
+  );
+
   return (
     <main className={styles.main}>
-      {productDetails ? (
-        <div className={styles.product_details_container}>
-          <ProductCard product={productDetails} productDetailsPage={true} />
+      <div className={styles.wrapper}>
+        {/* Left: product image */}
+        <div className={styles.imageContainer}>
+          <Image
+            src={product_image}
+            alt={productDetails.productName}
+            width={380}
+            height={460}
+            className={styles.image}
+            style={{ objectFit: "cover" }}
+          />
+        </div>
 
-          <div className={styles.details}>
-            <h2>{productDetails.productName}</h2>
+        {/* Right: product details */}
+        <div className={styles.details}>
+          <h1 className={styles.productName}>{productDetails.productName}</h1>
 
-            <div className={styles.unit_price}>
-              {US_dollar.format(productDetails.unitPrice)}
-            </div>
+          <p className={styles.price}>
+            {US_dollar.format(productDetails.unitPrice)}
+          </p>
 
-            <div className={styles.product_manufacturer}>
-              <p>Manufacturer: {productDetails.manufacturer}</p>
-            </div>
+          <div className={styles.ratingRow}>
+            <Rating
+              name="half-rating-read"
+              defaultValue={productDetails.rating}
+              precision={0.5}
+              readOnly
+              size="small"
+            />
+            <span className={styles.ratingValue}>{productDetails.rating}</span>
+          </div>
 
-            <div className={styles.product_description}>
-              <p>Description: {productDetails.description}</p>
-            </div>
+          <div className={styles.divider} />
 
-            <div className={styles.product_rating}>
-              <p>Rating: {productDetails.rating}</p>
-              <Rating
-                name="half-rating-read"
-                defaultValue={productDetails.rating}
-                precision={0.5}
-                readOnly
-              />
-            </div>
-            <div className={styles.product_sku}>
-              <p>SKU: {productDetails.sku}</p>
-            </div>
+          <div className={styles.metaRow}>
+            <span className={styles.metaLabel}>Manufacturer</span>
+            <span className={styles.metaValue}>
+              {productDetails.manufacturer}
+            </span>
+          </div>
+
+          <div className={styles.metaRow}>
+            <span className={styles.metaLabel}>SKU</span>
+            <span className={styles.metaValue}>{productDetails.sku}</span>
+          </div>
+
+          <div className={styles.description}>
+            <p className={styles.metaLabel}>Description</p>
+            <p className={styles.descriptionText}>
+              {productDetails.description}
+            </p>
           </div>
         </div>
-      ) : (
-        <p>Loading...</p>
-      )}
-      {/** convert product id into a number for add to cart button */}
+      </div>
+
+      {/* Add to cart button — full width of the wrapper */}
       {productId && !isNaN(productId) && (
-        <AddToCartButton productId={productId} />
+        <div className={styles.cartButtonWrapper}>
+          <AddToCartButton productId={productId} />
+        </div>
       )}
     </main>
   );

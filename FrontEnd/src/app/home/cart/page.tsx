@@ -44,7 +44,7 @@ const Cart = () => {
       })
       .then(setCartItems)
       .catch((error) => setError(error.message));
-  }, []);
+  }, [user?.userId]);
   // Function to calculate total price
   const calculateTotal = (items: CartItem[]) =>
     items.reduce((acc, item) => acc + item.unitPrice * item.quantity, 0);
@@ -112,7 +112,7 @@ const Cart = () => {
         }
         // Filter out the removed item from the cartItems state
         const updatedCartItems = cartItems.filter(
-          (item) => item.cartItemId !== cartItemId
+          (item) => item.cartItemId !== cartItemId,
         );
         setCartItems(updatedCartItems);
       })

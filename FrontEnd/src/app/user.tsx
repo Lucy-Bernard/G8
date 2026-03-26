@@ -1,12 +1,11 @@
-/*
- * User Context
- * 
- * This module defines a React context for managing user-related state across the application.
- */
-
 "use client";
-
-import { createContext, useContext, useState, ReactNode } from "react";
+import {
+  createContext,
+  useContext,
+  useState,
+  useEffect,
+  ReactNode,
+} from "react";
 
 type User = {
   userId: number;
@@ -19,28 +18,39 @@ type UserContextType = {
   setUser: (user: User | null) => void;
 };
 
-// Create the context with a default value
 const UserContext = createContext<UserContextType>({
   user: null,
-  setUser: () => { },
+  setUser: () => {},
 });
 
-// Props interface for the provider
 type UserProviderProps = {
   children: ReactNode;
 };
 
-// The provider component
 export function UserProvider({ children }: UserProviderProps) {
-  const [user, setUser] = useState<User | null>(null);
+  // Initialize from localStorage if available
+  const [user, setUserState] = useState<User | null>(() => {
+    if (typeof window !== "undefined") {
+      const stored = localStorage.getItem("user");
+      return stored ? JSON.parse(stored) : null;
+    }
+    return null;
+  });
 
-  // The value that will be supplied to the context
+  // Wrap setUser to also save to localStorage
+  const setUser = (user: User | null) => {
+    setUserState(user);
+    if (user) {
+      localStorage.setItem("user", JSON.stringify(user));
+    } else {
+      localStorage.removeItem("user");
+    }
+  };
+
   const value = { user, setUser };
-
   return <UserContext.Provider value={value}>{children}</UserContext.Provider>;
 }
 
-// Hook for easy access to the context
 export function useUser() {
   return useContext(UserContext);
 }

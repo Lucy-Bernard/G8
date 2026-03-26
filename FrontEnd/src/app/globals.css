@@ -11,3 +11,7 @@
 body {
   padding-top: 4.75rem;
 }
+main {
+  background-color: #d1b8a3;
+  min-height: 100vh;
+}

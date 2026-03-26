@@ -1,3 +1,11 @@
+# Purpose
+
+This project was created to learn end-to-end development, covering everything from database and backend API to frontend UI and deployment.
+
+## Demo Video
+
+Watch a walkthrough of the application here: [Demo Video on Loom](https://www.loom.com/share/1a65551334914ad595ce378c586fbaa8)
+
 # Architecture Used
 
 ## Model View Controller
@@ -20,7 +28,7 @@
 
 Tools used: Azure Data Studio to run Microsoft SQL queries.
 
-- In order to run SQL environment (sql isn't native to linux/mac), we use a docker image (microsoft provides this image) to simulate windows environment for SQL to run.
+- In order to run SQL environment (sql isn't native to linux/mac), I use a docker image (microsoft provides this image) to simulate windows environment for SQL to run.
 
 Docker Image that Microsoft provides to simulate windows environment:
 
@@ -103,5 +111,5 @@ Components that are used throughout the app dynamically:
 
 ## Test directory:
 
-- We only tested the front end and whether the items retrieved from the backend were correct
+- I only tested the front end and whether the items retrieved from the backend were correct
 - Used **Jest** Library to test React components
